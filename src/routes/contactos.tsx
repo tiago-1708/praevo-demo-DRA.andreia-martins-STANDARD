@@ -15,17 +15,24 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { sendContactEmail } from "@/lib/send-contact-email";
 import { contactSubmissionSchema } from "@/lib/contact-submission";
 import { trackEvent } from "@/lib/analytics";
-import { siteConfig, siteName, absoluteUrl, isPlaceholder } from "@/lib/site-config";
+import {
+  siteConfig,
+  absoluteUrl,
+  advogadaEm,
+  isPlaceholder,
+  telHref,
+  mailHref,
+} from "@/lib/site-config";
 
 export const Route = createFileRoute("/contactos")({
   head: () => ({
     meta: [
-      { title: `Contactos — ${siteName()}` },
+      { title: `Contactos — ${siteConfig.advogado.displayName}, ${advogadaEm()}` },
       {
         name: "description",
-        content: `Contactos do ${siteName()} em ${siteConfig.advogado.locality}: telemóvel ${siteConfig.advogado.phoneDisplay}, email ${siteConfig.advogado.email} e formulário.`,
+        content: `Contactos da ${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}: telefone, email e formulário de contacto.`,
       },
-      { property: "og:title", content: `Contactos — ${siteName()}` },
+      { property: "og:title", content: `Contactos — ${siteConfig.advogado.displayName}` },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/contactos") }],
   }),
@@ -34,11 +41,14 @@ export const Route = createFileRoute("/contactos")({
 
 function Contactos() {
   const a = siteConfig.advogado;
-  // Enquanto a morada não estiver confirmada, o mapa mostra apenas a localidade.
+  // Enquanto a morada não estiver confirmada, o mapa mostra apenas a
+  // localidade (ou o país, se também ela estiver por confirmar).
   const mapsQuery = encodeURIComponent(
-    isPlaceholder(a.street)
-      ? `${a.locality}, Portugal`
-      : `${a.street}, ${a.postalCode} ${a.locality}`,
+    !isPlaceholder(a.street)
+      ? `${a.street}, ${a.postalCode} ${a.locality}`
+      : !isPlaceholder(a.locality)
+        ? `${a.locality}, Portugal`
+        : "Portugal",
   );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -119,9 +129,9 @@ function Contactos() {
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="Contactos" title="Falar com o escritório">
-        Atendimento presencial em {a.locality}. Ligue, escreva ou deixe os seus contactos — o
-        escritório entrará em contacto consigo.
+      <PageHero eyebrow="Contactos" title="Falar com a advogada">
+        Atendimento presencial no escritório. Ligue, escreva ou deixe os seus contactos — a advogada
+        entrará em contacto consigo.
       </PageHero>
 
       <section className="bg-background py-20 lg:py-24">
@@ -143,6 +153,7 @@ function Contactos() {
                       {a.street}
                       <br />
                       {a.postalCode} {a.locality}
+                      {!isPlaceholder(a.district) && `, ${a.district}`}
                     </dd>
                   </div>
                 </div>
@@ -157,7 +168,7 @@ function Contactos() {
                     </dt>
                     <dd className="mt-1 leading-relaxed">
                       <a
-                        href={`tel:${a.phoneE164}`}
+                        href={telHref(a.phoneE164)}
                         className="font-serif text-xl hover:text-[color:var(--gold-ink)]"
                       >
                         {a.phoneDisplay}
@@ -169,7 +180,7 @@ function Contactos() {
                         <>
                           <br />
                           <a
-                            href={`tel:${a.phoneAltE164}`}
+                            href={telHref(a.phoneAltE164)}
                             className="font-serif text-xl hover:text-[color:var(--gold-ink)]"
                           >
                             {a.phoneAltDisplay}
@@ -193,7 +204,7 @@ function Contactos() {
                     </dt>
                     <dd className="mt-1">
                       <a
-                        href={`mailto:${a.email}`}
+                        href={mailHref(a.email)}
                         className="font-serif text-xl hover:text-[color:var(--gold-ink)]"
                       >
                         {a.email}
@@ -217,7 +228,7 @@ function Contactos() {
 
               <div className="mt-8 min-h-[280px] w-full overflow-hidden rounded-md border border-border bg-muted">
                 <iframe
-                  title={`Localização do escritório em ${a.locality}`}
+                  title="Localização do escritório"
                   src={`https://www.google.com/maps?q=${mapsQuery}&output=embed`}
                   className="h-full w-full min-h-[280px]"
                   loading="lazy"
@@ -232,7 +243,7 @@ function Contactos() {
                 Envie os seus contactos
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                O escritório entrará em contacto consigo pelo telefone ou email indicado.
+                A advogada entrará em contacto consigo pelo telefone ou email indicado.
               </p>
 
               {sent ? (
@@ -244,7 +255,7 @@ function Contactos() {
                     Pedido recebido
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Entraremos em contacto brevemente.
+                    A advogada entrará em contacto consigo.
                   </p>
                 </div>
               ) : (

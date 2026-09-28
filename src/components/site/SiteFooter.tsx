@@ -1,24 +1,25 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { siteConfig, siteName } from "@/lib/site-config";
+import { siteConfig, siteName, telHref, mailHref } from "@/lib/site-config";
 import { reopenCookieConsent } from "./CookieConsent";
-import { ContourPattern, Wordmark } from "./Brand";
+import { GuillochePattern } from "./Brand";
+import { Logo } from "./Logo";
 
 export function SiteFooter() {
   const a = siteConfig.advogado;
 
   return (
     <footer className="relative overflow-hidden bg-[color:var(--navy-deep)] text-[color:var(--ivory)]/80">
-      <ContourPattern opacity={0.08} />
+      <GuillochePattern opacity={0.08} />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-4">
         <div className="md:col-span-1">
           <Link to="/" className="inline-block text-[color:var(--ivory)]" aria-label="Início">
-            <Wordmark size="md" />
+            <Logo variant="lockup" size="sm" />
           </Link>
           <p className="mt-6 text-sm leading-relaxed">
             {siteConfig.perfil.tagline}.
             <br />
-            Atendimento presencial em {a.locality}.
+            Atendimento presencial · {a.locality}.
           </p>
         </div>
 
@@ -93,13 +94,13 @@ export function SiteFooter() {
             <li className="flex items-start gap-2">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--gold)]" aria-hidden />
               <span>
-                <a href={`tel:${a.phoneE164}`} className="hover:text-[color:var(--gold)]">
+                <a href={telHref(a.phoneE164)} className="hover:text-[color:var(--gold)]">
                   {a.phoneDisplay}
                 </a>
                 {a.phoneAltE164 && (
                   <>
                     <br />
-                    <a href={`tel:${a.phoneAltE164}`} className="hover:text-[color:var(--gold)]">
+                    <a href={telHref(a.phoneAltE164)} className="hover:text-[color:var(--gold)]">
                       {a.phoneAltDisplay}
                     </a>
                   </>
@@ -108,7 +109,7 @@ export function SiteFooter() {
             </li>
             <li className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-[color:var(--gold)]" aria-hidden />
-              <a href={`mailto:${a.email}`} className="hover:text-[color:var(--gold)]">
+              <a href={mailHref(a.email)} className="hover:text-[color:var(--gold)]">
                 {a.email}
               </a>
             </li>
@@ -122,11 +123,12 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {siteName()}. Todos os direitos reservados.
           </p>
           <p>
-            {a.name}, advogado inscrito na Ordem dos Advogados — Cédula Profissional n.º {a.cedula}.
+            {a.displayName}, advogada inscrita na Ordem dos Advogados — Cédula Profissional n.º{" "}
+            {a.cedula}.
           </p>
         </div>
         {siteConfig.demo && (
-          <p className="mx-auto max-w-6xl px-6 pb-6 text-[11px] text-[color:var(--ivory)]/45">
+          <p className="mx-auto max-w-6xl px-6 pb-6 text-[11px] text-[color:var(--ivory)]/60">
             Proposta de website em demonstração, preparada por Praevo Technologies. Não indexado.
           </p>
         )}

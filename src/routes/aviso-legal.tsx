@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/Brand";
-import { siteConfig, siteName, absoluteUrl } from "@/lib/site-config";
+import { siteConfig, absoluteUrl } from "@/lib/site-config";
 
 export const Route = createFileRoute("/aviso-legal")({
   head: () => ({
     meta: [
-      { title: `Aviso Legal e Privacidade — ${siteName()}` },
+      { title: `Aviso Legal e Privacidade — ${siteConfig.advogado.displayName}` },
       { name: "robots", content: "noindex, nofollow" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/aviso-legal") }],
@@ -22,17 +22,17 @@ function AvisoLegal() {
       <PageHero eyebrow="Legal" title="Aviso Legal e Política de Privacidade" />
       <article className="mx-auto max-w-3xl px-6 py-16 lg:py-20">
         <p className="text-xs text-muted-foreground">
-          Última actualização: {new Date().toLocaleDateString("pt-PT")}
+          Última atualização: {new Date().toLocaleDateString("pt-PT")}
         </p>
 
         <div className="mt-10 space-y-8 text-sm leading-relaxed text-muted-foreground">
           <section>
             <h2 className="text-lg text-[color:var(--navy-deep)]">1. Identificação</h2>
             <p className="mt-3">
-              O presente sítio é da responsabilidade de <strong>{siteName()}</strong>, escritório do
-              advogado {a.name}, inscrito na Ordem dos Advogados portuguesa com a cédula
-              profissional n.º {a.cedula}, com domicílio profissional em {a.street}, {a.postalCode}{" "}
-              {a.locality}, NIF {a.nif}. Contactos: {a.email} · {a.phoneDisplay}.
+              O presente sítio é da responsabilidade de <strong>{a.displayName}</strong>, advogada
+              inscrita na Ordem dos Advogados portuguesa com a cédula profissional n.º {a.cedula},
+              com domicílio profissional em {a.street}, {a.postalCode} {a.locality}, NIF {a.nif}.
+              Contactos: {a.email} · {a.phoneDisplay}.
             </p>
           </section>
 
@@ -41,7 +41,7 @@ function AvisoLegal() {
             <p className="mt-3">
               O conteúdo deste sítio tem carácter meramente informativo. Não constitui
               aconselhamento jurídico nem estabelece qualquer relação profissional entre o
-              utilizador e o advogado. O aconselhamento jurídico requer análise individualizada do
+              utilizador e a advogada. O aconselhamento jurídico requer a análise individualizada do
               caso concreto.
             </p>
           </section>
@@ -60,7 +60,7 @@ function AvisoLegal() {
           <section>
             <h2 className="text-lg text-[color:var(--navy-deep)]">4. Segredo profissional</h2>
             <p className="mt-3">
-              As informações partilhadas com o advogado estão protegidas pelo dever de segredo
+              As informações partilhadas com a advogada estão protegidas pelo dever de segredo
               profissional nos termos do Estatuto da Ordem dos Advogados (Lei n.º 145/2015).
             </p>
           </section>
@@ -74,17 +74,17 @@ function AvisoLegal() {
               tempo estritamente necessário.
             </p>
             <p className="mt-3">
-              Responsável pelo tratamento: {siteName()}, com os contactos indicados no ponto 1.
-              Direitos do titular: acesso, rectificação, apagamento, limitação, oposição e
+              Responsável pelo tratamento: {a.displayName}, com os contactos indicados no ponto 1.
+              Direitos do titular: acesso, retificação, apagamento, limitação, oposição e
               portabilidade dos dados, exercidos por email para {a.email}. Reclamação sempre
-              disponível junto da Comissão Nacional de Protecção de Dados (CNPD — cnpd.pt).
+              disponível junto da Comissão Nacional de Proteção de Dados (CNPD — cnpd.pt).
             </p>
           </section>
 
           <section>
             <h2 className="text-lg text-[color:var(--navy-deep)]">6. Propriedade intelectual</h2>
             <p className="mt-3">
-              O conteúdo deste sítio (texto, imagens, marca) é propriedade do escritório ou dos seus
+              O conteúdo deste sítio (texto, imagens, marca) é propriedade da titular ou dos seus
               licenciantes. É proibida a reprodução parcial ou total sem autorização escrita, salvo
               para uso pessoal não comercial.
             </p>
@@ -93,8 +93,8 @@ function AvisoLegal() {
           <section>
             <h2 className="text-lg text-[color:var(--navy-deep)]">7. Lei aplicável</h2>
             <p className="mt-3">
-              Aplica-se a lei portuguesa. Foro competente: tribunais do domicílio profissional do
-              advogado.
+              Aplica-se a lei portuguesa. Foro competente: tribunais do domicílio profissional da
+              advogada.
             </p>
           </section>
         </div>

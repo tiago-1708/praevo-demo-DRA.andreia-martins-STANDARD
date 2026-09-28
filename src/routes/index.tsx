@@ -2,20 +2,28 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Mail, MapPin, Phone } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { ContourPattern, Eyebrow, Wordmark } from "@/components/site/Brand";
+import { GuillochePattern, Eyebrow } from "@/components/site/Brand";
+import { Logo } from "@/components/site/Logo";
 import { FaqItem } from "@/components/site/FaqItem";
-import { siteConfig, siteName, absoluteUrl } from "@/lib/site-config";
+import {
+  siteConfig,
+  absoluteUrl,
+  advogadaEm,
+  telHref,
+  mailHref,
+  isPlaceholder,
+} from "@/lib/site-config";
 import { handleSpot } from "@/lib/spotlight";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: `${siteName()} — Advogados em ${siteConfig.advogado.locality}` },
+      { title: `${siteConfig.advogado.displayName} — ${advogadaEm()}` },
       {
         name: "description",
-        content: `${siteName()}: ${siteConfig.perfil.tagline.toLowerCase()} em ${siteConfig.advogado.locality}. Serviços jurídicos a empresas, particulares e entidades públicas.`,
+        content: `${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}. Serviços jurídicos a particulares, famílias, trabalhadores e pequenas empresas.`,
       },
-      { property: "og:title", content: siteName() },
+      { property: "og:title", content: `${siteConfig.advogado.displayName} — ${advogadaEm()}` },
       { property: "og:url", content: absoluteUrl("/") },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/") }],
@@ -33,21 +41,23 @@ function HomePage() {
     <SiteLayout>
       {/* HERO */}
       <section className="relative -mt-20 flex min-h-[92svh] items-center overflow-hidden bg-[color:var(--navy-deep)] text-[color:var(--ivory)]">
-        <ContourPattern opacity={0.24} />
+        <GuillochePattern opacity={0.24} />
         <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--navy-deep)] via-[color:var(--navy-deep)]/80 to-transparent" />
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-16 px-6 pt-32 pb-20 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.65fr)] lg:pt-40">
           <div>
             <div className="animate-fade-rise">
-              <Eyebrow tone="dark">Boutique de Advocacia · Full service · {a.locality}</Eyebrow>
+              <Eyebrow tone="dark">
+                {a.displayName} · {p.tagline}
+              </Eyebrow>
             </div>
             <h1 className="animate-fade-rise delay-1 max-w-3xl font-serif text-[2.6rem] leading-[1.02] font-medium sm:text-6xl lg:text-7xl">
-              Não nos procure quando tiver um problema.{" "}
-              <em className="text-[color:var(--gold-soft)]">Antecipe-o.</em>
+              Acompanhamento jurídico próximo,{" "}
+              <em className="text-[color:var(--gold-soft)]">explicado com clareza.</em>
             </h1>
             <p className="animate-fade-rise delay-2 mt-7 max-w-xl text-base leading-relaxed text-[color:var(--ivory)]/80 sm:text-lg">
-              Prestamos serviços jurídicos a empresas privadas, a particulares e a entidades
-              públicas — com rigor, clareza e a convicção de que o melhor momento para falar com um
-              advogado é antes de o problema existir.
+              Prestamos serviços jurídicos a particulares, a famílias, a trabalhadores e a pequenas
+              empresas — em questões de família, trabalho, arrendamento, contratos e processo penal
+              — com tempo para ouvir e clareza para explicar cada passo.
             </p>
 
             <div className="animate-fade-rise delay-3 mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
@@ -56,7 +66,7 @@ function HomePage() {
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
               <a
-                href={`tel:${a.phoneE164}`}
+                href={telHref(a.phoneE164)}
                 className="btn-outline btn-lg text-[color:var(--ivory)]"
               >
                 <Phone className="h-4 w-4" aria-hidden />
@@ -67,24 +77,23 @@ function HomePage() {
             <div className="animate-fade-rise delay-4 mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[color:var(--ivory)]/15 pt-8 text-[11px] uppercase tracking-[0.2em] text-[color:var(--ivory)]/70">
               <span className="flex items-center gap-2">
                 <BadgeCheck className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />
-                Inscrito na Ordem dos Advogados · Cédula n.º {a.cedula}
+                Inscrita na Ordem dos Advogados · Cédula n.º {a.cedula}
               </span>
               <span className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />
-                Atendimento presencial em {a.locality}
+                Atendimento presencial · {a.locality}
               </span>
             </div>
           </div>
 
-          {/* Monograma */}
+          {/* Logótipo em moldura dupla */}
           <div className="animate-fade-rise delay-3 hidden justify-center lg:flex">
-            <div className="relative flex aspect-[4/5] w-full max-w-xs flex-col items-center justify-center border border-[color:var(--gold)]/40 p-10 text-[color:var(--ivory)]">
-              <span className="absolute inset-2 border border-[color:var(--gold)]/15" aria-hidden />
-              <Wordmark size="lg" />
-              <span className="mt-8 h-px w-16 bg-[color:var(--gold)]/60" aria-hidden />
-              <span className="mt-6 text-[10px] uppercase tracking-[0.45em] text-[color:var(--ivory)]/60">
-                Advogados
-              </span>
+            <div className="relative flex aspect-[4/5] w-full max-w-xs flex-col items-center justify-center rounded-md border border-[color:var(--gold)]/40 p-10 text-[color:var(--ivory)]">
+              <span
+                className="absolute inset-2 rounded-sm border border-[color:var(--gold)]/15"
+                aria-hidden
+              />
+              <Logo variant="lockup" layout="stacked" size="lg" />
             </div>
           </div>
         </div>
@@ -96,20 +105,20 @@ function HomePage() {
           <Reveal>
             <Eyebrow>O escritório</Eyebrow>
             <h2 className="font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-[2.6rem]">
-              A advocacia é a profissão jurídica mais abrangente.
+              Cada assunto começa por uma conversa.
             </h2>
           </Reveal>
           <Reveal delay={120}>
             <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">{a.bio}</p>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
               Da consulta jurídica ao contrato, da negociação ao tribunal: acompanhamos cada assunto
-              do princípio ao fim.
+              do princípio ao fim, com informação clara sobre as opções, os prazos e os custos.
             </p>
             <Link
               to="/sobre"
               className="link-underline mt-8 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-[color:var(--navy-deep)] hover:text-[color:var(--gold-ink)]"
             >
-              Conhecer o escritório <ArrowRight className="h-4 w-4" aria-hidden />
+              Conhecer a advogada <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </Reveal>
         </div>
@@ -121,7 +130,7 @@ function HomePage() {
           <Reveal>
             <Eyebrow>A quem prestamos serviços</Eyebrow>
             <h2 className="max-w-2xl font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-4xl">
-              Três públicos, o mesmo rigor.
+              Perto de quem precisa de uma resposta clara.
             </h2>
           </Reveal>
           <div className="mt-12 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-3">
@@ -150,7 +159,7 @@ function HomePage() {
             <div>
               <Eyebrow>Áreas de prática</Eyebrow>
               <h2 className="font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-4xl">
-                Onde acompanhamos os nossos clientes
+                Matérias que acompanhamos
               </h2>
             </div>
             <Link
@@ -204,12 +213,12 @@ function HomePage() {
 
       {/* VALORES */}
       <section className="relative overflow-hidden bg-[color:var(--navy-deep)] py-20 text-[color:var(--ivory)] lg:py-28">
-        <ContourPattern opacity={0.12} />
+        <GuillochePattern opacity={0.12} />
         <div className="relative mx-auto max-w-6xl px-6">
           <Reveal>
             <Eyebrow tone="dark">Valores</Eyebrow>
             <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
-              Como pensamos o Direito
+              Como trabalhamos
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
@@ -251,16 +260,16 @@ function HomePage() {
 
       {/* CONTACTO */}
       <section className="relative overflow-hidden bg-[color:var(--navy)] py-20 text-[color:var(--ivory)] lg:py-24">
-        <ContourPattern opacity={0.1} />
+        <GuillochePattern opacity={0.1} />
         <div className="relative mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
           <Reveal>
-            <Eyebrow tone="dark">Novo escritório em {a.locality}</Eyebrow>
+            <Eyebrow tone="dark">Contacto</Eyebrow>
             <h2 className="font-serif text-3xl leading-tight sm:text-[2.6rem]">
-              Fale connosco antes de assinar, de comprar, de decidir.
+              Fale connosco antes de assinar, de decidir, de responder.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-[color:var(--ivory)]/75">
-              Atendimento presencial no escritório, em {a.locality}. Deixe os seus contactos e o
-              escritório entrará em contacto consigo.
+              Atendimento presencial no escritório. Ligue, escreva ou deixe os seus contactos: a
+              advogada entrará em contacto consigo.
             </p>
             <Link to="/contactos" className="btn-primary btn-lg mt-8">
               Marcar reunião <ArrowRight className="h-4 w-4" aria-hidden />
@@ -268,19 +277,19 @@ function HomePage() {
           </Reveal>
           <Reveal delay={120}>
             <ul className="divide-y divide-[color:var(--gold)]/20 border-y border-[color:var(--gold)]/20">
-              <ContactRow icon={Phone} label="Telemóvel" href={`tel:${a.phoneE164}`}>
+              <ContactRow icon={Phone} label="Telemóvel" href={telHref(a.phoneE164)}>
                 {a.phoneDisplay}
               </ContactRow>
               {a.phoneAltE164 && (
-                <ContactRow icon={Phone} label="Telefone" href={`tel:${a.phoneAltE164}`}>
+                <ContactRow icon={Phone} label="Telefone" href={telHref(a.phoneAltE164)}>
                   {a.phoneAltDisplay}
                 </ContactRow>
               )}
-              <ContactRow icon={Mail} label="Email" href={`mailto:${a.email}`}>
+              <ContactRow icon={Mail} label="Email" href={mailHref(a.email)}>
                 {a.email}
               </ContactRow>
               <ContactRow icon={MapPin} label="Morada">
-                {a.street}, {a.locality}
+                {isPlaceholder(a.street) ? a.street : `${a.street}, ${a.locality}`}
               </ContactRow>
             </ul>
           </Reveal>

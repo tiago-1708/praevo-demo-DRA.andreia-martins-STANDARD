@@ -1,8 +1,8 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
-import { siteConfig } from "@/lib/site-config";
-import { Wordmark } from "./Brand";
+import { siteConfig, telHref } from "@/lib/site-config";
+import { Logo } from "./Logo";
 
 const nav = [
   { to: "/", label: "Início" },
@@ -15,6 +15,17 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const a = siteConfig.advogado;
+  const pathname = useLocation({ select: (l) => l.pathname });
+
+  // Logótipo: link para "/" nas outras páginas; já em "/" e com scroll,
+  // sobe suavemente ao topo em vez de recarregar a rota.
+  const onLogoClick = (e: React.MouseEvent) => {
+    setOpen(false);
+    if (pathname === "/" && window.scrollY > 0) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -31,13 +42,14 @@ export function SiteHeader() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3.5 lg:py-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-6 py-3.5 lg:py-4">
         <Link
           to="/"
+          onClick={onLogoClick}
           className="flex min-w-0 items-center text-[color:var(--ivory)]"
-          aria-label={`${siteConfig.advogado.firm} — início`}
+          aria-label={`${a.displayName}, Advogada — início`}
         >
-          <Wordmark size="sm" />
+          <Logo variant="lockup" size="sm" />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -53,7 +65,7 @@ export function SiteHeader() {
             </Link>
           ))}
           <a
-            href={`tel:${a.phoneE164}`}
+            href={telHref(a.phoneE164)}
             className="flex items-center gap-2 text-sm tracking-wide text-[color:var(--ivory)]/85 transition-colors hover:text-[color:var(--gold)]"
           >
             <Phone className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />
@@ -66,9 +78,9 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2 lg:hidden">
           <a
-            href={`tel:${a.phoneE164}`}
+            href={telHref(a.phoneE164)}
             className="btn-primary btn-sm"
-            aria-label="Ligar para o escritório"
+            aria-label="Ligar para a advogada"
           >
             <Phone className="h-4 w-4" aria-hidden />
             Ligar

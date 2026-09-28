@@ -8,23 +8,27 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { ArrowRight } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { siteConfig, siteName, baseUrl, isPlaceholder } from "../lib/site-config";
+import { siteConfig, siteName, baseUrl, isPlaceholder, advogadaEm } from "../lib/site-config";
 
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Página não encontrada</h2>
+        <p className="font-serif text-7xl text-[color:var(--gold-ink)]">404</p>
+        <h1 className="mt-4 font-serif text-2xl text-foreground">Página não encontrada</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           A página que procura não existe ou foi movida.
         </p>
-        <div className="mt-6">
-          <Link to="/" className="btn-primary btn-sm">
-            Voltar ao início
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Link to="/" className="btn-primary">
+            Voltar ao início <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+          <Link to="/contactos" className="btn-outline text-foreground">
+            Contactos
           </Link>
         </div>
       </div>
@@ -42,23 +46,21 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          Esta página não carregou
-        </h1>
+        <h1 className="font-serif text-2xl text-foreground">Esta página não carregou</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Algo correu mal. Tente actualizar ou volte ao início.
+          Algo correu mal. Tente atualizar a página ou volte ao início.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <button
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="btn-primary btn-sm"
+            className="btn-primary"
           >
             Tentar novamente
           </button>
-          <a href="/" className="btn-outline btn-sm text-foreground">
+          <a href="/" className="btn-outline text-foreground">
             Início
           </a>
         </div>
@@ -81,22 +83,23 @@ const structuredData = () => {
       // Placeholders ("[...]") ficam de fora dos dados estruturados.
       ...(isPlaceholder(a.street) ? {} : { streetAddress: a.street }),
       ...(isPlaceholder(a.postalCode) ? {} : { postalCode: a.postalCode }),
-      addressLocality: a.locality,
-      addressRegion: a.district,
+      ...(isPlaceholder(a.locality) ? {} : { addressLocality: a.locality }),
+      ...(isPlaceholder(a.district) ? {} : { addressRegion: a.district }),
       addressCountry: "PT",
     },
-    telephone: a.phoneE164,
-    email: a.email,
-    areaServed: [a.locality, a.district, "Portugal"],
+    ...(isPlaceholder(a.phoneE164) ? {} : { telephone: a.phoneE164 }),
+    ...(isPlaceholder(a.email) ? {} : { email: a.email }),
+    areaServed: [a.locality, a.district, "Portugal"].filter((x) => !isPlaceholder(x)),
     priceRange: "€€",
     knowsAbout: siteConfig.areas.map((x) => x.title),
   };
 };
 
 const dynamicFaviconHref = () => {
-  // Monograma "JRR" em serifa, bronze sobre quase-preto.
+  // Monograma "AM" (mesma geometria de src/components/site/Logo.tsx e de
+  // public/favicon.svg): branco-gelo sobre azul-noite, travessa em azul claro.
   const c = siteConfig.brand.colors;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="14" fill="${c.dark}"/><text x="50" y="64" font-family="Georgia,serif" font-weight="500" font-size="40" letter-spacing="1" text-anchor="middle" fill="${c.accentSoft}">JRR</text><rect x="26" y="74" width="48" height="2" fill="${c.accent}"/></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="${c.dark}"/><clipPath id="c"><rect x="0" y="0" width="64" height="47"/></clipPath><path d="M6.4 51 L20 17 L32 47 L44 17 L57.6 51" fill="none" stroke="${c.background}" stroke-width="4.6" stroke-linejoin="miter" stroke-miterlimit="10" clip-path="url(#c)"/><line x1="12.4" x2="27.6" y1="36" y2="36" stroke="${c.accent}" stroke-width="2.6"/></svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 };
 
@@ -105,20 +108,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: `${siteName()} — Advogados em ${siteConfig.advogado.locality}` },
+      { title: `${siteConfig.advogado.displayName} — ${advogadaEm()}` },
       {
         name: "description",
-        content: `${siteName()} — ${siteConfig.perfil.tagline}. Advogado ${siteConfig.advogado.name}, em ${siteConfig.advogado.locality}.`,
+        content: `${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}. ${siteConfig.perfil.tagline}: família, trabalho, arrendamento, contratos e processo penal.`,
       },
-      // Site demo: nunca indexar (usa nome e contactos reais do escritório).
+      // Site demo: nunca indexar (proposta com o nome real da advogada).
       ...(siteConfig.demo ? [{ name: "robots", content: "noindex, nofollow" }] : []),
       { name: "author", content: siteName() },
       { name: "theme-color", content: siteConfig.themeColor },
       { property: "og:site_name", content: siteName() },
-      { property: "og:title", content: siteName() },
+      { property: "og:title", content: `${siteConfig.advogado.displayName} — ${advogadaEm()}` },
       {
         property: "og:description",
-        content: `${siteConfig.perfil.tagline}. ${siteConfig.advogado.locality}.`,
+        content: `${siteConfig.perfil.tagline}. ${siteConfig.perfil.motto}`,
       },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "pt_PT" },
@@ -132,15 +135,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      // Favicon dinâmico: gerado a partir da primeira letra do siteName +
-      // brand.colors.dark. Muda automaticamente para qualquer cliente.
-      // Para usar logo próprio, colocar em public/favicon.svg e trocar aqui.
+      // Favicon: monograma "AM" gerado com as cores de brand.colors (há uma
+      // cópia estática em public/favicon.svg).
       { rel: "icon", href: dynamicFaviconHref(), type: "image/svg+xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Geist:wght@300..600&display=swap",
       },
     ],
   }),

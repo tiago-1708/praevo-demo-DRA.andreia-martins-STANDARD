@@ -7,19 +7,22 @@
  *
  * Depois de editar, ler o SCAFFOLD.md para os passos de deploy.
  *
- * SITE DEMO — JRR Advogados. Dados recolhidos do Instagram @jrradvogados.pt.
- * Tudo o que está entre [parênteses rectos] é placeholder a confirmar com o
- * cliente. O site inteiro está em noindex/nofollow (ver `demo` abaixo).
+ * SITE DEMO — Dra. Andreia Martins, Advogada. Proposta preparada pela
+ * Praevo Technologies. Áreas, públicos, textos e valores são uma PROPOSTA
+ * a validar com a cliente; tudo o que está entre [parênteses rectos] é
+ * placeholder a confirmar. O site inteiro está em noindex/nofollow (ver
+ * `demo` abaixo).
  */
 
 import {
-  Home,
-  ScrollText,
-  Coins,
+  Users,
   Briefcase,
-  Landmark,
-  Building2,
-  User,
+  KeyRound,
+  FilePen,
+  Shield,
+  UserRound,
+  IdCard,
+  Store,
   type LucideIcon,
 } from "lucide-react";
 
@@ -40,6 +43,7 @@ export type PracticeArea = {
 
 export type Advogado = {
   name: string;
+  displayName: string; // Nome com tratamento, para títulos (ex.: "Dra. …")
   firm: string | null;
   cedula: string;
   nif: string;
@@ -78,13 +82,13 @@ export type Brand = {
     background: string; // Near-white do body
   };
   /**
-   * Logo do escritório. Ficheiro em /public/ (ex.: /logo.png ou /logo.svg).
-   * Se null, o header/footer mostram o wordmark em texto (`Wordmark`).
+   * Logo em ficheiro (/public/). Neste demo fica a null: o logótipo é o
+   * componente `<Logo>` (src/components/site/Logo.tsx), em SVG inline.
    */
   logo: {
     src: string;
     alt: string;
-    height?: number; // Altura em px no header (default 44). Footer usa +25%.
+    height?: number;
   } | null;
 };
 
@@ -93,235 +97,243 @@ export type Brand = {
 // --------------------------------------------------------------------------
 
 export const siteConfig = {
-  slug: "praevo-demo-jrr",
+  slug: "praevo-demo-andreia-martins",
   domain: null as string | null,
-  themeColor: "#121110",
+  themeColor: "#0F1B2D",
 
   /**
    * Site de demonstração: força `noindex, nofollow` em todas as páginas
    * (meta + header X-Robots-Tag) e mostra a nota discreta no rodapé.
-   * Passar a `false` quando o site for entregue ao cliente.
+   * Passar a `false` quando o site for entregue à cliente.
    */
   demo: true,
 
   /**
-   * Paleta e logo. Contrastes (WCAG): accent sobre dark 5,9:1 · accentInk
-   * sobre background 5,7:1 · dark sobre accent 5,9:1.
+   * Paleta. Contrastes (WCAG 2.x): accent sobre dark 6,87:1 · accentInk
+   * sobre background 7,08:1 · dark sobre accent 6,87:1 · muted-foreground
+   * (styles.css) sobre background 6,55:1.
    */
   brand: {
     colors: {
-      dark: "#121110",
-      darkAlt: "#1E1B18",
-      accent: "#B08A57",
-      accentSoft: "#D8BF94",
-      accentInk: "#7A5A30",
-      background: "#F7F4EE",
+      dark: "#0F1B2D",
+      darkAlt: "#1A2A42",
+      accent: "#7FA7D1",
+      accentSoft: "#C9DBEE",
+      accentInk: "#2F5680",
+      background: "#F5F7FA",
     },
     logo: null,
   } satisfies Brand,
 
   advogado: {
-    name: "João Romão Rodrigues",
-    firm: "JRR Advogados",
+    name: "Andreia Martins",
+    displayName: "Dra. Andreia Martins",
+    firm: null,
     cedula: "[a confirmar]",
     nif: "[NIF a confirmar]",
     street: "[Morada a confirmar]",
     postalCode: "[Código postal]",
-    locality: "Alcobaça",
-    district: "Leiria",
-    phoneE164: "+351913981455",
-    phoneDisplay: "913 981 455",
-    phoneAltE164: "+351262062764",
-    phoneAltDisplay: "262 062 764",
-    email: "geral@jrradvogados.pt",
+    locality: "[Localidade a confirmar]",
+    district: "[Distrito a confirmar]",
+    phoneE164: "[+351 a confirmar]",
+    phoneDisplay: "[Telemóvel]",
+    phoneAltE164: null,
+    phoneAltDisplay: null,
+    email: "[email a confirmar]",
     hours: "[Horário a confirmar]",
     bio:
-      "O JRR Advogados é uma boutique de advocacia full service, sediada em Alcobaça e " +
-      "conduzida pelo advogado João Romão Rodrigues. Prestamos serviços jurídicos a empresas " +
-      "privadas, a particulares e a entidades públicas, com uma ideia simples: o melhor momento " +
-      "para falar com um advogado é antes de o problema existir.",
+      "Andreia Martins é advogada, inscrita na Ordem dos Advogados. Presta serviços jurídicos a " +
+      "particulares, a famílias e a pequenas empresas, em questões de família, trabalho, " +
+      "arrendamento, contratos e processo penal. Cada assunto começa por uma conversa: ouvir, " +
+      "perceber o que está em causa e explicar, com clareza, as opções e os passos seguintes.",
   } satisfies Advogado,
 
-  /** Conteúdo próprio do escritório (Instagram @jrradvogados.pt). */
+  /** Conteúdo próprio — PROPOSTA a validar com a cliente. */
   perfil: {
-    tagline: "Boutique de Advocacia — Full service",
-    motto: "Não nos procure quando tiver um problema: antecipe-o.",
+    tagline: "Advocacia de proximidade",
+    motto: "Cada decisão merece ser tomada com informação clara.",
     audiences: [
       {
-        title: "Empresas privadas",
-        text: "Pequenas, médias e grandes empresas — nos contratos, na atividade corrente e nos litígios.",
-        icon: Building2,
+        title: "Particulares e famílias",
+        text: "Nas questões da vida pessoal e familiar: do divórcio à casa arrendada, de um contrato a um processo em tribunal.",
+        icon: UserRound,
       },
       {
-        title: "Particulares",
-        text: "Qualquer caso pessoal em que é necessário o advogado: da compra de casa a uma herança.",
-        icon: User,
+        title: "Trabalhadores",
+        text: "Na relação com a entidade empregadora, do contrato de trabalho à sua cessação.",
+        icon: IdCard,
       },
       {
-        title: "Entidades públicas",
-        text: "Municípios, entidades hospitalares e empresas públicas.",
-        icon: Landmark,
+        title: "Pequenas empresas",
+        text: "Empresários em nome individual e pequenas empresas: contratos, relações laborais e cobrança de créditos.",
+        icon: Store,
       },
     ] satisfies { title: string; text: string; icon: LucideIcon }[],
     values: [
       {
-        title: "Rigor & Exigência",
-        text: "Cada assunto é estudado a fundo: os documentos, os prazos e a lei aplicável. Sem atalhos.",
+        title: "Proximidade",
+        text: "Cada pessoa é ouvida com tempo e sabe, em cada fase, com quem fala e em que ponto está o seu assunto.",
       },
       {
-        title: "Visibilidade & Clareza",
-        text: "O cliente sabe em que ponto está o seu processo, que opções tem e o que cada uma implica — em linguagem clara.",
+        title: "Clareza",
+        text: "Opções, prazos e custos explicados em linguagem simples, para que cada decisão seja tomada com conhecimento.",
       },
       {
-        title: "Antecipação",
-        text: "Rever antes de assinar, verificar antes de comprar, planear antes de decidir. Prevenir custa menos do que litigar.",
+        title: "Rigor",
+        text: "Os documentos, a lei aplicável e os prazos são estudados antes de qualquer passo. Sem atalhos.",
       },
     ],
-    /** "Tipos de atos que os advogados fazem" — atos próprios (Lei n.º 49/2004). */
+    /**
+     * "Tipos de atos que os advogados fazem" — atos próprios dos advogados
+     * (Lei n.º 49/2004); o último decorre do Decreto-Lei n.º 76-A/2006.
+     */
     acts: [
       "Consulta jurídica e pareceres escritos",
       "Elaboração e revisão de contratos",
-      "Representação em tribunal (mandato forense)",
-      "Representação perante entidades públicas e privadas",
-      "Negociação e cobrança de créditos",
+      "Mandato forense: representação em tribunal",
+      "Negociação tendente à cobrança de créditos",
+      "Reclamação e impugnação de atos administrativos e tributários",
       "Reconhecimento de assinaturas, autenticação e certificação de documentos",
     ],
     faqs: [
       {
-        id: "comprar-imovel",
-        question: "O que deve ser verificado antes de comprar um imóvel?",
+        id: "divorcio-mutuo-consentimento",
+        question: "Como funciona o divórcio por mútuo consentimento?",
         intro:
-          "A compra de um imóvel é, para muitas pessoas, o maior investimento de uma vida. Antes de assinar o contrato-promessa, convém confirmar pelo menos:",
+          "Quando os dois cônjuges estão de acordo quanto ao divórcio e às suas consequências, o processo pode correr numa conservatória do registo civil. Em termos gerais:",
         steps: [
-          "Quem é o proprietário e se existem hipotecas, penhoras, usufrutos ou outros encargos — através da certidão permanente do registo predial.",
-          "Se o registo predial, a caderneta predial das Finanças e a realidade física do imóvel coincidem (áreas, divisões, anexos).",
-          "A situação urbanística do imóvel e documentos como a ficha técnica da habitação, quando exigível, e o certificado energético.",
-          "Se há dívidas ao condomínio, mediante declaração emitida pela administração.",
-          "Os custos da operação — IMT, Imposto do Selo, registos — e o calendário entre o contrato-promessa e a escritura.",
+          "O requerimento é apresentado pelos dois cônjuges, ou pelos seus mandatários, numa conservatória do registo civil.",
+          "Acompanham-no os acordos exigidos por lei: sobre o exercício das responsabilidades parentais dos filhos menores, se os houver; sobre os alimentos ao cônjuge que deles careça; e sobre o destino da casa de morada de família.",
+          "Junta-se a relação especificada dos bens comuns (ou o acordo sobre a sua partilha) e, se existir, a certidão da convenção antenupcial.",
+          "Havendo filhos menores, o acordo sobre as responsabilidades parentais é enviado ao Ministério Público, que se pronuncia sobre se acautela os interesses das crianças.",
+          "Se faltar algum destes acordos, o divórcio por mútuo consentimento pode ser requerido em tribunal, que decide as questões em falta. Sem acordo quanto ao próprio divórcio, o caminho é o divórcio sem consentimento de um dos cônjuges, também em tribunal.",
         ],
-        note: "Cada imóvel tem a sua história. A análise dos documentos antes da primeira assinatura evita surpresas depois.",
+        note: "A solução adequada depende da situação da família, dos filhos e do património comum.",
       },
       {
-        id: "falecimento-familiar",
-        question: "Quando falece um familiar, o que é que tenho mesmo que fazer?",
-        intro: "Num momento difícil, há passos que não podem ficar esquecidos. Em termos gerais:",
+        id: "comunicacao-despedimento",
+        question: "Recebi uma comunicação de despedimento. O que devo fazer?",
+        intro: "Em Direito do Trabalho, alguns prazos são curtos. Em termos gerais, convém:",
         steps: [
-          "Registo do óbito — normalmente tratado pela agência funerária junto da conservatória.",
-          "Habilitação de herdeiros — identifica quem são os herdeiros; pode ser feita em notário ou no Balcão das Heranças.",
-          "Participação às Finanças — cabe ao cabeça-de-casal, em regra até ao final do terceiro mês seguinte ao do falecimento, com a relação de bens.",
-          "Comunicações a bancos, seguradoras e Segurança Social (por exemplo, subsídio por morte e pensões de sobrevivência, quando aplicáveis).",
-          "Partilha dos bens — por acordo entre os herdeiros ou, na falta de acordo, através de processo de inventário.",
+          "Guardar a comunicação de despedimento e reunir o contrato de trabalho, os recibos de vencimento e a correspondência trocada com a entidade empregadora.",
+          "Identificar a modalidade de despedimento invocada — por facto imputável ao trabalhador, coletivo, por extinção do posto de trabalho ou por inadaptação —, porque os requisitos e os prazos variam.",
+          "Para contestar um despedimento individual comunicado por escrito, a oposição deve, em regra, dar entrada no tribunal no prazo de 60 dias a contar da receção da comunicação ou da cessação do contrato, se posterior.",
+          "Verificar os créditos devidos com a cessação, como férias e subsídios proporcionais e, quando aplicável, a compensação. Estes créditos prescrevem, em regra, um ano após o dia seguinte ao da cessação do contrato.",
+          "Pedir à entidade empregadora a declaração de situação de desemprego e, sendo o caso, requerer as prestações de desemprego à Segurança Social no prazo de 90 dias a contar da data do desemprego.",
         ],
-        note: "Prazos e obrigações variam consoante o património deixado e a existência de testamento.",
+        note: "Antes de assinar qualquer acordo com a entidade empregadora, convém analisar o que nele se prevê e aquilo de que se prescinde.",
       },
       {
-        id: "cobrar-divida",
-        question: "Devem-me dinheiro… o que é que faço?",
-        intro: "Antes de avançar para tribunal, há um caminho a percorrer com método:",
+        id: "contrato-arrendamento",
+        question: "Vou arrendar uma casa. O que deve ficar no contrato?",
+        intro:
+          "O contrato de arrendamento urbano deve ser celebrado por escrito. Antes de assinar, convém confirmar que dele constam, pelo menos:",
         steps: [
-          "Reunir a prova: contratos, faturas, orçamentos aceites, mensagens e comprovativos de entrega ou de serviço.",
-          "Interpelar o devedor por escrito — de preferência por carta registada com aviso de receção — fixando um prazo para pagamento.",
-          "Confirmar os prazos de prescrição, que variam consoante o tipo de dívida e podem ser curtos.",
-          "Sem pagamento: procedimento de injunção (dívidas contratuais até 15 000 € ou transações comerciais), ação judicial e, obtido o título, execução.",
+          "A identificação das partes e do imóvel, com a referência à licença de utilização (ou ao documento que a dispense) e ao certificado energético.",
+          "A finalidade do arrendamento (habitacional ou não habitacional), o prazo e o regime de renovação.",
+          "O valor da renda, a forma e o local de pagamento e, se existir, a caução ou as rendas pagas antecipadamente.",
+          "A repartição das despesas — condomínio, obras, água, luz e gás — e o estado do imóvel na entrega, de preferência com registo fotográfico anexo.",
+          "A comunicação do contrato às Finanças e o pagamento do Imposto do Selo, obrigações que cabem ao senhorio.",
         ],
-        note: "O meio adequado depende do valor em causa, da prova disponível e da situação patrimonial do devedor.",
+        note: "As regras aplicáveis dependem do tipo de arrendamento e da data em que o contrato é celebrado.",
       },
     ] satisfies Faq[],
   },
 
+  /** Áreas de prática — PROPOSTA a validar com a cliente. */
   areas: [
     {
-      slug: "direito-imobiliario",
-      title: "Direito Imobiliário",
-      short: "Compra e venda de imóveis, com verificação documental e registal antes de assinar.",
+      slug: "direito-da-familia",
+      title: "Direito da Família e das Crianças",
+      short: "Divórcio, responsabilidades parentais, alimentos e partilha do património comum.",
       long:
-        "Acompanhamos compradores e vendedores em todas as fases de um negócio imobiliário: " +
-        "da análise prévia dos documentos ao contrato-promessa, da escritura ao registo. " +
-        "O objetivo é que cada assinatura seja feita com conhecimento completo do que se está a " +
-        "comprar ou a vender.",
+        "Acompanhamos pessoas e famílias em momentos de mudança. Sempre que é possível e protege " +
+        "os interesses de todos, em especial os das crianças, privilegiamos a via do acordo; " +
+        "quando não é, acompanhamos o processo em tribunal, com a mesma atenção a cada passo.",
       topics: [
-        "Análise da certidão permanente do registo predial e da caderneta predial",
-        "Verificação de ónus e encargos: hipotecas, penhoras, usufrutos",
-        "Contrato-promessa de compra e venda e escritura",
-        "Situação urbanística, ficha técnica e declaração de dívidas ao condomínio",
-        "Arrendamento urbano",
+        "Divórcio por mútuo consentimento e sem consentimento de um dos cônjuges",
+        "Regulação e alteração do exercício das responsabilidades parentais",
+        "Pensão de alimentos: fixação, alteração e incumprimento",
+        "União de facto e os seus efeitos",
+        "Partilha dos bens comuns",
       ],
-      audiences: ["Particulares", "Empresas privadas"],
-      faq: "comprar-imovel",
-      icon: Home,
+      audiences: ["Particulares e famílias"],
+      faq: "divorcio-mutuo-consentimento",
+      icon: Users,
     },
     {
-      slug: "herancas-e-sucessoes",
-      title: "Heranças e Sucessões",
-      short: "Habilitação de herdeiros, participação às Finanças, partilhas e testamentos.",
+      slug: "direito-do-trabalho",
+      title: "Direito do Trabalho",
+      short: "Contratos, despedimentos e créditos laborais, para trabalhadores e empregadores.",
       long:
-        "O falecimento de um familiar traz consigo obrigações com prazos próprios. Acompanhamos " +
-        "as famílias em cada passo — da habilitação de herdeiros à partilha — e ajudamos quem " +
-        "quer planear a sua sucessão com antecedência.",
+        "Prestamos serviços a trabalhadores e a pequenas empresas em todas as fases da relação " +
+        "laboral: da celebração do contrato à sua cessação. Revemos documentos antes de serem " +
+        "assinados e acompanhamos os processos em que os prazos contam.",
       topics: [
-        "Habilitação de herdeiros",
-        "Relação de bens e participação às Finanças (Imposto do Selo)",
-        "Partilha por acordo e processo de inventário",
-        "Testamentos e planeamento sucessório",
-        "Funções e deveres do cabeça-de-casal",
+        "Contratos de trabalho e acordos de cessação",
+        "Impugnação de despedimento",
+        "Créditos laborais: retribuições, férias e subsídios",
+        "Processos disciplinares",
+        "Acidentes de trabalho",
       ],
-      audiences: ["Particulares"],
-      faq: "falecimento-familiar",
-      icon: ScrollText,
-    },
-    {
-      slug: "cobranca-de-dividas-e-contratos",
-      title: "Cobrança de Dívidas e Contratos",
-      short: "Direito civil e contratos: redação, incumprimento e recuperação de créditos.",
-      long:
-        "Um contrato bem redigido é a primeira forma de prevenção. Quando o incumprimento já " +
-        "aconteceu, acompanhamos a recuperação do crédito com método: primeiro a via " +
-        "extrajudicial, depois os meios judiciais adequados ao valor e à prova disponível.",
-      topics: [
-        "Redação e revisão de contratos",
-        "Interpelação e negociação extrajudicial",
-        "Procedimento de injunção",
-        "Ações declarativas e processos de execução",
-        "Responsabilidade contratual e extracontratual",
-      ],
-      audiences: ["Particulares", "Empresas privadas"],
-      faq: "cobrar-divida",
-      icon: Coins,
-    },
-    {
-      slug: "direito-empresarial",
-      title: "Direito Empresarial",
-      short: "Assessoria jurídica a pequenas, médias e grandes empresas na atividade do dia a dia.",
-      long:
-        "Prestamos serviços a empresas de diferentes dimensões, desde a constituição da sociedade " +
-        "à gestão jurídica corrente. Revemos contratos com clientes e fornecedores, preparamos " +
-        "deliberações e acompanhamos a empresa quando surge um diferendo.",
-      topics: [
-        "Constituição de sociedades e alterações ao contrato de sociedade",
-        "Contratos comerciais com clientes, fornecedores e parceiros",
-        "Deliberações sociais, atas e assembleias gerais",
-        "Assessoria jurídica corrente",
-        "Prevenção e gestão de litígios comerciais",
-      ],
-      audiences: ["Empresas privadas"],
+      audiences: ["Trabalhadores", "Pequenas empresas"],
+      faq: "comunicacao-despedimento",
       icon: Briefcase,
     },
     {
-      slug: "direito-administrativo-e-contratacao-publica",
-      title: "Direito Administrativo e Contratação Pública",
-      short: "Assessoria a municípios, entidades hospitalares e empresas públicas.",
+      slug: "arrendamento-e-imobiliario",
+      title: "Arrendamento e Imobiliário",
+      short: "Contratos de arrendamento, rendas em atraso, despejo e compra e venda de imóveis.",
       long:
-        "Acompanhamos entidades públicas na preparação e condução de procedimentos de " +
-        "contratação pública e na atividade administrativa corrente. Prestamos também serviços a " +
-        "particulares e empresas na sua relação com a Administração.",
+        "Acompanhamos senhorios e inquilinos na preparação e na execução do contrato de " +
+        "arrendamento, e compradores e vendedores num negócio imobiliário. Um contrato claro " +
+        "desde o início evita muitos dos diferendos que chegam depois.",
       topics: [
-        "Procedimentos de contratação pública (Código dos Contratos Públicos)",
-        "Peças do procedimento, relatórios e execução de contratos",
-        "Procedimento administrativo e pareceres jurídicos",
-        "Contencioso administrativo",
+        "Contratos de arrendamento habitacional e não habitacional",
+        "Rendas em atraso e cessação do contrato",
+        "Procedimento especial de despejo",
+        "Contrato-promessa e compra e venda de imóveis",
+        "Questões de condomínio",
       ],
-      audiences: ["Entidades públicas", "Empresas privadas", "Particulares"],
-      icon: Landmark,
+      audiences: ["Particulares e famílias", "Pequenas empresas"],
+      faq: "contrato-arrendamento",
+      icon: KeyRound,
+    },
+    {
+      slug: "contratos-e-direito-civil",
+      title: "Contratos e Direito Civil",
+      short: "Redação e revisão de contratos, incumprimento e cobrança de créditos.",
+      long:
+        "Um contrato bem redigido é a primeira forma de prevenção. Revemos e preparamos " +
+        "contratos do dia a dia e, quando há incumprimento, acompanhamos a recuperação do " +
+        "crédito: primeiro pela via extrajudicial, depois pelos meios judiciais adequados.",
+      topics: [
+        "Redação e revisão de contratos",
+        "Incumprimento contratual",
+        "Cobrança de créditos e procedimento de injunção",
+        "Responsabilidade civil e acidentes de viação",
+        "Direitos do consumidor",
+      ],
+      audiences: ["Particulares e famílias", "Pequenas empresas"],
+      icon: FilePen,
+    },
+    {
+      slug: "direito-penal-e-contraordenacoes",
+      title: "Direito Penal e Contraordenações",
+      short: "Defesa de arguidos, apoio a vítimas e assistentes, e processos de contraordenação.",
+      long:
+        "Acompanhamos arguidos, assistentes e vítimas ao longo do processo penal, do inquérito " +
+        "ao julgamento e ao recurso. Representamos também particulares e empresas em processos " +
+        "de contraordenação, incluindo as rodoviárias.",
+      topics: [
+        "Defesa de arguidos em todas as fases do processo",
+        "Constituição como assistente e pedido de indemnização civil",
+        "Apoio a vítimas de crime",
+        "Contraordenações rodoviárias e outras",
+        "Recursos",
+      ],
+      audiences: ["Particulares e famílias", "Pequenas empresas"],
+      icon: Shield,
     },
   ] as PracticeArea[],
 } as const;
@@ -342,5 +354,18 @@ export const getArea = (slug: string) => siteConfig.areas.find((a) => a.slug ===
 
 export const getFaq = (id: string) => siteConfig.perfil.faqs.find((f) => f.id === id);
 
-/** Placeholder por confirmar com o cliente (texto entre parênteses rectos). */
+/** Placeholder por confirmar com a cliente (texto entre parênteses rectos). */
 export const isPlaceholder = (value: string) => value.startsWith("[");
+
+/** "Advogada em <localidade>" — só "Advogada" enquanto a localidade for placeholder. */
+export const advogadaEm = () =>
+  isPlaceholder(siteConfig.advogado.locality)
+    ? "Advogada"
+    : `Advogada em ${siteConfig.advogado.locality}`;
+
+/** Link de chamada; enquanto o número for placeholder, leva aos contactos. */
+export const telHref = (e164: string) => (isPlaceholder(e164) ? "/contactos" : `tel:${e164}`);
+
+/** Link de email; enquanto o endereço for placeholder, leva aos contactos. */
+export const mailHref = (email: string) =>
+  isPlaceholder(email) ? "/contactos" : `mailto:${email}`;

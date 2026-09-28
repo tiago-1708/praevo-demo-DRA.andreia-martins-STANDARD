@@ -3,18 +3,21 @@ import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Eyebrow, PageHero } from "@/components/site/Brand";
-import { siteConfig, siteName, absoluteUrl } from "@/lib/site-config";
+import { siteConfig, absoluteUrl, advogadaEm } from "@/lib/site-config";
 import { handleSpot } from "@/lib/spotlight";
 
 export const Route = createFileRoute("/areas-de-atuacao/")({
   head: () => ({
     meta: [
-      { title: `Áreas de Prática — ${siteName()}` },
+      { title: `Áreas de Prática — ${siteConfig.advogado.displayName}, ${advogadaEm()}` },
       {
         name: "description",
-        content: `Áreas de prática do ${siteName()} em ${siteConfig.advogado.locality}: ${siteConfig.areas.map((a) => a.title).join(", ")}.`,
+        content: `Áreas de prática da ${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}: ${siteConfig.areas.map((a) => a.title).join(", ")}.`,
       },
-      { property: "og:title", content: `Áreas de Prática — ${siteName()}` },
+      {
+        property: "og:title",
+        content: `Áreas de Prática — ${siteConfig.advogado.displayName}`,
+      },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/areas-de-atuacao") }],
   }),
@@ -24,9 +27,9 @@ export const Route = createFileRoute("/areas-de-atuacao/")({
 function AreasIndex() {
   return (
     <SiteLayout>
-      <PageHero eyebrow="Áreas de prática" title="Onde acompanhamos os nossos clientes">
-        Uma boutique de advocacia full service: prestamos serviços a empresas privadas, a
-        particulares e a entidades públicas.
+      <PageHero eyebrow="Áreas de prática" title="Matérias que acompanhamos">
+        Prestamos serviços a particulares, a famílias, a trabalhadores e a pequenas empresas, nas
+        questões jurídicas do dia a dia.
       </PageHero>
 
       <section className="bg-background py-20 lg:py-24">
@@ -71,7 +74,7 @@ function AreasIndex() {
 
           <Reveal className="mt-16 grid gap-8 rounded-md bg-[color:var(--muted)] p-8 sm:p-10 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
             <div>
-              <Eyebrow>Prevenção</Eyebrow>
+              <Eyebrow>Clareza</Eyebrow>
               <p className="font-serif text-2xl leading-snug text-[color:var(--navy-deep)] sm:text-3xl">
                 {siteConfig.perfil.motto}
               </p>

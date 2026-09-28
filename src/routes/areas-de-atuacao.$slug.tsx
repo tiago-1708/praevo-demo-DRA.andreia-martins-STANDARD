@@ -4,7 +4,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { Eyebrow, PageHero } from "@/components/site/Brand";
 import { FaqBody } from "@/components/site/FaqItem";
-import { getArea, getFaq, siteConfig, siteName, absoluteUrl } from "@/lib/site-config";
+import { getArea, getFaq, siteConfig, absoluteUrl, advogadaEm, telHref } from "@/lib/site-config";
 
 export const Route = createFileRoute("/areas-de-atuacao/$slug")({
   // O loader devolve só o slug: os dados do loader são serializados para a
@@ -18,9 +18,9 @@ export const Route = createFileRoute("/areas-de-atuacao/$slug")({
     if (!area) return {};
     return {
       meta: [
-        { title: `${area.title} — ${siteName()}` },
+        { title: `${area.title} — ${siteConfig.advogado.displayName}, ${advogadaEm()}` },
         { name: "description", content: area.short },
-        { property: "og:title", content: `${area.title} — ${siteName()}` },
+        { property: "og:title", content: `${area.title} — ${siteConfig.advogado.displayName}` },
       ],
       links: [{ rel: "canonical", href: absoluteUrl(`/areas-de-atuacao/${area.slug}`) }],
     };
@@ -110,13 +110,13 @@ function AreaPage() {
                 </ul>
                 <div className="mt-8 border-t border-[color:var(--gold)]/25 pt-8">
                   <p className="text-sm leading-relaxed text-[color:var(--ivory)]/75">
-                    Quanto mais cedo, melhor. Fale connosco antes de decidir.
+                    Uma conversa a tempo ajuda a perceber as opções. Fale connosco antes de decidir.
                   </p>
                   <Link to="/contactos" className="btn-primary mt-6 w-full">
                     Marcar reunião <ArrowRight className="h-4 w-4" aria-hidden />
                   </Link>
                   <a
-                    href={`tel:${a.phoneE164}`}
+                    href={telHref(a.phoneE164)}
                     className="mt-4 flex items-center justify-center gap-2 text-sm text-[color:var(--ivory)]/80 hover:text-[color:var(--gold)]"
                   >
                     <Phone className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />

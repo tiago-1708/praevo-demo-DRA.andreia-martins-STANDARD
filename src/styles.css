@@ -5,9 +5,10 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — JRR Advogados (demo).
- * Quase-preto + bronze quente + marfim, como no Instagram do escritório.
- * Type: Cormorant Garamond (títulos, serifa) + Inter (texto).
+ * Design system — Dra. Andreia Martins, Advogada (demo).
+ * Azul-noite institucional + azul claro + branco-gelo, uma só família de
+ * cinzentos azulados para os neutros.
+ * Type: Fraunces (títulos, serifa) + Geist (texto).
  * Light, sober theme only — no dark mode.
  */
 
@@ -58,8 +59,8 @@
   --color-gold-soft: var(--gold-soft);
   --color-gold-ink: var(--gold-ink);
   --color-ivory: var(--ivory);
-  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
 }
 
 :root {
@@ -68,45 +69,46 @@
   /* Brand — fallbacks. Os valores reais são injectados a partir de
    * siteConfig.brand.colors em __root.tsx. Nomes (--navy, --gold, --ivory)
    * mantidos por retro-compatibilidade com as classes do template. */
-  --navy: #1e1b18;
-  --navy-deep: #121110;
-  --gold: #b08a57;
-  --gold-soft: #d8bf94;
-  --gold-ink: #7a5a30;
-  --ivory: #f7f4ee;
+  --navy: #1a2a42;
+  --navy-deep: #0f1b2d;
+  --gold: #7fa7d1;
+  --gold-soft: #c9dbee;
+  --gold-ink: #2f5680;
+  --ivory: #f5f7fa;
 
-  --background: #f7f4ee;
-  --foreground: #121110;
+  /* Neutros: uma só família de cinzento azulado (matiz ~215°). */
+  --background: #f5f7fa;
+  --foreground: #0f1b2d;
   --card: #ffffff;
-  --card-foreground: #121110;
+  --card-foreground: #0f1b2d;
   --popover: #ffffff;
-  --popover-foreground: #121110;
-  --primary: #121110;
-  --primary-foreground: #f7f4ee;
-  --secondary: #efe9df;
-  --secondary-foreground: #121110;
-  --muted: #efe9df;
-  --muted-foreground: #5e574f; /* 6,5:1 sobre o fundo */
-  --accent: #b08a57;
-  --accent-foreground: #121110;
+  --popover-foreground: #0f1b2d;
+  --primary: #0f1b2d;
+  --primary-foreground: #f5f7fa;
+  --secondary: #e8edf3;
+  --secondary-foreground: #0f1b2d;
+  --muted: #e8edf3;
+  --muted-foreground: #4b5a6e; /* 6,55:1 sobre o fundo · 5,97:1 sobre muted */
+  --accent: #7fa7d1;
+  --accent-foreground: #0f1b2d;
   --destructive: oklch(0.52 0.2 27);
-  --destructive-foreground: #f7f4ee;
-  --border: #e2d9ca;
-  --input: #ddd3c3;
-  --ring: #b08a57;
+  --destructive-foreground: #f5f7fa;
+  --border: #d9e0e8;
+  --input: #cdd6e0;
+  --ring: #7fa7d1;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: #f7f4ee;
-  --sidebar-foreground: #121110;
-  --sidebar-primary: #121110;
-  --sidebar-primary-foreground: #f7f4ee;
-  --sidebar-accent: #efe9df;
-  --sidebar-accent-foreground: #121110;
-  --sidebar-border: #e2d9ca;
-  --sidebar-ring: #b08a57;
+  --sidebar: #f5f7fa;
+  --sidebar-foreground: #0f1b2d;
+  --sidebar-primary: #0f1b2d;
+  --sidebar-primary-foreground: #f5f7fa;
+  --sidebar-accent: #e8edf3;
+  --sidebar-accent-foreground: #0f1b2d;
+  --sidebar-border: #d9e0e8;
+  --sidebar-ring: #7fa7d1;
 }
 
 .dark {
@@ -160,11 +162,12 @@
   h1, h2, h3, h4, h5 {
     font-family: var(--font-serif);
     font-weight: 500;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.01em;
+    font-optical-sizing: auto;
   }
 
-  /* Cormorant usa algarismos antigos por omissão; telefones e datas leem-se
-   * melhor com algarismos alinhados. */
+  /* Algarismos alinhados em títulos e serifa: telefones e datas leem-se
+   * melhor (e não dependem das predefinições da fonte). */
   h1, h2, h3, h4, h5,
   .font-serif {
     font-variant-numeric: lining-nums;
@@ -184,7 +187,7 @@
 }
 
 @layer components {
-  /* Botões — pílula, bronze sólido, texto em minúsculas. Tamanho base,
+  /* Botões — pílula, azul claro sólido, texto sem maiúsculas. Tamanho base,
    * .btn-sm (header) e .btn-lg (heros/CTAs). Cores vêm dos tokens da marca. */
   .btn-primary,
   .btn-outline {
@@ -216,8 +219,8 @@
     font-size: 1rem;
   }
 
-  /* Cheio: bronze sólido com realce interior de 1px (luz de cima) e sombra
-   * curta tingida do quase-preto — sem gradiente nem halo. */
+  /* Cheio: azul claro sólido com realce interior de 1px (luz de cima) e
+   * sombra curta tingida do azul-noite — sem gradiente nem halo. */
   .btn-primary {
     color: var(--navy-deep);
     background-color: var(--gold);
@@ -348,7 +351,7 @@
     transform-origin: left center;
   }
 
-  /* Zoom lento de imagem (ex.: retrato do advogado) dentro de um
+  /* Zoom lento de imagem (ex.: retrato) dentro de um
    * contentor com overflow-hidden. */
   .zoom-hover img {
     transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
