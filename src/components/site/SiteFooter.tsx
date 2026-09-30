@@ -9,7 +9,7 @@ export function SiteFooter() {
   const a = siteConfig.advogado;
 
   return (
-    <footer className="relative overflow-hidden bg-[color:var(--navy-deep)] text-[color:var(--ivory)]/80">
+    <footer className="on-dark relative overflow-hidden bg-[color:var(--navy-deep)] text-[color:var(--ivory)]/80">
       <GuillochePattern opacity={0.08} />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-4">
         <div className="md:col-span-1">
@@ -118,7 +118,7 @@ export function SiteFooter() {
       </div>
 
       <div className="relative border-t border-[color:var(--gold)]/15">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-xs text-[color:var(--ivory)]/60 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-xs text-[color:var(--ivory)]/80 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {siteName()}. Todos os direitos reservados.
           </p>
@@ -128,7 +128,7 @@ export function SiteFooter() {
           </p>
         </div>
         {siteConfig.demo && (
-          <p className="mx-auto max-w-6xl px-6 pb-6 text-[11px] text-[color:var(--ivory)]/60">
+          <p className="mx-auto max-w-6xl px-6 pb-6 text-[11px] text-[color:var(--ivory)]/80">
             Proposta de website em demonstração, preparada por Praevo Technologies. Não indexado.
           </p>
         )}

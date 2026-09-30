@@ -50,7 +50,7 @@ function AreasIndex() {
                     </span>
                     <div className="flex items-center gap-4">
                       <Icon className="h-6 w-6 shrink-0 text-[color:var(--gold-ink)]" aria-hidden />
-                      <h2 className="font-serif text-2xl leading-snug text-[color:var(--navy-deep)] sm:text-3xl">
+                      <h2 className="font-serif text-2xl leading-snug text-[color:var(--ink)] sm:text-3xl">
                         {area.title}
                       </h2>
                     </div>
@@ -63,7 +63,7 @@ function AreasIndex() {
                       </p>
                     </div>
                     <ArrowRight
-                      className="hidden h-5 w-5 text-[color:var(--navy-deep)] transition-transform group-hover:translate-x-1 md:block"
+                      className="hidden h-5 w-5 text-[color:var(--ink)] transition-transform group-hover:translate-x-1 md:block"
                       aria-hidden
                     />
                   </Link>
@@ -75,7 +75,7 @@ function AreasIndex() {
           <Reveal className="mt-16 grid gap-8 rounded-md bg-[color:var(--muted)] p-8 sm:p-10 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
             <div>
               <Eyebrow>Clareza</Eyebrow>
-              <p className="font-serif text-2xl leading-snug text-[color:var(--navy-deep)] sm:text-3xl">
+              <p className="font-serif text-2xl leading-snug text-[color:var(--ink)] sm:text-3xl">
                 {siteConfig.perfil.motto}
               </p>
             </div>

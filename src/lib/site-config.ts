@@ -7,7 +7,7 @@
  *
  * Depois de editar, ler o SCAFFOLD.md para os passos de deploy.
  *
- * SITE DEMO — Dra. Andreia Martins, Advogada. Proposta preparada pela
+ * SITE DEMO — Andreia Martins, Advogada. Proposta preparada pela
  * Praevo Technologies. Áreas, públicos, textos e valores são uma PROPOSTA
  * a validar com a cliente; tudo o que está entre [parênteses rectos] é
  * placeholder a confirmar. O site inteiro está em noindex/nofollow (ver
@@ -43,7 +43,7 @@ export type PracticeArea = {
 
 export type Advogado = {
   name: string;
-  displayName: string; // Nome com tratamento, para títulos (ex.: "Dra. …")
+  displayName: string; // Nome como a advogada prefere ser tratada (sem título)
   firm: string | null;
   cedula: string;
   nif: string;
@@ -78,8 +78,9 @@ export type Brand = {
     darkAlt: string; // Variação — hover, sidebar dark
     accent: string; // Cor de destaque — ícones, links, CTAs (em fundo escuro)
     accentSoft: string; // Versão clara — badges, bordas subtis
-    accentInk: string; // Accent escurecido para texto/ícones em fundo claro (AA)
+    accentInk: string; // Accent para texto/ícones em fundo claro (AA)
     background: string; // Near-white do body
+    ink: string; // Cor do texto corrido e dos títulos em fundo claro
   };
   /**
    * Logo em ficheiro (/public/). Neste demo fica a null: o logótipo é o
@@ -99,7 +100,7 @@ export type Brand = {
 export const siteConfig = {
   slug: "praevo-demo-andreia-martins",
   domain: null as string | null,
-  themeColor: "#0F1B2D",
+  themeColor: "#FFFFFF",
 
   /**
    * Site de demonstração: força `noindex, nofollow` em todas as páginas
@@ -109,25 +110,29 @@ export const siteConfig = {
   demo: true,
 
   /**
-   * Paleta. Contrastes (WCAG 2.x): accent sobre dark 6,87:1 · accentInk
-   * sobre background 7,08:1 · dark sobre accent 6,87:1 · muted-foreground
-   * (styles.css) sobre background 6,55:1.
+   * Paleta vermelho-carmim + branco, como no Instagram da advogada.
+   * `dark` é o vermelho dos blocos de cor e dos botões; `accent` é o rosa
+   * pálido usado sobre esse vermelho. Contrastes (WCAG 2.x): branco sobre
+   * dark 7,79:1 · accent sobre dark 5,73:1 · accentInk sobre background
+   * 7,79:1 (7,21:1 sobre muted) · ink sobre background 17:1 ·
+   * muted-foreground (styles.css) sobre background 6,86:1.
    */
   brand: {
     colors: {
-      dark: "#0F1B2D",
-      darkAlt: "#1A2A42",
-      accent: "#7FA7D1",
-      accentSoft: "#C9DBEE",
-      accentInk: "#2F5680",
-      background: "#F5F7FA",
+      dark: "#A3142D",
+      darkAlt: "#80101F",
+      accent: "#F6D5D9",
+      accentSoft: "#FBE9EB",
+      accentInk: "#A3142D",
+      background: "#FFFFFF",
+      ink: "#231A1B",
     },
     logo: null,
   } satisfies Brand,
 
   advogado: {
     name: "Andreia Martins",
-    displayName: "Dra. Andreia Martins",
+    displayName: "Andreia Martins",
     firm: null,
     cedula: "[a confirmar]",
     nif: "[NIF a confirmar]",

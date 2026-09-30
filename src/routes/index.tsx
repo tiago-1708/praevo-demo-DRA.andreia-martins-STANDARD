@@ -40,21 +40,21 @@ function HomePage() {
   return (
     <SiteLayout>
       {/* HERO */}
-      <section className="relative -mt-20 flex min-h-[92svh] items-center overflow-hidden bg-[color:var(--navy-deep)] text-[color:var(--ivory)]">
-        <GuillochePattern opacity={0.24} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--navy-deep)] via-[color:var(--navy-deep)]/80 to-transparent" />
+      <section className="relative -mt-20 flex min-h-[92svh] items-center overflow-hidden bg-background text-[color:var(--ink)]">
+        <GuillochePattern tone="light" opacity={0.12} />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent" />
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-16 px-6 pt-32 pb-20 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.65fr)] lg:pt-40">
           <div>
             <div className="animate-fade-rise">
-              <Eyebrow tone="dark">
+              <Eyebrow>
                 {a.displayName} · {p.tagline}
               </Eyebrow>
             </div>
             <h1 className="animate-fade-rise delay-1 max-w-3xl font-serif text-[2.6rem] leading-[1.02] font-medium sm:text-6xl lg:text-7xl">
               Acompanhamento jurídico próximo,{" "}
-              <em className="text-[color:var(--gold-soft)]">explicado com clareza.</em>
+              <em className="text-[color:var(--gold-ink)]">explicado com clareza.</em>
             </h1>
-            <p className="animate-fade-rise delay-2 mt-7 max-w-xl text-base leading-relaxed text-[color:var(--ivory)]/80 sm:text-lg">
+            <p className="animate-fade-rise delay-2 mt-7 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Prestamos serviços jurídicos a particulares, a famílias, a trabalhadores e a pequenas
               empresas — em questões de família, trabalho, arrendamento, contratos e processo penal
               — com tempo para ouvir e clareza para explicar cada passo.
@@ -65,35 +65,33 @@ function HomePage() {
                 Marcar reunião
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
-              <a
-                href={telHref(a.phoneE164)}
-                className="btn-outline btn-lg text-[color:var(--ivory)]"
-              >
+              <a href={telHref(a.phoneE164)} className="btn-outline btn-lg text-[color:var(--ink)]">
                 <Phone className="h-4 w-4" aria-hidden />
                 {a.phoneDisplay}
               </a>
             </div>
 
-            <div className="animate-fade-rise delay-4 mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[color:var(--ivory)]/15 pt-8 text-[11px] uppercase tracking-[0.2em] text-[color:var(--ivory)]/70">
+            <div className="animate-fade-rise delay-4 mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-border pt-8 text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
               <span className="flex items-center gap-2">
-                <BadgeCheck className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />
+                <BadgeCheck className="h-4 w-4 text-[color:var(--gold-ink)]" aria-hidden />
                 Inscrita na Ordem dos Advogados · Cédula n.º {a.cedula}
               </span>
               <span className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />
+                <MapPin className="h-4 w-4 text-[color:var(--gold-ink)]" aria-hidden />
                 Atendimento presencial · {a.locality}
               </span>
             </div>
           </div>
 
-          {/* Logótipo em moldura dupla */}
+          {/* Logótipo em carmim, com moldura dupla */}
           <div className="animate-fade-rise delay-3 hidden justify-center lg:flex">
-            <div className="relative flex aspect-[4/5] w-full max-w-xs flex-col items-center justify-center rounded-md border border-[color:var(--gold)]/40 p-10 text-[color:var(--ivory)]">
+            <div className="on-dark relative flex aspect-[4/5] w-full max-w-xs flex-col items-center justify-center overflow-hidden rounded-md bg-[color:var(--navy-deep)] p-10 text-[color:var(--ivory)] shadow-2xl shadow-[color:var(--navy)]/25">
+              <GuillochePattern opacity={0.22} />
               <span
-                className="absolute inset-2 rounded-sm border border-[color:var(--gold)]/15"
+                className="absolute inset-2 rounded-sm border border-[color:var(--gold)]/30"
                 aria-hidden
               />
-              <Logo variant="lockup" layout="stacked" size="lg" />
+              <Logo variant="lockup" layout="stacked" size="lg" className="relative" />
             </div>
           </div>
         </div>
@@ -104,7 +102,7 @@ function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
           <Reveal>
             <Eyebrow>O escritório</Eyebrow>
-            <h2 className="font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-[2.6rem]">
+            <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-[2.6rem]">
               Cada assunto começa por uma conversa.
             </h2>
           </Reveal>
@@ -116,9 +114,9 @@ function HomePage() {
             </p>
             <Link
               to="/sobre"
-              className="link-underline mt-8 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-[color:var(--navy-deep)] hover:text-[color:var(--gold-ink)]"
+              className="link-underline mt-8 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-[color:var(--ink)] hover:text-[color:var(--gold-ink)]"
             >
-              Conhecer a advogada <ArrowRight className="h-4 w-4" aria-hidden />
+              Conhecer a Andreia Martins <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </Reveal>
         </div>
@@ -129,7 +127,7 @@ function HomePage() {
         <div className="mx-auto max-w-6xl px-6 pt-20 lg:pt-24">
           <Reveal>
             <Eyebrow>A quem prestamos serviços</Eyebrow>
-            <h2 className="max-w-2xl font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-4xl">
+            <h2 className="max-w-2xl font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
               Perto de quem precisa de uma resposta clara.
             </h2>
           </Reveal>
@@ -140,7 +138,7 @@ function HomePage() {
                 <Reveal key={aud.title} delay={100 + i * 100} className="bg-background">
                   <div onMouseMove={handleSpot} className="card-lift h-full p-8 lg:p-10">
                     <Icon className="h-6 w-6 text-[color:var(--gold-ink)]" aria-hidden />
-                    <h3 className="mt-6 font-serif text-2xl text-[color:var(--navy-deep)]">
+                    <h3 className="mt-6 font-serif text-2xl text-[color:var(--ink)]">
                       {aud.title}
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{aud.text}</p>
@@ -158,13 +156,13 @@ function HomePage() {
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <Eyebrow>Áreas de prática</Eyebrow>
-              <h2 className="font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-4xl">
+              <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
                 Matérias que acompanhamos
               </h2>
             </div>
             <Link
               to="/areas-de-atuacao"
-              className="link-underline inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-[color:var(--navy-deep)] hover:text-[color:var(--gold-ink)]"
+              className="link-underline inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-[color:var(--ink)] hover:text-[color:var(--gold-ink)]"
             >
               Ver todas <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
@@ -190,13 +188,13 @@ function HomePage() {
                         {String(i + 1).padStart(2, "0")}
                       </span>
                     </div>
-                    <h3 className="mt-6 font-serif text-2xl leading-snug text-[color:var(--navy-deep)] group-hover:text-[color:var(--ivory)]">
+                    <h3 className="mt-6 font-serif text-2xl leading-snug text-[color:var(--ink)] group-hover:text-[color:var(--ivory)]">
                       {area.title}
                     </h3>
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground group-hover:text-[color:var(--ivory)]/75">
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground group-hover:text-[color:var(--ivory)]/80">
                       {area.short}
                     </p>
-                    <span className="mt-6 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--navy-deep)] group-hover:text-[color:var(--gold)]">
+                    <span className="mt-6 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--ink)] group-hover:text-[color:var(--gold)]">
                       Saber mais
                       <ArrowRight
                         className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
@@ -212,7 +210,7 @@ function HomePage() {
       </section>
 
       {/* VALORES */}
-      <section className="relative overflow-hidden bg-[color:var(--navy-deep)] py-20 text-[color:var(--ivory)] lg:py-28">
+      <section className="on-dark relative overflow-hidden bg-[color:var(--navy-deep)] py-20 text-[color:var(--ivory)] lg:py-28">
         <GuillochePattern opacity={0.12} />
         <div className="relative mx-auto max-w-6xl px-6">
           <Reveal>
@@ -227,7 +225,7 @@ function HomePage() {
                 <div className="border-t border-[color:var(--gold)]/40 pt-6">
                   <span className="font-serif text-lg text-[color:var(--gold)]">{ROMAN[i]}</span>
                   <h3 className="mt-3 font-serif text-2xl">{v.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--ivory)]/70">
+                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--ivory)]/80">
                     {v.text}
                   </p>
                 </div>
@@ -242,7 +240,7 @@ function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-16">
           <Reveal>
             <Eyebrow>Perguntas frequentes</Eyebrow>
-            <h2 className="font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-4xl">
+            <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
               Algumas perguntas comuns
             </h2>
             <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
@@ -259,7 +257,7 @@ function HomePage() {
       </section>
 
       {/* CONTACTO */}
-      <section className="relative overflow-hidden bg-[color:var(--navy)] py-20 text-[color:var(--ivory)] lg:py-24">
+      <section className="on-dark relative overflow-hidden bg-[color:var(--navy)] py-20 text-[color:var(--ivory)] lg:py-24">
         <GuillochePattern opacity={0.1} />
         <div className="relative mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
           <Reveal>
@@ -267,9 +265,9 @@ function HomePage() {
             <h2 className="font-serif text-3xl leading-tight sm:text-[2.6rem]">
               Fale connosco antes de assinar, de decidir, de responder.
             </h2>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-[color:var(--ivory)]/75">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-[color:var(--ivory)]/80">
               Atendimento presencial no escritório. Ligue, escreva ou deixe os seus contactos: a
-              advogada entrará em contacto consigo.
+              Andreia Martins entrará em contacto consigo.
             </p>
             <Link to="/contactos" className="btn-primary btn-lg mt-8">
               Marcar reunião <ArrowRight className="h-4 w-4" aria-hidden />
@@ -312,7 +310,7 @@ function ContactRow({
 }) {
   const body = (
     <>
-      <span className="flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-[color:var(--ivory)]/60">
+      <span className="flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-[color:var(--ivory)]/80">
         <Icon className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />
         {label}
       </span>

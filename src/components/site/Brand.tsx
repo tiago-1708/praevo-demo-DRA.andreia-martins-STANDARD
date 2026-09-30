@@ -42,15 +42,18 @@ const LINE_DX = 13; // desfasamento entre linhas vizinhas (fase)
 const LINE_DY = 7; // espaçamento vertical entre linhas vizinhas
 
 /**
- * Textura guilloché em azul claro para fundos escuros. Decorativa:
- * posicionar dentro de um contentor `relative overflow-hidden`.
+ * Textura guilloché. `tone="dark"` (omissão): rosa pálido para os blocos
+ * carmim; `tone="light"`: carmim para fundos brancos (usar opacidade baixa).
+ * Decorativa: posicionar dentro de um contentor `relative overflow-hidden`.
  */
 export function GuillochePattern({
   className,
   opacity = 0.2,
+  tone = "dark",
 }: {
   className?: string;
   opacity?: number;
+  tone?: "light" | "dark";
 }) {
   const id = `wave-${useId().replace(/:/g, "")}`;
   return (
@@ -65,7 +68,7 @@ export function GuillochePattern({
       <defs>
         <path id={id} d={WAVE_PATH} />
       </defs>
-      <g fill="none" stroke="var(--gold)">
+      <g fill="none" stroke={tone === "light" ? "var(--gold-ink)" : "var(--gold)"}>
         {BANDS.map((band, b) => (
           <g key={b} transform={`translate(0 ${band.y}) rotate(${band.rotate} 720 0)`}>
             {Array.from({ length: band.lines }, (_, k) => {
@@ -113,7 +116,7 @@ export function Eyebrow({
   );
 }
 
-/** Hero escuro das páginas interiores, com textura guilloché. */
+/** Hero claro das páginas interiores, com textura guilloché em carmim. */
 export function PageHero({
   eyebrow,
   title,
@@ -124,18 +127,18 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="relative -mt-20 overflow-hidden bg-[color:var(--navy-deep)] text-[color:var(--ivory)]">
-      <GuillochePattern opacity={0.16} />
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[color:var(--gold)]/50 to-transparent" />
+    <section className="relative -mt-20 overflow-hidden bg-[color:var(--muted)] text-[color:var(--ink)]">
+      <GuillochePattern tone="light" opacity={0.1} />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[color:var(--gold-ink)]/50 to-transparent" />
       <div className="relative mx-auto max-w-6xl px-6 pt-36 pb-16 lg:pt-44 lg:pb-20">
         <div className="animate-fade-rise">
-          <Eyebrow tone="dark">{eyebrow}</Eyebrow>
+          <Eyebrow>{eyebrow}</Eyebrow>
         </div>
         <h1 className="animate-fade-rise delay-1 max-w-3xl font-serif text-4xl leading-[1.05] font-medium sm:text-5xl lg:text-6xl">
           {title}
         </h1>
         {children && (
-          <div className="animate-fade-rise delay-2 mt-6 max-w-2xl text-lg leading-relaxed text-[color:var(--ivory)]/80">
+          <div className="animate-fade-rise delay-2 mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             {children}
           </div>
         )}

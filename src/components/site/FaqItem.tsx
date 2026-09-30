@@ -16,7 +16,7 @@ export function FaqBody({ faq }: { faq: Faq }) {
           </li>
         ))}
       </ol>
-      <p className="mt-5 border-l border-[color:var(--gold)] pl-4 text-[color:var(--navy-deep)]">
+      <p className="mt-5 border-l border-[color:var(--gold-ink)] pl-4 text-[color:var(--ink)]">
         {faq.note}
       </p>
     </div>
@@ -31,7 +31,7 @@ export function FaqItem({ faq, defaultOpen = false }: { faq: Faq; defaultOpen?: 
       open={defaultOpen}
     >
       <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-left">
-        <h3 className="font-serif text-xl leading-snug text-[color:var(--navy-deep)] sm:text-2xl">
+        <h3 className="font-serif text-xl leading-snug text-[color:var(--ink)] sm:text-2xl">
           {faq.question}
         </h3>
         <Plus

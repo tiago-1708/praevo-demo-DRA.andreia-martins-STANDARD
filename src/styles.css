@@ -5,9 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — Dra. Andreia Martins, Advogada (demo).
- * Azul-noite institucional + azul claro + branco-gelo, uma só família de
- * cinzentos azulados para os neutros.
+ * Design system — Andreia Martins, Advogada (demo).
+ * Branco + vermelho-carmim (entre o vermelho e o bordeaux), como no
+ * Instagram da advogada. Fundo branco, texto quase preto, blocos de cor em
+ * carmim com rosa pálido; neutros numa só família de cinzento rosado.
+ * Nomes de tokens (--navy*, --gold*, --ivory) mantidos do template:
+ *   --navy-deep = carmim · --navy = carmim escuro · --gold = rosa pálido
+ *   (sobre carmim) · --gold-ink = carmim (sobre branco) · --ink = texto.
  * Type: Fraunces (títulos, serifa) + Geist (texto).
  * Light, sober theme only — no dark mode.
  */
@@ -59,6 +63,7 @@
   --color-gold-soft: var(--gold-soft);
   --color-gold-ink: var(--gold-ink);
   --color-ivory: var(--ivory);
+  --color-ink: var(--ink);
   --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
   --font-sans: "Geist", system-ui, -apple-system, sans-serif;
 }
@@ -69,46 +74,47 @@
   /* Brand — fallbacks. Os valores reais são injectados a partir de
    * siteConfig.brand.colors em __root.tsx. Nomes (--navy, --gold, --ivory)
    * mantidos por retro-compatibilidade com as classes do template. */
-  --navy: #1a2a42;
-  --navy-deep: #0f1b2d;
-  --gold: #7fa7d1;
-  --gold-soft: #c9dbee;
-  --gold-ink: #2f5680;
-  --ivory: #f5f7fa;
+  --navy: #80101f;
+  --navy-deep: #a3142d;
+  --gold: #f6d5d9;
+  --gold-soft: #fbe9eb;
+  --gold-ink: #a3142d;
+  --ivory: #ffffff;
+  --ink: #231a1b;
 
-  /* Neutros: uma só família de cinzento azulado (matiz ~215°). */
-  --background: #f5f7fa;
-  --foreground: #0f1b2d;
+  /* Neutros: uma só família de cinzento rosado (matiz ~355°). */
+  --background: #ffffff;
+  --foreground: #231a1b;
   --card: #ffffff;
-  --card-foreground: #0f1b2d;
+  --card-foreground: #231a1b;
   --popover: #ffffff;
-  --popover-foreground: #0f1b2d;
-  --primary: #0f1b2d;
-  --primary-foreground: #f5f7fa;
-  --secondary: #e8edf3;
-  --secondary-foreground: #0f1b2d;
-  --muted: #e8edf3;
-  --muted-foreground: #4b5a6e; /* 6,55:1 sobre o fundo · 5,97:1 sobre muted */
-  --accent: #7fa7d1;
-  --accent-foreground: #0f1b2d;
+  --popover-foreground: #231a1b;
+  --primary: #a3142d;
+  --primary-foreground: #ffffff;
+  --secondary: #faf5f4;
+  --secondary-foreground: #231a1b;
+  --muted: #faf5f4;
+  --muted-foreground: #6b5557; /* 6,86:1 sobre o fundo · 6,35:1 sobre muted */
+  --accent: #f6d5d9;
+  --accent-foreground: #231a1b;
   --destructive: oklch(0.52 0.2 27);
-  --destructive-foreground: #f5f7fa;
-  --border: #d9e0e8;
-  --input: #cdd6e0;
-  --ring: #7fa7d1;
+  --destructive-foreground: #ffffff;
+  --border: #eadfdd;
+  --input: #e0d2d0;
+  --ring: #a3142d;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: #f5f7fa;
-  --sidebar-foreground: #0f1b2d;
-  --sidebar-primary: #0f1b2d;
-  --sidebar-primary-foreground: #f5f7fa;
-  --sidebar-accent: #e8edf3;
-  --sidebar-accent-foreground: #0f1b2d;
-  --sidebar-border: #d9e0e8;
-  --sidebar-ring: #7fa7d1;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #231a1b;
+  --sidebar-primary: #a3142d;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #faf5f4;
+  --sidebar-accent-foreground: #231a1b;
+  --sidebar-border: #eadfdd;
+  --sidebar-ring: #a3142d;
 }
 
 .dark {
@@ -174,8 +180,8 @@
   }
 
   ::selection {
-    background-color: var(--gold-soft);
-    color: var(--navy-deep);
+    background-color: var(--navy-deep);
+    color: var(--ivory);
   }
 }
 
@@ -187,7 +193,7 @@
 }
 
 @layer components {
-  /* Botões — pílula, azul claro sólido, texto sem maiúsculas. Tamanho base,
+  /* Botões — pílula, cor sólida, texto sem maiúsculas. Tamanho base,
    * .btn-sm (header) e .btn-lg (heros/CTAs). Cores vêm dos tokens da marca. */
   .btn-primary,
   .btn-outline {
@@ -219,18 +225,26 @@
     font-size: 1rem;
   }
 
-  /* Cheio: azul claro sólido com realce interior de 1px (luz de cima) e
-   * sombra curta tingida do azul-noite — sem gradiente nem halo. */
+  /* Cheio: carmim sólido com texto branco em fundo claro; dentro de um
+   * bloco `.on-dark` (fundo carmim) inverte para rosa pálido com texto
+   * carmim. Realce interior de 1px e sombra curta tingida — sem gradiente
+   * nem halo. */
   .btn-primary {
-    color: var(--navy-deep);
-    background-color: var(--gold);
+    color: var(--btn-fg, var(--ivory));
+    background-color: var(--btn-bg, var(--navy-deep));
     box-shadow:
-      inset 0 1px 0 color-mix(in srgb, white 28%, transparent),
-      inset 0 -1px 0 color-mix(in srgb, var(--navy-deep) 18%, transparent),
-      0 1px 2px color-mix(in srgb, var(--navy-deep) 30%, transparent);
+      inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--ink) 18%, transparent),
+      0 1px 2px color-mix(in srgb, var(--navy) 30%, transparent);
   }
   .btn-primary:hover {
-    background-color: var(--gold-soft);
+    background-color: var(--btn-bg-hover, var(--navy));
+  }
+  .on-dark {
+    --btn-bg: var(--gold);
+    --btn-fg: var(--navy);
+    --btn-bg-hover: var(--ivory);
+    --focus-ring: var(--gold);
   }
 
   /* Contornado: filete a 40% da cor do texto, preenche levemente no hover. */
@@ -258,12 +272,12 @@
     transform: translateY(1px) scale(0.99);
   }
   .btn-primary:active {
-    box-shadow: inset 0 1px 2px color-mix(in srgb, var(--navy-deep) 25%, transparent);
+    box-shadow: inset 0 1px 2px color-mix(in srgb, var(--ink) 25%, transparent);
   }
 
   .btn-primary:focus-visible,
   .btn-outline:focus-visible {
-    outline: 2px solid var(--gold-soft);
+    outline: 2px solid var(--focus-ring, var(--gold-ink));
     outline-offset: 3px;
   }
 
@@ -276,8 +290,8 @@
   }
   .card-lift:hover {
     transform: translateY(-4px);
-    box-shadow: 0 22px 44px -20px color-mix(in srgb, var(--navy-deep) 35%, transparent);
-    border-color: var(--gold);
+    box-shadow: 0 22px 44px -20px color-mix(in srgb, var(--navy) 30%, transparent);
+    border-color: var(--gold-ink);
   }
   .card-lift::after {
     content: "";
@@ -286,7 +300,7 @@
     pointer-events: none;
     background: radial-gradient(
       280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-      color-mix(in srgb, var(--gold) 22%, transparent) 0%,
+      color-mix(in srgb, var(--gold-ink) 10%, transparent) 0%,
       transparent 55%
     );
     opacity: 0;

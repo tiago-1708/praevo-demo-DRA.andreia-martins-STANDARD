@@ -35,7 +35,7 @@ function Sobre() {
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
           <Reveal variant="scale">
-            <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-md bg-[color:var(--navy-deep)] text-[color:var(--ivory)]">
+            <div className="on-dark relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-md bg-[color:var(--navy-deep)] text-[color:var(--ivory)]">
               <GuillochePattern opacity={0.28} />
               <span
                 className="absolute inset-3 rounded-sm border border-[color:var(--gold)]/25"
@@ -47,7 +47,7 @@ function Sobre() {
 
           <Reveal delay={120}>
             <Eyebrow>Quem é a {a.displayName}?</Eyebrow>
-            <h2 className="font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-4xl">
+            <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
               Advocacia de proximidade, com tempo para cada pessoa.
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -60,7 +60,7 @@ function Sobre() {
               </p>
             </div>
 
-            <ul className="mt-10 space-y-4 border-t border-border pt-8 text-sm text-[color:var(--navy-deep)] sm:text-base">
+            <ul className="mt-10 space-y-4 border-t border-border pt-8 text-sm text-[color:var(--ink)] sm:text-base">
               <li className="flex items-start gap-3">
                 <BadgeCheck
                   className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--gold-ink)]"
@@ -93,7 +93,7 @@ function Sobre() {
         <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <Eyebrow>Tipos de atos que os advogados fazem</Eyebrow>
-            <h2 className="font-serif text-3xl leading-tight text-[color:var(--navy-deep)] sm:text-4xl">
+            <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
               Muito para além do tribunal.
             </h2>
             <p className="mt-6 text-base leading-relaxed text-muted-foreground">
@@ -106,7 +106,7 @@ function Sobre() {
           <Reveal delay={120}>
             <ul className="divide-y divide-border border-y border-border">
               {p.acts.map((act) => (
-                <li key={act} className="flex items-start gap-4 py-4 text-[color:var(--navy-deep)]">
+                <li key={act} className="flex items-start gap-4 py-4 text-[color:var(--ink)]">
                   <Check
                     className="mt-1 h-4 w-4 shrink-0 text-[color:var(--gold-ink)]"
                     aria-hidden
@@ -120,13 +120,13 @@ function Sobre() {
       </section>
 
       {/* Missão & valores */}
-      <section className="relative overflow-hidden bg-[color:var(--navy-deep)] py-20 text-[color:var(--ivory)] lg:py-28">
+      <section className="on-dark relative overflow-hidden bg-[color:var(--navy-deep)] py-20 text-[color:var(--ivory)] lg:py-28">
         <GuillochePattern opacity={0.12} />
         <div className="relative mx-auto max-w-6xl px-6">
           <Reveal>
             <Eyebrow tone="dark">Missão & valores</Eyebrow>
             <h2 className="max-w-3xl font-serif text-3xl leading-tight sm:text-4xl">“{p.motto}”</h2>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--ivory)]/70">
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--ivory)]/80">
               <Pending>[Texto da missão — a confirmar com a cliente.]</Pending>
             </p>
           </Reveal>
@@ -135,7 +135,7 @@ function Sobre() {
               <Reveal key={v.title} delay={100 + i * 120}>
                 <div className="border-t border-[color:var(--gold)]/40 pt-6">
                   <h3 className="font-serif text-2xl">{v.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--ivory)]/70">
+                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--ivory)]/80">
                     {v.text}
                   </p>
                 </div>
@@ -148,7 +148,7 @@ function Sobre() {
       {/* CTA */}
       <section className="bg-background py-20 lg:py-24">
         <Reveal variant="scale" className="mx-auto max-w-3xl px-6 text-center">
-          <h2 className="font-serif text-3xl text-[color:var(--navy-deep)] sm:text-4xl">
+          <h2 className="font-serif text-3xl text-[color:var(--ink)] sm:text-4xl">
             Conversemos sobre o seu assunto
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground">

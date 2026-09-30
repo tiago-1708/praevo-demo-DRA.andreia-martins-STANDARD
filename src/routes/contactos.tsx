@@ -124,14 +124,14 @@ function Contactos() {
   };
 
   const field =
-    "w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-all duration-200 focus:border-[color:var(--gold)] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--gold)_20%,transparent)]";
+    "w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-all duration-200 focus:border-[color:var(--gold-ink)] focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--gold-ink)_12%,transparent)]";
   const label = "mb-1.5 block text-[11px] uppercase tracking-[0.2em] text-muted-foreground";
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="Contactos" title="Falar com a advogada">
-        Atendimento presencial no escritório. Ligue, escreva ou deixe os seus contactos — a advogada
-        entrará em contacto consigo.
+      <PageHero eyebrow="Contactos" title="Falar com a Andreia Martins">
+        Atendimento presencial no escritório. Ligue, escreva ou deixe os seus contactos — a Andreia
+        Martins entrará em contacto consigo.
       </PageHero>
 
       <section className="bg-background py-20 lg:py-24">
@@ -139,7 +139,7 @@ function Contactos() {
           <div className="grid gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
             {/* Coluna esquerda: contactos + mapa */}
             <div>
-              <dl className="space-y-6 text-sm text-[color:var(--navy-deep)]">
+              <dl className="space-y-6 text-sm text-[color:var(--ink)]">
                 <div className="flex items-start gap-3">
                   <MapPin
                     className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--gold-ink)]"
@@ -238,24 +238,22 @@ function Contactos() {
             </div>
 
             {/* Coluna direita: formulário */}
-            <div className="rounded-md border border-border bg-background p-6 shadow-xl shadow-[color:var(--navy-deep)]/5 sm:p-8">
-              <h2 className="font-serif text-2xl text-[color:var(--navy-deep)]">
+            <div className="rounded-md border border-border bg-background p-6 shadow-xl shadow-[color:var(--ink)]/5 sm:p-8">
+              <h2 className="font-serif text-2xl text-[color:var(--ink)]">
                 Envie os seus contactos
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                A advogada entrará em contacto consigo pelo telefone ou email indicado.
+                A Andreia Martins entrará em contacto consigo pelo telefone ou email indicado.
               </p>
 
               {sent ? (
                 <div className="mt-8 flex flex-col items-start gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[color:var(--gold)]/15">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[color:var(--gold)]">
                     <CheckCircle2 className="h-6 w-6 text-[color:var(--gold-ink)]" aria-hidden />
                   </div>
-                  <h3 className="font-serif text-xl text-[color:var(--navy-deep)]">
-                    Pedido recebido
-                  </h3>
+                  <h3 className="font-serif text-xl text-[color:var(--ink)]">Pedido recebido</h3>
                   <p className="text-sm text-muted-foreground">
-                    A advogada entrará em contacto consigo.
+                    A Andreia Martins entrará em contacto consigo.
                   </p>
                 </div>
               ) : (
@@ -349,7 +347,7 @@ function Contactos() {
                       name="consent"
                       type="checkbox"
                       required
-                      className="mt-1 h-4 w-4 shrink-0 accent-[color:var(--gold)]"
+                      className="mt-1 h-4 w-4 shrink-0 accent-[color:var(--gold-ink)]"
                     />
                     <span>
                       Aceito o{" "}

@@ -97,9 +97,9 @@ const structuredData = () => {
 
 const dynamicFaviconHref = () => {
   // Monograma "AM" (mesma geometria de src/components/site/Logo.tsx e de
-  // public/favicon.svg): branco-gelo sobre azul-noite, travessa em azul claro.
+  // public/favicon.svg): branco sobre carmim, travessa em rosa pálido.
   const c = siteConfig.brand.colors;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="${c.dark}"/><clipPath id="c"><rect x="0" y="0" width="64" height="47"/></clipPath><path d="M6.4 51 L20 17 L32 47 L44 17 L57.6 51" fill="none" stroke="${c.background}" stroke-width="4.6" stroke-linejoin="miter" stroke-miterlimit="10" clip-path="url(#c)"/><line x1="12.4" x2="27.6" y1="36" y2="36" stroke="${c.accent}" stroke-width="2.6"/></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="${c.dark}"/><clipPath id="c"><rect x="0" y="0" width="64" height="47"/></clipPath><path d="M6.4 51 L20 17 L32 47 L44 17 L57.6 51" fill="none" stroke="#ffffff" stroke-width="4.6" stroke-linejoin="miter" stroke-miterlimit="10" clip-path="url(#c)"/><line x1="12.4" x2="27.6" y1="36" y2="36" stroke="${c.accent}" stroke-width="2.6"/></svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 };
 
@@ -157,7 +157,7 @@ function RootShell({ children }: { children: ReactNode }) {
   // Injecta a paleta do cliente como CSS custom properties. Sobrepõe os
   // defaults do styles.css (que ficam como fallback). Alterar a paleta =
   // editar siteConfig.brand.colors em site-config.ts.
-  const brandCss = `:root{--navy-deep:${b.dark};--navy:${b.darkAlt};--gold:${b.accent};--gold-soft:${b.accentSoft};--gold-ink:${b.accentInk};--ivory:${b.background};--background:${b.background};--primary:${b.dark};--primary-foreground:${b.background};--accent:${b.accent};--accent-foreground:${b.dark};--ring:${b.accent};--foreground:${b.dark};--card:#ffffff;--card-foreground:${b.dark};--popover:#ffffff;--popover-foreground:${b.dark};--sidebar:${b.background};--sidebar-foreground:${b.dark};--sidebar-primary:${b.dark};--sidebar-primary-foreground:${b.background};--sidebar-accent:${b.accent};--sidebar-accent-foreground:${b.dark};--sidebar-ring:${b.accent};}`;
+  const brandCss = `:root{--navy-deep:${b.dark};--navy:${b.darkAlt};--gold:${b.accent};--gold-soft:${b.accentSoft};--gold-ink:${b.accentInk};--ivory:${b.background};--ink:${b.ink};--background:${b.background};--foreground:${b.ink};--primary:${b.dark};--primary-foreground:${b.background};--accent:${b.accent};--accent-foreground:${b.ink};--ring:${b.accentInk};--card:#ffffff;--card-foreground:${b.ink};--popover:#ffffff;--popover-foreground:${b.ink};--sidebar:${b.background};--sidebar-foreground:${b.ink};--sidebar-primary:${b.dark};--sidebar-primary-foreground:${b.background};--sidebar-accent:${b.accent};--sidebar-accent-foreground:${b.ink};--sidebar-ring:${b.accentInk};}`;
   return (
     <html lang="pt-PT">
       <head>

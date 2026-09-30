@@ -60,7 +60,7 @@ export function CookieConsent() {
       aria-label="Consentimento de cookies"
       className="fixed inset-x-0 bottom-0 z-50 mx-auto mb-4 max-w-5xl px-4 sm:px-6"
     >
-      <div className="rounded-3xl border border-white/10 bg-[color:var(--navy-deep)] px-6 py-5 text-[color:var(--ivory)] shadow-2xl shadow-black/20">
+      <div className="on-dark rounded-md border border-white/10 bg-[color:var(--navy-deep)] px-6 py-5 text-[color:var(--ivory)] shadow-2xl shadow-black/20">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm leading-relaxed text-[color:var(--ivory)]/85">
             Este site utiliza cookies de análise para melhorar a experiência de navegação. Pode

@@ -38,7 +38,7 @@ export function SiteHeader() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled || open
-          ? "border-b border-[color:var(--gold)]/20 bg-[color:var(--navy-deep)]/95 backdrop-blur"
+          ? "border-b border-border bg-[color:var(--ivory)]/95 backdrop-blur"
           : "border-b border-transparent bg-transparent"
       }`}
     >
@@ -46,10 +46,10 @@ export function SiteHeader() {
         <Link
           to="/"
           onClick={onLogoClick}
-          className="flex min-w-0 items-center text-[color:var(--ivory)]"
+          className="flex min-w-0 items-center text-[color:var(--ink)]"
           aria-label={`${a.displayName}, Advogada — início`}
         >
-          <Logo variant="lockup" size="sm" />
+          <Logo variant="lockup" size="sm" accentClassName="text-[color:var(--gold-ink)]" />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -58,17 +58,17 @@ export function SiteHeader() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              className="link-underline text-sm tracking-wide text-[color:var(--ivory)]/85 transition-colors hover:text-[color:var(--gold)]"
-              activeProps={{ className: "text-[color:var(--gold)]" }}
+              className="link-underline text-sm tracking-wide text-[color:var(--ink)]/80 transition-colors hover:text-[color:var(--gold-ink)]"
+              activeProps={{ className: "text-[color:var(--gold-ink)]" }}
             >
               {item.label}
             </Link>
           ))}
           <a
             href={telHref(a.phoneE164)}
-            className="flex items-center gap-2 text-sm tracking-wide text-[color:var(--ivory)]/85 transition-colors hover:text-[color:var(--gold)]"
+            className="flex items-center gap-2 text-sm tracking-wide text-[color:var(--ink)]/80 transition-colors hover:text-[color:var(--gold-ink)]"
           >
-            <Phone className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />
+            <Phone className="h-4 w-4 text-[color:var(--gold-ink)]" aria-hidden />
             {a.phoneDisplay}
           </a>
           <Link to="/contactos" className="btn-primary btn-sm">
@@ -80,7 +80,7 @@ export function SiteHeader() {
           <a
             href={telHref(a.phoneE164)}
             className="btn-primary btn-sm"
-            aria-label="Ligar para a advogada"
+            aria-label={`Ligar para ${a.displayName}`}
           >
             <Phone className="h-4 w-4" aria-hidden />
             Ligar
@@ -88,7 +88,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className="rounded-sm p-1.5 text-[color:var(--ivory)] transition-colors hover:bg-white/10"
+            className="rounded-sm p-1.5 text-[color:var(--ink)] transition-colors hover:bg-[color:var(--muted)]"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
             aria-expanded={open}
           >
@@ -98,7 +98,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-[color:var(--gold)]/20 bg-[color:var(--navy-deep)] lg:hidden">
+        <div className="border-t border-border bg-[color:var(--ivory)] lg:hidden">
           <nav className="mx-auto flex max-w-6xl flex-col px-6 py-4">
             {nav.map((item) => (
               <Link
@@ -106,8 +106,8 @@ export function SiteHeader() {
                 to={item.to}
                 onClick={() => setOpen(false)}
                 activeOptions={{ exact: item.to === "/" }}
-                className="border-b border-[color:var(--gold)]/10 py-3 text-sm text-[color:var(--ivory)]/85"
-                activeProps={{ className: "text-[color:var(--gold)]" }}
+                className="border-b border-border py-3 text-sm text-[color:var(--ink)]/80"
+                activeProps={{ className: "text-[color:var(--gold-ink)]" }}
               >
                 {item.label}
               </Link>

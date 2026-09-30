@@ -41,7 +41,7 @@ function AreaPage() {
         eyebrow={
           <Link
             to="/areas-de-atuacao"
-            className="inline-flex items-center gap-2 hover:text-[color:var(--gold-soft)]"
+            className="inline-flex items-center gap-2 hover:text-[color:var(--ink)]"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden /> Áreas de prática
           </Link>
@@ -55,7 +55,7 @@ function AreaPage() {
         <div className="mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] lg:gap-20">
           <div>
             <Reveal>
-              <p className="font-serif text-2xl leading-snug text-[color:var(--navy-deep)] sm:text-[1.7rem]">
+              <p className="font-serif text-2xl leading-snug text-[color:var(--ink)] sm:text-[1.7rem]">
                 {area.long}
               </p>
             </Reveal>
@@ -66,7 +66,7 @@ function AreaPage() {
                 {area.topics.map((t) => (
                   <li
                     key={t}
-                    className="flex items-start gap-4 py-4 text-sm text-[color:var(--navy-deep)] sm:text-base"
+                    className="flex items-start gap-4 py-4 text-sm text-[color:var(--ink)] sm:text-base"
                   >
                     <Check
                       className="mt-1 h-4 w-4 shrink-0 text-[color:var(--gold-ink)]"
@@ -84,7 +84,7 @@ function AreaPage() {
                 className="mt-16 rounded-md border border-border bg-card p-7 sm:p-10"
               >
                 <Eyebrow>Pergunta frequente</Eyebrow>
-                <h2 className="font-serif text-2xl leading-snug text-[color:var(--navy-deep)] sm:text-3xl">
+                <h2 className="font-serif text-2xl leading-snug text-[color:var(--ink)] sm:text-3xl">
                   {faq.question}
                 </h2>
                 <div className="mt-6">
@@ -99,7 +99,7 @@ function AreaPage() {
 
           <aside>
             <Reveal delay={150} className="lg:sticky lg:top-28">
-              <div className="rounded-md bg-[color:var(--navy-deep)] p-8 text-[color:var(--ivory)]">
+              <div className="on-dark rounded-md bg-[color:var(--navy-deep)] p-8 text-[color:var(--ivory)]">
                 <p className="text-[11px] uppercase tracking-[0.25em] text-[color:var(--gold)]">
                   A quem se dirige
                 </p>
@@ -109,7 +109,7 @@ function AreaPage() {
                   ))}
                 </ul>
                 <div className="mt-8 border-t border-[color:var(--gold)]/25 pt-8">
-                  <p className="text-sm leading-relaxed text-[color:var(--ivory)]/75">
+                  <p className="text-sm leading-relaxed text-[color:var(--ivory)]/80">
                     Uma conversa a tempo ajuda a perceber as opções. Fale connosco antes de decidir.
                   </p>
                   <Link to="/contactos" className="btn-primary mt-6 w-full">
@@ -142,7 +142,7 @@ function AreaPage() {
                   <Link
                     to="/areas-de-atuacao/$slug"
                     params={{ slug: x.slug }}
-                    className="inline-block rounded-sm border border-border bg-background px-4 py-2 text-sm text-[color:var(--navy-deep)] transition-colors hover:border-[color:var(--gold)] hover:text-[color:var(--gold-ink)]"
+                    className="inline-block rounded-sm border border-border bg-background px-4 py-2 text-sm text-[color:var(--ink)] transition-colors hover:border-[color:var(--gold-ink)] hover:text-[color:var(--gold-ink)]"
                   >
                     {x.title}
                   </Link>
