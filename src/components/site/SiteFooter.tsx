@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig, siteName, telHref, mailHref } from "@/lib/site-config";
 import { reopenCookieConsent } from "./CookieConsent";
-import { GuillochePattern } from "./Brand";
 import { Logo } from "./Logo";
 
 export function SiteFooter() {
@@ -10,7 +9,6 @@ export function SiteFooter() {
 
   return (
     <footer className="on-dark relative overflow-hidden bg-[color:var(--navy-deep)] text-[color:var(--ivory)]/80">
-      <GuillochePattern opacity={0.08} />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-4">
         <div className="md:col-span-1">
           <Link to="/" className="inline-block text-[color:var(--ivory)]" aria-label="Início">

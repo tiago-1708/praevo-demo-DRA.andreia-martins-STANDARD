@@ -1,102 +1,94 @@
 import { useId } from "react";
+import {
+  MARK_VIEWBOX,
+  PATH_A,
+  PATH_M,
+  SLASH,
+  STACKED_VIEWBOX,
+  TEXT_ADVOGADA,
+  TEXT_NAME,
+} from "./logo-paths";
 
 /**
- * Proposta de logótipo — monograma "AM".
+ * Logótipo da Andreia Martins, reproduzido do Instagram: monograma "A/M" —
+ * A em cima à esquerda, M em baixo à direita, separados por um traço
+ * diagonal fino — com "ADVOGADA" e "ANDREIA MARTINS" em maiúsculas
+ * espaçadas por baixo.
  *
- * Construção (grelha 56 × 40, linha de base y = 36, altura de maiúscula 30):
- * um único traço contínuo em ziguezague /\/\ com quatro hastes de igual
- * inclinação desenha o M; a travessa fina no primeiro vértice transforma a
- * metade esquerda do M num A. As duas letras partilham assim duas hastes.
- * Os pés são cortados na horizontal (clipPath) e os vértices ficam em
- * esquadria, como numa letra gravada.
- *
- * Tudo em `currentColor`: herda a cor do contexto. `accentClassName`
- * permite dar à travessa uma cor própria (ex.: o azul claro em fundo escuro).
+ * Letras em contornos (Playfair Display e Montserrat, ver logo-paths.ts),
+ * por isso não dependem das fontes carregadas. Tudo em `currentColor`.
+ * O traço abre um pequeno intervalo nas letras (máscara), como no original.
  */
 
-// Os pés prolongam-se abaixo da linha de base e o clipPath corta-os a direito.
-const ZIGZAG = "M2.4 40 L16 6 L28 36 L40 6 L53.6 40";
-// Travessa do A à altura y = 25 (interseção com as hastes 1 e 2).
-const BAR = { x1: 8.4, x2: 23.6, y: 25 };
+function MarkShapes({ maskId }: { maskId: string }) {
+  return (
+    <>
+      <defs>
+        <mask id={maskId} maskUnits="userSpaceOnUse" x="-100" y="-100" width="500" height="500">
+          <rect x="-100" y="-100" width="500" height="500" fill="white" />
+          <line {...SLASH} stroke="black" strokeWidth={8} />
+        </mask>
+      </defs>
+      <g fill="currentColor" mask={`url(#${maskId})`}>
+        <path d={PATH_A} />
+        <path d={PATH_M} />
+      </g>
+      <line {...SLASH} stroke="currentColor" strokeWidth={2} />
+    </>
+  );
+}
 
-export function LogoMark({
-  className,
-  accentClassName,
-  title,
-}: {
-  className?: string;
-  accentClassName?: string;
-  title?: string;
-}) {
-  const clipId = useId();
+export function LogoMark({ className, title }: { className?: string; title?: string }) {
+  const maskId = `am-${useId().replace(/:/g, "")}`;
   return (
     <svg
-      viewBox="0 0 56 40"
+      viewBox={MARK_VIEWBOX}
       className={className}
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}
       aria-label={title}
       focusable="false"
     >
-      <defs>
-        <clipPath id={clipId}>
-          <rect x="0" y="0" width="56" height="36" />
-        </clipPath>
-      </defs>
-      <path
-        d={ZIGZAG}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={3.2}
-        strokeLinejoin="miter"
-        strokeMiterlimit={10}
-        clipPath={`url(#${clipId})`}
-      />
-      <line
-        x1={BAR.x1}
-        x2={BAR.x2}
-        y1={BAR.y}
-        y2={BAR.y}
-        stroke="currentColor"
-        strokeWidth={1.6}
-        className={accentClassName}
-      />
+      <MarkShapes maskId={maskId} />
     </svg>
   );
 }
 
 type LogoProps = {
   variant?: "mark" | "lockup";
-  /** Só para `lockup`: horizontal (header/rodapé) ou empilhado (hero/Sobre). */
+  /** Só para `lockup`: horizontal (header/rodapé) ou empilhado (como no Instagram). */
   layout?: "horizontal" | "stacked";
   size?: "sm" | "md" | "lg";
   className?: string;
-  /** Cor da travessa e de "ADVOGADA" (classe Tailwind de cor). */
+  /** Cor de "ADVOGADA" no lockup horizontal (classe Tailwind de cor). */
   accentClassName?: string;
 };
 
 const markSize = {
-  sm: "h-6 w-auto sm:h-7",
-  md: "h-9 w-auto",
-  lg: "h-20 w-auto sm:h-24",
+  sm: "h-8 w-auto sm:h-9",
+  md: "h-10 w-auto",
+  lg: "h-24 w-auto",
 } as const;
 
-/**
- * Logótipo completo. `mark` = monograma isolado (legível a 32 px);
- * `lockup` = monograma + "ANDREIA MARTINS" + "ADVOGADA" em versaletes.
- */
+const stackedSize = {
+  sm: "w-28",
+  md: "w-36",
+  lg: "w-48 sm:w-56",
+} as const;
+
 export function Logo({
   variant = "lockup",
   layout = "horizontal",
   size = "sm",
   className,
-  accentClassName = "text-[color:var(--gold)]",
+  accentClassName = "opacity-80",
 }: LogoProps) {
+  const maskId = `am-${useId().replace(/:/g, "")}`;
+
   if (variant === "mark") {
     return (
       <LogoMark
         className={`${markSize[size]} ${className ?? ""}`}
-        accentClassName={accentClassName}
         title="Andreia Martins, Advogada"
       />
     );
@@ -104,36 +96,40 @@ export function Logo({
 
   if (layout === "stacked") {
     return (
-      <span className={`inline-flex flex-col items-center leading-none ${className ?? ""}`}>
-        <LogoMark className={markSize[size]} accentClassName={accentClassName} />
-        <span
-          className="mt-7 whitespace-nowrap font-serif text-lg font-normal tracking-[0.3em] uppercase sm:text-xl"
-          style={{ fontVariant: "small-caps" }}
-        >
-          Andreia Martins
-        </span>
-        <span className="mt-4 h-px w-12 bg-current opacity-40" aria-hidden />
-        <span
-          className={`mt-4 whitespace-nowrap text-[10px] font-medium tracking-[0.5em] uppercase ${accentClassName}`}
-        >
-          Advogada
-        </span>
-      </span>
+      <svg
+        viewBox={STACKED_VIEWBOX}
+        className={`h-auto ${stackedSize[size]} ${className ?? ""}`}
+        role="img"
+        aria-label="Andreia Martins, Advogada"
+        focusable="false"
+      >
+        <MarkShapes maskId={maskId} />
+        <path
+          d={TEXT_ADVOGADA.d}
+          transform={`translate(${TEXT_ADVOGADA.x} ${TEXT_ADVOGADA.y})`}
+          fill="currentColor"
+        />
+        <path
+          d={TEXT_NAME.d}
+          transform={`translate(${TEXT_NAME.x} ${TEXT_NAME.y})`}
+          fill="currentColor"
+        />
+      </svg>
     );
   }
 
   const text =
     size === "md"
-      ? { name: "text-[15px] tracking-[0.24em]", role: "text-[9px] tracking-[0.46em]" }
+      ? { name: "text-[15px] tracking-[0.2em]", role: "text-[9px] tracking-[0.46em]" }
       : {
           // Mais compacto em mobile, para caber ao lado de "Ligar" e do menu.
-          name: "text-[11.5px] tracking-[0.12em] sm:text-[13px] sm:tracking-[0.22em]",
+          name: "text-[12px] tracking-[0.12em] sm:text-[14px] sm:tracking-[0.18em]",
           role: "text-[7.5px] tracking-[0.4em] sm:text-[8px] sm:tracking-[0.44em]",
         };
 
   return (
     <span className={`inline-flex items-center gap-2.5 leading-none sm:gap-3 ${className ?? ""}`}>
-      <LogoMark className={markSize[size]} accentClassName={accentClassName} />
+      <LogoMark className={markSize[size]} />
       <span className="hidden h-8 w-px bg-current opacity-30 sm:block" aria-hidden />
       <span className="flex flex-col">
         <span className={`whitespace-nowrap font-serif font-normal uppercase ${text.name}`}>

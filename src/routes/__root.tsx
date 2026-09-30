@@ -95,14 +95,6 @@ const structuredData = () => {
   };
 };
 
-const dynamicFaviconHref = () => {
-  // Monograma "AM" (mesma geometria de src/components/site/Logo.tsx e de
-  // public/favicon.svg): branco sobre carmim, travessa em rosa pálido.
-  const c = siteConfig.brand.colors;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="${c.dark}"/><clipPath id="c"><rect x="0" y="0" width="64" height="47"/></clipPath><path d="M6.4 51 L20 17 L32 47 L44 17 L57.6 51" fill="none" stroke="#ffffff" stroke-width="4.6" stroke-linejoin="miter" stroke-miterlimit="10" clip-path="url(#c)"/><line x1="12.4" x2="27.6" y1="36" y2="36" stroke="${c.accent}" stroke-width="2.6"/></svg>`;
-  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
-};
-
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -135,14 +127,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      // Favicon: monograma "AM" gerado com as cores de brand.colors (há uma
-      // cópia estática em public/favicon.svg).
-      { rel: "icon", href: dynamicFaviconHref(), type: "image/svg+xml" },
+      // Favicon: monograma A/M do Instagram (public/favicon.svg).
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Geist:wght@300..600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Jost:wght@300..600&display=swap",
       },
     ],
   }),

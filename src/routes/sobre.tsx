@@ -2,8 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Check, Clock, MapPin } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
-import { GuillochePattern, Eyebrow, PageHero, Pending } from "@/components/site/Brand";
-import { Logo } from "@/components/site/Logo";
+import { ArchLogo, Eyebrow, PageHero, Pending } from "@/components/site/Brand";
 import { siteConfig, absoluteUrl, advogadaEm, isPlaceholder } from "@/lib/site-config";
 
 export const Route = createFileRoute("/sobre")({
@@ -35,14 +34,7 @@ function Sobre() {
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto grid max-w-6xl gap-14 px-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
           <Reveal variant="scale">
-            <div className="on-dark relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-md bg-[color:var(--navy-deep)] text-[color:var(--ivory)]">
-              <GuillochePattern opacity={0.28} />
-              <span
-                className="absolute inset-3 rounded-sm border border-[color:var(--gold)]/25"
-                aria-hidden
-              />
-              <Logo variant="lockup" layout="stacked" size="lg" className="relative" />
-            </div>
+            <ArchLogo className="mx-auto max-w-sm" />
           </Reveal>
 
           <Reveal delay={120}>
@@ -121,7 +113,6 @@ function Sobre() {
 
       {/* Missão & valores */}
       <section className="on-dark relative overflow-hidden bg-[color:var(--navy-deep)] py-20 text-[color:var(--ivory)] lg:py-28">
-        <GuillochePattern opacity={0.12} />
         <div className="relative mx-auto max-w-6xl px-6">
           <Reveal>
             <Eyebrow tone="dark">Missão & valores</Eyebrow>

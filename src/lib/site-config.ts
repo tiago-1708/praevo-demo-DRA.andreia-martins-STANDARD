@@ -83,8 +83,9 @@ export type Brand = {
     ink: string; // Cor do texto corrido e dos títulos em fundo claro
   };
   /**
-   * Logo em ficheiro (/public/). Neste demo fica a null: o logótipo é o
-   * componente `<Logo>` (src/components/site/Logo.tsx), em SVG inline.
+   * Logo em ficheiro (/public/). Neste demo fica a null: o logótipo (o
+   * monograma A/M do Instagram) é o componente `<Logo>`
+   * (src/components/site/Logo.tsx), em SVG inline.
    */
   logo: {
     src: string;
@@ -100,7 +101,7 @@ export type Brand = {
 export const siteConfig = {
   slug: "praevo-demo-andreia-martins",
   domain: null as string | null,
-  themeColor: "#FFFFFF",
+  themeColor: "#F4F1EA",
 
   /**
    * Site de demonstração: força `noindex, nofollow` em todas as páginas
@@ -110,22 +111,22 @@ export const siteConfig = {
   demo: true,
 
   /**
-   * Paleta vermelho-carmim + branco, como no Instagram da advogada.
-   * `dark` é o vermelho dos blocos de cor e dos botões; `accent` é o rosa
-   * pálido usado sobre esse vermelho. Contrastes (WCAG 2.x): branco sobre
-   * dark 7,79:1 · accent sobre dark 5,73:1 · accentInk sobre background
-   * 7,79:1 (7,21:1 sobre muted) · ink sobre background 17:1 ·
-   * muted-foreground (styles.css) sobre background 6,86:1.
+   * Paleta do Instagram da advogada: creme, bordeaux escuro e rosa-bege.
+   * `dark` é o bordeaux dos blocos de cor e dos botões; `accent` é o
+   * rosa-bege usado sobre esse bordeaux. Contrastes (WCAG 2.x): creme sobre
+   * dark 12,54:1 · accent sobre dark 7,02:1 · accentInk sobre background
+   * 12,54:1 · ink sobre background 14,35:1 · muted-foreground (styles.css)
+   * sobre background 5,8:1.
    */
   brand: {
     colors: {
-      dark: "#A3142D",
-      darkAlt: "#80101F",
-      accent: "#F6D5D9",
-      accentSoft: "#FBE9EB",
-      accentInk: "#A3142D",
-      background: "#FFFFFF",
-      ink: "#231A1B",
+      dark: "#521616",
+      darkAlt: "#3D0F0F",
+      accent: "#CCB1A8",
+      accentSoft: "#E4D3CC",
+      accentInk: "#521616",
+      background: "#F4F1EA",
+      ink: "#2E1C1A",
     },
     logo: null,
   } satisfies Brand,

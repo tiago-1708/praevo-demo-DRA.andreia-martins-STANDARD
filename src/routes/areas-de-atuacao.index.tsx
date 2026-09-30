@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { Eyebrow, PageHero } from "@/components/site/Brand";
+import { Eyebrow, NumberBadge, PageHero } from "@/components/site/Brand";
 import { siteConfig, absoluteUrl, advogadaEm } from "@/lib/site-config";
 import { handleSpot } from "@/lib/spotlight";
 
@@ -45,9 +45,7 @@ function AreasIndex() {
                     onMouseMove={handleSpot}
                     className="group card-lift grid gap-4 border-b border-border px-2 py-9 hover:!translate-y-0 hover:bg-card sm:px-6 md:grid-cols-[3rem_minmax(0,1fr)_minmax(0,1.1fr)_2rem] md:items-center md:gap-8"
                   >
-                    <span className="font-serif text-lg text-[color:var(--gold-ink)]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+                    <NumberBadge>{String(i + 1).padStart(2, "0")}</NumberBadge>
                     <div className="flex items-center gap-4">
                       <Icon className="h-6 w-6 shrink-0 text-[color:var(--gold-ink)]" aria-hidden />
                       <h2 className="font-serif text-2xl leading-snug text-[color:var(--ink)] sm:text-3xl">

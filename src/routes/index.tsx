@@ -2,8 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Mail, MapPin, Phone } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { GuillochePattern, Eyebrow } from "@/components/site/Brand";
-import { Logo } from "@/components/site/Logo";
+import { ArchLogo, Eyebrow, NumberBadge } from "@/components/site/Brand";
 import { FaqItem } from "@/components/site/FaqItem";
 import {
   siteConfig,
@@ -41,7 +40,6 @@ function HomePage() {
     <SiteLayout>
       {/* HERO */}
       <section className="relative -mt-20 flex min-h-[92svh] items-center overflow-hidden bg-background text-[color:var(--ink)]">
-        <GuillochePattern tone="light" opacity={0.12} />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent" />
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-16 px-6 pt-32 pb-20 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.65fr)] lg:pt-40">
           <div>
@@ -83,16 +81,9 @@ function HomePage() {
             </div>
           </div>
 
-          {/* Logótipo em carmim, com moldura dupla */}
+          {/* Logótipo num arco bordeaux, como nos posts */}
           <div className="animate-fade-rise delay-3 hidden justify-center lg:flex">
-            <div className="on-dark relative flex aspect-[4/5] w-full max-w-xs flex-col items-center justify-center overflow-hidden rounded-md bg-[color:var(--navy-deep)] p-10 text-[color:var(--ivory)] shadow-2xl shadow-[color:var(--navy)]/25">
-              <GuillochePattern opacity={0.22} />
-              <span
-                className="absolute inset-2 rounded-sm border border-[color:var(--gold)]/30"
-                aria-hidden
-              />
-              <Logo variant="lockup" layout="stacked" size="lg" className="relative" />
-            </div>
+            <ArchLogo className="max-w-xs shadow-2xl shadow-[color:var(--navy)]/25" />
           </div>
         </div>
       </section>
@@ -184,9 +175,9 @@ function HomePage() {
                         className="h-6 w-6 text-[color:var(--gold-ink)] group-hover:text-[color:var(--gold)]"
                         aria-hidden
                       />
-                      <span className="font-serif text-sm text-[color:var(--gold-ink)] group-hover:text-[color:var(--gold)]">
+                      <NumberBadge className="text-sm group-hover:border-[color:var(--gold)]/60 group-hover:text-[color:var(--ivory)]">
                         {String(i + 1).padStart(2, "0")}
-                      </span>
+                      </NumberBadge>
                     </div>
                     <h3 className="mt-6 font-serif text-2xl leading-snug text-[color:var(--ink)] group-hover:text-[color:var(--ivory)]">
                       {area.title}
@@ -211,7 +202,6 @@ function HomePage() {
 
       {/* VALORES */}
       <section className="on-dark relative overflow-hidden bg-[color:var(--navy-deep)] py-20 text-[color:var(--ivory)] lg:py-28">
-        <GuillochePattern opacity={0.12} />
         <div className="relative mx-auto max-w-6xl px-6">
           <Reveal>
             <Eyebrow tone="dark">Valores</Eyebrow>
@@ -223,7 +213,7 @@ function HomePage() {
             {p.values.map((v, i) => (
               <Reveal key={v.title} delay={100 + i * 120}>
                 <div className="border-t border-[color:var(--gold)]/40 pt-6">
-                  <span className="font-serif text-lg text-[color:var(--gold)]">{ROMAN[i]}</span>
+                  <NumberBadge tone="dark">{ROMAN[i]}</NumberBadge>
                   <h3 className="mt-3 font-serif text-2xl">{v.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-[color:var(--ivory)]/80">
                     {v.text}
@@ -258,7 +248,6 @@ function HomePage() {
 
       {/* CONTACTO */}
       <section className="on-dark relative overflow-hidden bg-[color:var(--navy)] py-20 text-[color:var(--ivory)] lg:py-24">
-        <GuillochePattern opacity={0.1} />
         <div className="relative mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
           <Reveal>
             <Eyebrow tone="dark">Contacto</Eyebrow>

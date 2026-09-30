@@ -1,96 +1,43 @@
-import { useId } from "react";
-
-/* ------------------------------------------------------------------------ */
-/* Textura guilloché (ondas paralelas entrelaçadas)                          */
-/* ------------------------------------------------------------------------ */
-
-// Evoca o fundo de segurança de um documento oficial ou de um papel
-// timbrado: feixes de ondas sinusoidais paralelas, em duas famílias com
-// fase oposta que se cruzam. Tudo determinístico (sem Math.random): uma só
-// onda-base é calculada no módulo e reutilizada com <use>, deslocada em x
-// (o que equivale a desfasar a onda) e em y. O SVG do servidor é igual ao
-// do cliente e o HTML fica leve.
-
-const WAVE_LENGTH = 260;
-const WAVE_AMP = 24;
-const WAVE_FROM = -600;
-const WAVE_TO = 2100;
-const WAVE_STEP = WAVE_LENGTH / 16;
-
-const WAVE_PATH = (() => {
-  const f = (v: number) => v.toFixed(1);
-  const pts: [number, number][] = [];
-  for (let x = WAVE_FROM; x <= WAVE_TO; x += WAVE_STEP) {
-    pts.push([x, WAVE_AMP * Math.sin((2 * Math.PI * x) / WAVE_LENGTH)]);
-  }
-  // Curva suave: quadráticas entre pontos médios.
-  let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
-  for (let k = 1; k < pts.length - 1; k++) {
-    const mx = (pts[k][0] + pts[k + 1][0]) / 2;
-    const my = (pts[k][1] + pts[k + 1][1]) / 2;
-    d += `Q${f(pts[k][0])} ${f(pts[k][1])} ${f(mx)} ${f(my)}`;
-  }
-  return d;
-})();
-
-// Dois feixes ligeiramente inclinados: um no terço superior, outro em baixo.
-const BANDS = [
-  { y: 210, rotate: -7, lines: 12 },
-  { y: 720, rotate: -7, lines: 9 },
-];
-const LINE_DX = 13; // desfasamento entre linhas vizinhas (fase)
-const LINE_DY = 7; // espaçamento vertical entre linhas vizinhas
+import { Logo } from "./Logo";
 
 /**
- * Textura guilloché. `tone="dark"` (omissão): rosa pálido para os blocos
- * carmim; `tone="light"`: carmim para fundos brancos (usar opacidade baixa).
- * Decorativa: posicionar dentro de um contentor `relative overflow-hidden`.
+ * Bloco em arco (topo em meia-volta), como a moldura das imagens nos posts
+ * do Instagram da advogada. Bordeaux com o logótipo empilhado a creme.
  */
-export function GuillochePattern({
-  className,
-  opacity = 0.2,
-  tone = "dark",
-}: {
-  className?: string;
-  opacity?: number;
-  tone?: "light" | "dark";
-}) {
-  const id = `wave-${useId().replace(/:/g, "")}`;
+export function ArchLogo({ className }: { className?: string }) {
   return (
-    <svg
-      aria-hidden
-      focusable="false"
-      viewBox="0 0 1440 900"
-      preserveAspectRatio="xMidYMid slice"
-      className={`pointer-events-none absolute inset-0 h-full w-full ${className ?? ""}`}
-      style={{ opacity }}
+    <div
+      className={`on-dark relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-t-[999px] rounded-b-xl bg-[color:var(--navy-deep)] text-[color:var(--ivory)] ${className ?? ""}`}
     >
-      <defs>
-        <path id={id} d={WAVE_PATH} />
-      </defs>
-      <g fill="none" stroke={tone === "light" ? "var(--gold-ink)" : "var(--gold)"}>
-        {BANDS.map((band, b) => (
-          <g key={b} transform={`translate(0 ${band.y}) rotate(${band.rotate} 720 0)`}>
-            {Array.from({ length: band.lines }, (_, k) => {
-              const major = k % 4 === 0;
-              const w = major ? 1.1 : 0.6;
-              const y = (k - band.lines / 2) * LINE_DY;
-              return (
-                <g key={k}>
-                  <use href={`#${id}`} x={k * LINE_DX} y={y} strokeWidth={w} />
-                  <use
-                    href={`#${id}`}
-                    transform={`translate(${-k * LINE_DX} ${y}) scale(1 -1)`}
-                    strokeWidth={w}
-                    strokeOpacity={0.7}
-                  />
-                </g>
-              );
-            })}
-          </g>
-        ))}
-      </g>
-    </svg>
+      <span
+        className="absolute inset-3 rounded-t-[999px] rounded-b-lg border border-[color:var(--gold)]/40"
+        aria-hidden
+      />
+      <Logo variant="lockup" layout="stacked" size="lg" className="relative mt-8" />
+    </div>
+  );
+}
+
+/** Número dentro de um círculo fino, como o "02" dos posts. */
+export function NumberBadge({
+  children,
+  tone = "light",
+  className,
+}: {
+  children: React.ReactNode;
+  tone?: "light" | "dark";
+  className?: string;
+}) {
+  const color =
+    tone === "dark"
+      ? "border-[color:var(--gold)]/60 text-[color:var(--ivory)]"
+      : "border-[color:var(--gold-ink)]/30 text-[color:var(--gold-ink)]";
+  return (
+    <span
+      className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border font-serif text-base leading-none ${color} ${className ?? ""}`}
+    >
+      {children}
+    </span>
   );
 }
 
@@ -116,7 +63,7 @@ export function Eyebrow({
   );
 }
 
-/** Hero claro das páginas interiores, com textura guilloché em carmim. */
+/** Hero claro das páginas interiores, com filete inferior em gradiente. */
 export function PageHero({
   eyebrow,
   title,
@@ -128,7 +75,6 @@ export function PageHero({
 }) {
   return (
     <section className="relative -mt-20 overflow-hidden bg-[color:var(--muted)] text-[color:var(--ink)]">
-      <GuillochePattern tone="light" opacity={0.1} />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[color:var(--gold-ink)]/50 to-transparent" />
       <div className="relative mx-auto max-w-6xl px-6 pt-36 pb-16 lg:pt-44 lg:pb-20">
         <div className="animate-fade-rise">
