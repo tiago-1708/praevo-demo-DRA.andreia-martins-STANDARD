@@ -222,15 +222,16 @@ export const siteConfig = {
     ],
     /**
      * "Tipos de atos que os advogados fazem" — atos próprios dos advogados
-     * (Lei n.º 49/2004); o último decorre do Decreto-Lei n.º 76-A/2006.
+     * (Lei n.º 49/2004); os dois últimos decorrem dos Decretos-Leis
+     * n.º 76-A/2006 e n.º 116/2008.
      */
     acts: [
       "Consulta jurídica e pareceres escritos",
       "Elaboração e revisão de contratos",
       "Mandato forense: representação em tribunal",
       "Negociação tendente à cobrança de créditos",
-      "Reclamação e impugnação de atos administrativos e tributários",
       "Reconhecimento de assinaturas, autenticação e certificação de documentos",
+      "Documentos Particulares Autenticados (DPA)",
     ],
     faqs: [
       {
@@ -426,33 +427,32 @@ export const siteConfig = {
     {
       slug: "condominios",
       title: "Condomínios",
-      short:
-        "Assembleias e atas, cobrança de quotas em dívida, obras e conflitos entre condóminos.",
+      short: "Cobrança de quotas em dívida, regulamentos, obras e conflitos entre condóminos.",
       long: [
-        "A vida em condomínio levanta questões práticas: quem decide, como se aprovam obras, como se cobram quotas em atraso. Acompanho administrações de condomínio e condóminos na preparação de assembleias, na redação de atas e regulamentos e na cobrança de contribuições em dívida.",
-        "Acompanho também os conflitos entre condóminos e com a administração, desde a impugnação de deliberações até às questões sobre partes comuns e obras.",
+        "A vida em condomínio levanta questões práticas: como se cobram quotas em atraso, o que pode ou não ser feito nas partes comuns, quem suporta o custo das obras. Acompanho administrações de condomínio e condóminos na cobrança de contribuições em dívida e na redação de regulamentos.",
+        "Acompanho também os conflitos entre condóminos e com a administração, nomeadamente as questões sobre partes comuns e obras.",
       ],
       topics: [
-        "Convocatórias, assembleias de condóminos e atas",
-        "Regulamento do condomínio",
         "Cobrança de quotas em dívida",
+        "Regulamento do condomínio",
         "Obras e partes comuns",
-        "Impugnação de deliberações da assembleia",
         "Conflitos entre condóminos",
       ],
       audiences: ["Empresas e condomínios", "Particulares e famílias"],
       faq: "quotas-condominio",
       seoTitle: "Advogada de Condomínios na Maia",
       seoDescription:
-        "Advogada para condomínios na Maia: cobrança de quotas em dívida, assembleias e atas, obras, regulamentos e conflitos entre condóminos.",
+        "Advogada para condomínios na Maia: cobrança de quotas em dívida, regulamentos, obras e partes comuns e conflitos entre condóminos.",
       icon: Building2,
     },
     {
       slug: "contratos",
       title: "Contratos",
-      short: "Redação, revisão e negociação de contratos para particulares e empresas.",
+      short:
+        "Redação, revisão e negociação de contratos, e Documentos Particulares Autenticados (DPA).",
       long: [
         "Um contrato bem redigido é a primeira forma de prevenir um litígio. Redijo e reviso contratos do dia a dia, como compra e venda, contratos-promessa, prestação de serviços, empreitada ou mútuo, e explico, antes da assinatura, o que cada cláusula significa.",
+        "Elaboro e autentico Documentos Particulares Autenticados (DPA), que permitem formalizar, sem escritura pública, atos como a compra e venda ou a doação de imóveis, tratando também dos registos necessários.",
         "Quando surge um incumprimento, acompanho a negociação com a outra parte e, se necessário, os meios judiciais adequados.",
       ],
       topics: [
@@ -461,12 +461,13 @@ export const siteConfig = {
         "Prestação de serviços e empreitada",
         "Negociação de cláusulas",
         "Incumprimento e resolução de contratos",
+        "Documentos Particulares Autenticados (DPA)",
         "Reconhecimento de assinaturas e autenticação de documentos",
       ],
       audiences: ["Particulares e famílias", "Empresas e condomínios"],
       seoTitle: "Advogada de Contratos na Maia",
       seoDescription:
-        "Advogada na Maia para redação, revisão e negociação de contratos: compra e venda, contratos-promessa, prestação de serviços, empreitada e incumprimento.",
+        "Advogada na Maia para contratos e Documentos Particulares Autenticados (DPA): compra e venda, contratos-promessa, prestação de serviços, empreitada e incumprimento.",
       icon: FilePen,
     },
     {
