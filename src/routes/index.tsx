@@ -1,31 +1,28 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BadgeCheck, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, BadgeCheck, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ArchLogo, Eyebrow, NumberBadge } from "@/components/site/Brand";
 import { FaqItem } from "@/components/site/FaqItem";
 import {
   siteConfig,
-  absoluteUrl,
   advogadaEm,
+  advogadaEmMinuscula,
   telHref,
   mailHref,
-  isPlaceholder,
+  fullAddress,
 } from "@/lib/site-config";
+import { faqPageLd, jsonLd, pageHead } from "@/lib/seo";
 import { handleSpot } from "@/lib/spotlight";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: `${siteConfig.advogado.displayName} — ${advogadaEm()}` },
-      {
-        name: "description",
-        content: `${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}. Serviços jurídicos a particulares, famílias, trabalhadores e pequenas empresas.`,
-      },
-      { property: "og:title", content: `${siteConfig.advogado.displayName} — ${advogadaEm()}` },
-      { property: "og:url", content: absoluteUrl("/") },
-    ],
-    links: [{ rel: "canonical", href: absoluteUrl("/") }],
+    ...pageHead({
+      title: `${advogadaEm()} | ${siteConfig.advogado.displayName} — Família, Heranças e Imigração`,
+      description: `${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: família e menores, heranças e inventários, imigração e nacionalidade, insolvências, arrendamento, condomínios e contratos.`,
+      path: "/",
+    }),
+    scripts: [jsonLd(faqPageLd([...siteConfig.perfil.faqs]))],
   }),
   component: HomePage,
 });
@@ -49,13 +46,14 @@ function HomePage() {
               </Eyebrow>
             </div>
             <h1 className="animate-fade-rise delay-1 max-w-3xl font-serif text-[2.6rem] leading-[1.02] font-medium sm:text-6xl lg:text-7xl">
-              Acompanhamento jurídico próximo,{" "}
-              <em className="text-[color:var(--gold-ink)]">explicado com clareza.</em>
+              {advogadaEm()}.{" "}
+              <em className="text-[color:var(--gold-ink)]">Com rigor, sem perder a leveza.</em>
             </h1>
             <p className="animate-fade-rise delay-2 mt-7 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Prestamos serviços jurídicos a particulares, a famílias, a trabalhadores e a pequenas
-              empresas — em questões de família, trabalho, arrendamento, contratos e processo penal
-              — com tempo para ouvir e clareza para explicar cada passo.
+              Sou a {a.displayName} e presto serviços jurídicos a particulares, famílias, cidadãos
+              estrangeiros, empresas e condomínios — em família e menores, heranças, imigração e
+              nacionalidade, insolvências, arrendamento, condomínios e contratos. Explico o Direito
+              de forma simples, para que cada decisão seja tomada com informação.
             </p>
 
             <div className="animate-fade-rise delay-3 mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
@@ -76,7 +74,11 @@ function HomePage() {
               </span>
               <span className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-[color:var(--gold-ink)]" aria-hidden />
-                Atendimento presencial · {a.locality}
+                Escritório {a.localityIn}
+              </span>
+              <span className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-[color:var(--gold-ink)]" aria-hidden />
+                {a.hours}
               </span>
             </div>
           </div>
@@ -92,16 +94,17 @@ function HomePage() {
       <section className="bg-background py-20 lg:py-28">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
           <Reveal>
-            <Eyebrow>O escritório</Eyebrow>
+            <Eyebrow>Sobre mim</Eyebrow>
             <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-[2.6rem]">
-              Cada assunto começa por uma conversa.
+              Ser advogada não tem de significar ser distante.
             </h2>
           </Reveal>
           <Reveal delay={120}>
-            <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">{a.bio}</p>
+            <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {a.bioLong[1]}
+            </p>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Da consulta jurídica ao contrato, da negociação ao tribunal: acompanhamos cada assunto
-              do princípio ao fim, com informação clara sobre as opções, os prazos e os custos.
+              {a.bioLong[2]}
             </p>
             <Link
               to="/sobre"
@@ -113,11 +116,11 @@ function HomePage() {
         </div>
       </section>
 
-      {/* A QUEM PRESTAMOS SERVIÇOS */}
+      {/* A QUEM PRESTO SERVIÇOS */}
       <section className="border-t border-border bg-background pb-20 lg:pb-28">
         <div className="mx-auto max-w-6xl px-6 pt-20 lg:pt-24">
           <Reveal>
-            <Eyebrow>A quem prestamos serviços</Eyebrow>
+            <Eyebrow>A quem presto serviços</Eyebrow>
             <h2 className="max-w-2xl font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
               Perto de quem precisa de uma resposta clara.
             </h2>
@@ -148,7 +151,7 @@ function HomePage() {
             <div>
               <Eyebrow>Áreas de prática</Eyebrow>
               <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
-                Matérias que acompanhamos
+                Áreas de prática {a.localityIn}
               </h2>
             </div>
             <Link
@@ -159,7 +162,7 @@ function HomePage() {
             </Link>
           </Reveal>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {siteConfig.areas.map((area, i) => {
               const Icon = area.icon;
               return (
@@ -168,7 +171,7 @@ function HomePage() {
                     to="/areas-de-atuacao/$slug"
                     params={{ slug: area.slug }}
                     onMouseMove={handleSpot}
-                    className="group card-lift flex h-full flex-col rounded-md border border-border bg-background p-8 transition-colors hover:bg-[color:var(--navy-deep)]"
+                    className="group card-lift flex h-full flex-col rounded-xl border border-border bg-background p-7 transition-colors hover:bg-[color:var(--navy-deep)]"
                   >
                     <div className="flex items-center justify-between">
                       <Icon
@@ -179,7 +182,7 @@ function HomePage() {
                         {String(i + 1).padStart(2, "0")}
                       </NumberBadge>
                     </div>
-                    <h3 className="mt-6 font-serif text-2xl leading-snug text-[color:var(--ink)] group-hover:text-[color:var(--ivory)]">
+                    <h3 className="mt-6 font-serif text-xl leading-snug text-[color:var(--ink)] group-hover:text-[color:var(--ivory)]">
                       {area.title}
                     </h3>
                     <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground group-hover:text-[color:var(--ivory)]/80">
@@ -206,7 +209,7 @@ function HomePage() {
           <Reveal>
             <Eyebrow tone="dark">Valores</Eyebrow>
             <h2 className="max-w-2xl font-serif text-3xl leading-tight sm:text-4xl">
-              Como trabalhamos
+              Como trabalho
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
@@ -252,11 +255,11 @@ function HomePage() {
           <Reveal>
             <Eyebrow tone="dark">Contacto</Eyebrow>
             <h2 className="font-serif text-3xl leading-tight sm:text-[2.6rem]">
-              Fale connosco antes de assinar, de decidir, de responder.
+              Fale comigo antes de assinar, de decidir, de responder.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-[color:var(--ivory)]/80">
-              Atendimento presencial no escritório. Ligue, escreva ou deixe os seus contactos: a
-              Andreia Martins entrará em contacto consigo.
+              Atendimento presencial no escritório {a.localityIn}, {a.hours.toLowerCase()}. Ligue,
+              escreva ou deixe os seus contactos e entrarei em contacto consigo.
             </p>
             <Link to="/contactos" className="btn-primary btn-lg mt-8">
               Marcar reunião <ArrowRight className="h-4 w-4" aria-hidden />
@@ -272,11 +275,11 @@ function HomePage() {
                   {a.phoneAltDisplay}
                 </ContactRow>
               )}
-              <ContactRow icon={Mail} label="Email" href={mailHref(a.email)}>
+              <ContactRow icon={Mail} label="Email" href={mailHref(a.email)} small>
                 {a.email}
               </ContactRow>
-              <ContactRow icon={MapPin} label="Morada">
-                {isPlaceholder(a.street) ? a.street : `${a.street}, ${a.locality}`}
+              <ContactRow icon={MapPin} label="Morada" small>
+                {fullAddress()}
               </ContactRow>
             </ul>
           </Reveal>
@@ -290,11 +293,14 @@ function ContactRow({
   icon: Icon,
   label,
   href,
+  small = false,
   children,
 }: {
   icon: typeof Phone;
   label: string;
   href?: string;
+  /** Texto longo (email, morada): mais pequeno e com quebra de linha. */
+  small?: boolean;
   children: React.ReactNode;
 }) {
   const body = (
@@ -303,7 +309,11 @@ function ContactRow({
         <Icon className="h-4 w-4 text-[color:var(--gold)]" aria-hidden />
         {label}
       </span>
-      <span className="font-serif text-xl sm:text-2xl">{children}</span>
+      <span
+        className={`font-serif ${small ? "text-lg [overflow-wrap:anywhere] sm:max-w-[60%] sm:text-right" : "text-xl sm:text-2xl"}`}
+      >
+        {children}
+      </span>
     </>
   );
   const cls = "flex flex-col gap-1 py-5 sm:flex-row sm:items-center sm:justify-between";

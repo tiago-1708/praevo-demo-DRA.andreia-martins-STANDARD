@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig, siteName, telHref, mailHref } from "@/lib/site-config";
 import { reopenCookieConsent } from "./CookieConsent";
 import { Logo } from "./Logo";
@@ -17,7 +17,7 @@ export function SiteFooter() {
           <p className="mt-6 text-sm leading-relaxed">
             {siteConfig.perfil.tagline}.
             <br />
-            Atendimento presencial · {a.locality}.
+            Escritório {a.localityIn} · {a.hours}.
           </p>
         </div>
 
@@ -107,10 +107,26 @@ export function SiteFooter() {
             </li>
             <li className="flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0 text-[color:var(--gold)]" aria-hidden />
-              <a href={mailHref(a.email)} className="hover:text-[color:var(--gold)]">
+              <a
+                href={mailHref(a.email)}
+                className="[overflow-wrap:anywhere] hover:text-[color:var(--gold)]"
+              >
                 {a.email}
               </a>
             </li>
+            {a.instagram && (
+              <li className="flex items-center gap-2">
+                <Instagram className="h-4 w-4 shrink-0 text-[color:var(--gold)]" aria-hidden />
+                <a
+                  href={a.instagram}
+                  target="_blank"
+                  rel="noopener"
+                  className="hover:text-[color:var(--gold)]"
+                >
+                  @andreiamartinsadvogada
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -4,7 +4,8 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { Eyebrow, PageHero } from "@/components/site/Brand";
 import { FaqBody } from "@/components/site/FaqItem";
-import { getArea, getFaq, siteConfig, absoluteUrl, advogadaEm, telHref } from "@/lib/site-config";
+import { getArea, getFaq, siteConfig, telHref } from "@/lib/site-config";
+import { breadcrumbLd, faqPageLd, jsonLd, pageHead, serviceLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/areas-de-atuacao/$slug")({
   // O loader devolve só o slug: os dados do loader são serializados para a
@@ -16,13 +17,25 @@ export const Route = createFileRoute("/areas-de-atuacao/$slug")({
   head: ({ loaderData }) => {
     const area = loaderData ? getArea(loaderData.slug) : undefined;
     if (!area) return {};
+    const path = `/areas-de-atuacao/${area.slug}`;
+    const faq = area.faq ? getFaq(area.faq) : undefined;
     return {
-      meta: [
-        { title: `${area.title} — ${siteConfig.advogado.displayName}, ${advogadaEm()}` },
-        { name: "description", content: area.short },
-        { property: "og:title", content: `${area.title} — ${siteConfig.advogado.displayName}` },
+      ...pageHead({
+        title: `${area.seoTitle} | ${siteConfig.advogado.displayName}`,
+        description: area.seoDescription,
+        path,
+      }),
+      scripts: [
+        jsonLd(serviceLd(area)),
+        jsonLd(
+          breadcrumbLd([
+            { name: "Início", path: "/" },
+            { name: "Áreas de prática", path: "/areas-de-atuacao" },
+            { name: area.title, path },
+          ]),
+        ),
+        ...(faq ? [jsonLd(faqPageLd([faq]))] : []),
       ],
-      links: [{ rel: "canonical", href: absoluteUrl(`/areas-de-atuacao/${area.slug}`) }],
     };
   },
   component: AreaPage,
@@ -46,7 +59,7 @@ function AreaPage() {
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden /> Áreas de prática
           </Link>
         }
-        title={area.title}
+        title={`${area.title} ${a.localityIn}`}
       >
         {area.short}
       </PageHero>
@@ -56,12 +69,20 @@ function AreaPage() {
           <div>
             <Reveal>
               <p className="font-serif text-2xl leading-snug text-[color:var(--ink)] sm:text-[1.7rem]">
-                {area.long}
+                {area.long[0]}
               </p>
+              {area.long.slice(1).map((para) => (
+                <p
+                  key={para.slice(0, 24)}
+                  className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg"
+                >
+                  {para}
+                </p>
+              ))}
             </Reveal>
 
             <Reveal delay={100} className="mt-14">
-              <Eyebrow>O que acompanhamos</Eyebrow>
+              <Eyebrow>O que acompanho</Eyebrow>
               <ul className="divide-y divide-border border-y border-border">
                 {area.topics.map((t) => (
                   <li
@@ -110,7 +131,8 @@ function AreaPage() {
                 </ul>
                 <div className="mt-8 border-t border-[color:var(--gold)]/25 pt-8">
                   <p className="text-sm leading-relaxed text-[color:var(--ivory)]/80">
-                    Uma conversa a tempo ajuda a perceber as opções. Fale connosco antes de decidir.
+                    Uma conversa a tempo ajuda a perceber as opções. Fale comigo antes de decidir —
+                    atendimento presencial no escritório {a.localityIn}.
                   </p>
                   <Link to="/contactos" className="btn-primary mt-6 w-full">
                     Marcar reunião <ArrowRight className="h-4 w-4" aria-hidden />

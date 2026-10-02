@@ -1,13 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/Brand";
-import { siteConfig, absoluteUrl } from "@/lib/site-config";
+import { siteConfig, absoluteUrl, isIndexable } from "@/lib/site-config";
 
 export const Route = createFileRoute("/aviso-legal")({
   head: () => ({
     meta: [
       { title: `Aviso Legal e Privacidade — ${siteConfig.advogado.displayName}` },
-      { name: "robots", content: "noindex, nofollow" },
+      {
+        name: "description",
+        content: `Aviso legal e política de privacidade do site de ${siteConfig.advogado.displayName}, advogada.`,
+      },
+      { name: "robots", content: isIndexable() ? "noindex, follow" : "noindex, nofollow" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/aviso-legal") }],
   }),
@@ -29,7 +33,7 @@ function AvisoLegal() {
           <section>
             <h2 className="text-lg text-[color:var(--ink)]">1. Identificação</h2>
             <p className="mt-3">
-              O presente sítio é da responsabilidade de <strong>{a.displayName}</strong>, advogada
+              O presente sítio é da responsabilidade de <strong>{a.legalName}</strong>, advogada
               inscrita na Ordem dos Advogados portuguesa com a cédula profissional n.º {a.cedula},
               com domicílio profissional em {a.street}, {a.postalCode} {a.locality}, NIF {a.nif}.
               Contactos: {a.email} · {a.phoneDisplay}.
@@ -74,7 +78,7 @@ function AvisoLegal() {
               tempo estritamente necessário.
             </p>
             <p className="mt-3">
-              Responsável pelo tratamento: {a.displayName}, com os contactos indicados no ponto 1.
+              Responsável pelo tratamento: {a.legalName}, com os contactos indicados no ponto 1.
               Direitos do titular: acesso, retificação, apagamento, limitação, oposição e
               portabilidade dos dados, exercidos por email para {a.email}. Reclamação sempre
               disponível junto da Comissão Nacional de Proteção de Dados (CNPD — cnpd.pt).

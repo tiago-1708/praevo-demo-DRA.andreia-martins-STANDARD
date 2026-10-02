@@ -12,7 +12,8 @@ import { ArrowRight } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { siteConfig, siteName, baseUrl, isPlaceholder, advogadaEm } from "../lib/site-config";
+import { siteConfig, siteName, advogadaEm, robotsContent } from "../lib/site-config";
+import { jsonLd, siteGraph } from "../lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -69,66 +70,30 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-const structuredData = () => {
-  const a = siteConfig.advogado;
-  return {
-    "@context": "https://schema.org",
-    "@type": ["Attorney", "LegalService"],
-    "@id": `${baseUrl()}/#escritorio`,
-    url: baseUrl(),
-    name: siteName(),
-    description: a.bio.replace(/<[^>]+>/g, "").slice(0, 300),
-    address: {
-      "@type": "PostalAddress",
-      // Placeholders ("[...]") ficam de fora dos dados estruturados.
-      ...(isPlaceholder(a.street) ? {} : { streetAddress: a.street }),
-      ...(isPlaceholder(a.postalCode) ? {} : { postalCode: a.postalCode }),
-      ...(isPlaceholder(a.locality) ? {} : { addressLocality: a.locality }),
-      ...(isPlaceholder(a.district) ? {} : { addressRegion: a.district }),
-      addressCountry: "PT",
-    },
-    ...(isPlaceholder(a.phoneE164) ? {} : { telephone: a.phoneE164 }),
-    ...(isPlaceholder(a.email) ? {} : { email: a.email }),
-    areaServed: [a.locality, a.district, "Portugal"].filter((x) => !isPlaceholder(x)),
-    priceRange: "€€",
-    knowsAbout: siteConfig.areas.map((x) => x.title),
-  };
-};
-
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: `${siteConfig.advogado.displayName} — ${advogadaEm()}` },
-      {
-        name: "description",
-        content: `${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}. ${siteConfig.perfil.tagline}: família, trabalho, arrendamento, contratos e processo penal.`,
-      },
-      // Site demo: nunca indexar (proposta com o nome real da advogada).
-      ...(siteConfig.demo ? [{ name: "robots", content: "noindex, nofollow" }] : []),
-      { name: "author", content: siteName() },
+      // Valores por omissão; cada rota define os seus via pageHead() (seo.ts).
+      { title: `${advogadaEm()} | ${siteConfig.advogado.displayName}` },
+      { name: "description", content: siteConfig.advogado.bio },
+      // Só indexável com domínio final (ver isIndexable em site-config.ts).
+      { name: "robots", content: robotsContent() },
+      { name: "author", content: siteConfig.advogado.displayName },
       { name: "theme-color", content: siteConfig.themeColor },
-      { property: "og:site_name", content: siteName() },
-      { property: "og:title", content: `${siteConfig.advogado.displayName} — ${advogadaEm()}` },
-      {
-        property: "og:description",
-        content: `${siteConfig.perfil.tagline}. ${siteConfig.perfil.motto}`,
-      },
-      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: `${siteName()} — Advogada` },
       { property: "og:locale", content: "pt_PT" },
-      { name: "twitter:card", content: "summary" },
+      { name: "format-detection", content: "telephone=no" },
     ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(structuredData()),
-      },
-    ],
+    // Escritório + advogada + site em JSON-LD, em todas as páginas.
+    scripts: [jsonLd(siteGraph())],
     links: [
       { rel: "stylesheet", href: appCss },
-      // Favicon: monograma A/M do Instagram (public/favicon.svg).
+      // Favicon: monograma A/M (public/favicon.svg) + PNG para iOS/Google.
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon-48.png", type: "image/png", sizes: "48x48" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

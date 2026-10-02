@@ -2,20 +2,26 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Check, Clock, MapPin } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
-import { ArchLogo, Eyebrow, PageHero, Pending } from "@/components/site/Brand";
-import { siteConfig, absoluteUrl, advogadaEm, isPlaceholder } from "@/lib/site-config";
+import { ArchLogo, Eyebrow, PageHero } from "@/components/site/Brand";
+import { siteConfig, advogadaEm, advogadaEmMinuscula, fullAddress } from "@/lib/site-config";
+import { breadcrumbLd, jsonLd, pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/sobre")({
   head: () => ({
-    meta: [
-      { title: `Sobre — ${siteConfig.advogado.displayName}, ${advogadaEm()}` },
-      {
-        name: "description",
-        content: `${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}, inscrita na Ordem dos Advogados. ${siteConfig.perfil.tagline}.`,
-      },
-      { property: "og:title", content: `Sobre — ${siteConfig.advogado.displayName}` },
+    ...pageHead({
+      title: `Sobre ${siteConfig.advogado.displayName} | ${advogadaEm()}`,
+      description: `Conheça ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}, inscrita na Ordem dos Advogados (cédula ${siteConfig.advogado.cedula}). ${siteConfig.perfil.tagline}.`,
+      path: "/sobre",
+      type: "profile",
+    }),
+    scripts: [
+      jsonLd(
+        breadcrumbLd([
+          { name: "Início", path: "/" },
+          { name: "Sobre", path: "/sobre" },
+        ]),
+      ),
     ],
-    links: [{ rel: "canonical", href: absoluteUrl("/sobre") }],
   }),
   component: Sobre,
 });
@@ -27,7 +33,7 @@ function Sobre() {
   return (
     <SiteLayout>
       <PageHero eyebrow="Sobre" title={a.displayName}>
-        Advogada · {p.tagline}
+        {advogadaEm()} · Cédula Profissional n.º {a.cedula}
       </PageHero>
 
       {/* Perfil */}
@@ -40,16 +46,12 @@ function Sobre() {
           <Reveal delay={120}>
             <Eyebrow>Quem é a {a.displayName}?</Eyebrow>
             <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
-              Advocacia de proximidade, com tempo para cada pessoa.
+              {p.tagline}.
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              <p>{a.bio}</p>
-              <p>
-                <Pending>
-                  [Percurso académico e profissional de {a.displayName} — texto a confirmar com a
-                  cliente.]
-                </Pending>
-              </p>
+              {a.bioLong.map((para) => (
+                <p key={para.slice(0, 24)}>{para}</p>
+              ))}
             </div>
 
             <ul className="mt-10 space-y-4 border-t border-border pt-8 text-sm text-[color:var(--ink)] sm:text-base">
@@ -65,8 +67,7 @@ function Sobre() {
                   className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--gold-ink)]"
                   aria-hidden
                 />
-                Atendimento presencial ·{" "}
-                {isPlaceholder(a.street) ? a.street : `${a.street}, ${a.postalCode} ${a.locality}`}
+                Escritório: {fullAddress()}
               </li>
               <li className="flex items-start gap-3">
                 <Clock
@@ -115,11 +116,8 @@ function Sobre() {
       <section className="on-dark relative overflow-hidden bg-[color:var(--navy-deep)] py-20 text-[color:var(--ivory)] lg:py-28">
         <div className="relative mx-auto max-w-6xl px-6">
           <Reveal>
-            <Eyebrow tone="dark">Missão & valores</Eyebrow>
+            <Eyebrow tone="dark">Valores</Eyebrow>
             <h2 className="max-w-3xl font-serif text-3xl leading-tight sm:text-4xl">“{p.motto}”</h2>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--ivory)]/80">
-              <Pending>[Texto da missão — a confirmar com a cliente.]</Pending>
-            </p>
           </Reveal>
           <div className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
             {p.values.map((v, i) => (
@@ -143,7 +141,8 @@ function Sobre() {
             Conversemos sobre o seu assunto
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground">
-            Atendimento presencial no escritório. Telemóvel {a.phoneDisplay} · {a.email}
+            Atendimento presencial no escritório {a.localityIn}, {a.hours.toLowerCase()}. Telemóvel{" "}
+            {a.phoneDisplay}.
           </p>
           <Link to="/contactos" className="btn-primary btn-lg mt-9">
             Marcar reunião <ArrowRight className="h-4 w-4" aria-hidden />

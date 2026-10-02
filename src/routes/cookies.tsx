@@ -1,14 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/Brand";
-import { siteConfig, absoluteUrl } from "@/lib/site-config";
+import { siteConfig, absoluteUrl, isIndexable } from "@/lib/site-config";
 import { reopenCookieConsent } from "@/components/site/CookieConsent";
 
 export const Route = createFileRoute("/cookies")({
   head: () => ({
     meta: [
       { title: `Política de Cookies — ${siteConfig.advogado.displayName}` },
-      { name: "robots", content: "noindex, nofollow" },
+      {
+        name: "description",
+        content: `Política de cookies do site de ${siteConfig.advogado.displayName}, advogada.`,
+      },
+      { name: "robots", content: isIndexable() ? "noindex, follow" : "noindex, nofollow" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/cookies") }],
   }),

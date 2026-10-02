@@ -1,45 +1,15 @@
-import { useId } from "react";
-import {
-  MARK_VIEWBOX,
-  PATH_A,
-  PATH_M,
-  SLASH,
-  STACKED_VIEWBOX,
-  TEXT_ADVOGADA,
-  TEXT_NAME,
-} from "./logo-paths";
+import { MARK_VIEWBOX, PATH_ADVOGADA, PATH_MARK, PATH_NAME, STACKED_VIEWBOX } from "./logo-paths";
 
 /**
- * Logótipo da Andreia Martins, reproduzido do Instagram: monograma "A/M" —
- * A em cima à esquerda, M em baixo à direita, separados por um traço
- * diagonal fino — com "ADVOGADA" e "ANDREIA MARTINS" em maiúsculas
- * espaçadas por baixo.
+ * Logótipo da Andreia Martins: monograma "A/M" — A em cima à esquerda, M em
+ * baixo à direita, separados por um traço diagonal fino — com "ADVOGADA" e
+ * "ANDREIA MARTINS" em maiúsculas espaçadas por baixo.
  *
- * Letras em contornos (Playfair Display e Montserrat, ver logo-paths.ts),
- * por isso não dependem das fontes carregadas. Tudo em `currentColor`.
- * O traço abre um pequeno intervalo nas letras (máscara), como no original.
+ * Vetorizado a partir do ficheiro original enviado pela cliente (ver
+ * logo-paths.ts). Tudo em `currentColor`, para herdar a cor do contexto.
  */
 
-function MarkShapes({ maskId }: { maskId: string }) {
-  return (
-    <>
-      <defs>
-        <mask id={maskId} maskUnits="userSpaceOnUse" x="-100" y="-100" width="500" height="500">
-          <rect x="-100" y="-100" width="500" height="500" fill="white" />
-          <line {...SLASH} stroke="black" strokeWidth={8} />
-        </mask>
-      </defs>
-      <g fill="currentColor" mask={`url(#${maskId})`}>
-        <path d={PATH_A} />
-        <path d={PATH_M} />
-      </g>
-      <line {...SLASH} stroke="currentColor" strokeWidth={2} />
-    </>
-  );
-}
-
 export function LogoMark({ className, title }: { className?: string; title?: string }) {
-  const maskId = `am-${useId().replace(/:/g, "")}`;
   return (
     <svg
       viewBox={MARK_VIEWBOX}
@@ -49,7 +19,7 @@ export function LogoMark({ className, title }: { className?: string; title?: str
       aria-label={title}
       focusable="false"
     >
-      <MarkShapes maskId={maskId} />
+      <path d={PATH_MARK} fill="currentColor" fillRule="evenodd" />
     </svg>
   );
 }
@@ -83,8 +53,6 @@ export function Logo({
   className,
   accentClassName = "opacity-80",
 }: LogoProps) {
-  const maskId = `am-${useId().replace(/:/g, "")}`;
-
   if (variant === "mark") {
     return (
       <LogoMark
@@ -103,17 +71,11 @@ export function Logo({
         aria-label="Andreia Martins, Advogada"
         focusable="false"
       >
-        <MarkShapes maskId={maskId} />
-        <path
-          d={TEXT_ADVOGADA.d}
-          transform={`translate(${TEXT_ADVOGADA.x} ${TEXT_ADVOGADA.y})`}
-          fill="currentColor"
-        />
-        <path
-          d={TEXT_NAME.d}
-          transform={`translate(${TEXT_NAME.x} ${TEXT_NAME.y})`}
-          fill="currentColor"
-        />
+        <g fill="currentColor" fillRule="evenodd">
+          <path d={PATH_MARK} />
+          <path d={PATH_ADVOGADA} />
+          <path d={PATH_NAME} />
+        </g>
       </svg>
     );
   }

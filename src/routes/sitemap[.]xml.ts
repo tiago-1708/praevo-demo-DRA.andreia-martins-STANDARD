@@ -1,23 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-import { siteConfig } from "@/lib/site-config";
-
-function baseUrlFromRequest(request: Request): string {
-  const headers = request.headers;
-  const forwardedHost = headers.get("x-forwarded-host");
-  const host = forwardedHost ?? headers.get("host");
-  if (host) {
-    const proto = headers.get("x-forwarded-proto") ?? "https";
-    return `${proto}://${host}`;
-  }
-  return new URL(request.url).origin;
-}
+import { siteConfig, baseUrl as siteBaseUrl } from "@/lib/site-config";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
-        const baseUrl = baseUrlFromRequest(request);
+      GET: async () => {
+        // Sempre o URL canónico (domínio final), igual aos <link rel="canonical">.
+        const baseUrl = siteBaseUrl();
 
         const entries = [
           { path: "/", changefreq: "monthly", priority: "1.0" },

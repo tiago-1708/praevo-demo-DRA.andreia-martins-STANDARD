@@ -92,12 +92,3 @@ export function PageHero({
     </section>
   );
 }
-
-/** Marca visual para dados ainda por confirmar com a cliente. */
-export function Pending({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="rounded-sm border border-dashed border-current/40 px-1.5 py-0.5 text-[0.92em] opacity-80">
-      {children}
-    </span>
-  );
-}

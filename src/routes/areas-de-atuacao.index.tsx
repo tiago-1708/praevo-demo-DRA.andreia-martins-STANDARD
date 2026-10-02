@@ -3,23 +3,25 @@ import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Eyebrow, NumberBadge, PageHero } from "@/components/site/Brand";
-import { siteConfig, absoluteUrl, advogadaEm } from "@/lib/site-config";
+import { siteConfig, advogadaEm, advogadaEmMinuscula } from "@/lib/site-config";
+import { breadcrumbLd, jsonLd, pageHead } from "@/lib/seo";
 import { handleSpot } from "@/lib/spotlight";
 
 export const Route = createFileRoute("/areas-de-atuacao/")({
   head: () => ({
-    meta: [
-      { title: `Áreas de Prática — ${siteConfig.advogado.displayName}, ${advogadaEm()}` },
-      {
-        name: "description",
-        content: `Áreas de prática da ${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}: ${siteConfig.areas.map((a) => a.title).join(", ")}.`,
-      },
-      {
-        property: "og:title",
-        content: `Áreas de Prática — ${siteConfig.advogado.displayName}`,
-      },
+    ...pageHead({
+      title: `Áreas de Prática | ${advogadaEm()} — ${siteConfig.advogado.displayName}`,
+      description: `Áreas de prática de ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: família e menores, heranças, imigração, insolvências, arrendamento, condomínios e contratos.`,
+      path: "/areas-de-atuacao",
+    }),
+    scripts: [
+      jsonLd(
+        breadcrumbLd([
+          { name: "Início", path: "/" },
+          { name: "Áreas de prática", path: "/areas-de-atuacao" },
+        ]),
+      ),
     ],
-    links: [{ rel: "canonical", href: absoluteUrl("/areas-de-atuacao") }],
   }),
   component: AreasIndex,
 });
@@ -27,9 +29,13 @@ export const Route = createFileRoute("/areas-de-atuacao/")({
 function AreasIndex() {
   return (
     <SiteLayout>
-      <PageHero eyebrow="Áreas de prática" title="Matérias que acompanhamos">
-        Prestamos serviços a particulares, a famílias, a trabalhadores e a pequenas empresas, nas
-        questões jurídicas do dia a dia.
+      <PageHero
+        eyebrow="Áreas de prática"
+        title={`Áreas de prática ${siteConfig.advogado.localityIn}`}
+      >
+        Presto serviços a particulares, famílias, cidadãos estrangeiros, empresas e condomínios, no
+        escritório {siteConfig.advogado.localityIn} — da família às heranças, da imigração à
+        insolvência.
       </PageHero>
 
       <section className="bg-background py-20 lg:py-24">
@@ -72,7 +78,7 @@ function AreasIndex() {
 
           <Reveal className="mt-16 grid gap-8 rounded-md bg-[color:var(--muted)] p-8 sm:p-10 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
             <div>
-              <Eyebrow>Clareza</Eyebrow>
+              <Eyebrow>Como trabalho</Eyebrow>
               <p className="font-serif text-2xl leading-snug text-[color:var(--ink)] sm:text-3xl">
                 {siteConfig.perfil.motto}
               </p>

@@ -5,7 +5,7 @@ import handler from "@tanstack/react-start/server-entry";
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 import type { RuntimeEnv } from "./lib/server-context";
-import { siteConfig } from "./lib/site-config";
+import { isIndexable } from "./lib/site-config";
 
 // h3 swallows in-handler throws into a normal 500 Response with body
 // {"unhandled":true,"message":"HTTPError"} — try/catch alone never fires for those.
@@ -64,8 +64,9 @@ function hardenResponse(request: Request, response: Response): Response {
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
     headers.set(key, value);
   }
-  // Site demo: bloqueia indexação em todas as respostas (HTML, sitemap, assets).
-  if (siteConfig.demo) {
+  // Sem domínio final (ou em modo demo), bloqueia a indexação em todas as
+  // respostas (HTML, sitemap, assets). Ver isIndexable em site-config.ts.
+  if (!isIndexable()) {
     headers.set("X-Robots-Tag", "noindex, nofollow");
   }
   if (new URL(request.url).protocol === "https:") {

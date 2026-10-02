@@ -1,3 +1,0 @@
-# Site de demonstração (Praevo Technologies) — não indexar.
-User-agent: *
-Disallow: /

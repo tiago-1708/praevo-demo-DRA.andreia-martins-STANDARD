@@ -17,39 +17,36 @@ import { contactSubmissionSchema } from "@/lib/contact-submission";
 import { trackEvent } from "@/lib/analytics";
 import {
   siteConfig,
-  absoluteUrl,
   advogadaEm,
-  isPlaceholder,
+  advogadaEmMinuscula,
+  fullAddress,
   telHref,
   mailHref,
 } from "@/lib/site-config";
+import { breadcrumbLd, jsonLd, pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/contactos")({
   head: () => ({
-    meta: [
-      { title: `Contactos — ${siteConfig.advogado.displayName}, ${advogadaEm()}` },
-      {
-        name: "description",
-        content: `Contactos da ${siteConfig.advogado.displayName}, ${advogadaEm().toLowerCase()}: telefone, email e formulário de contacto.`,
-      },
-      { property: "og:title", content: `Contactos — ${siteConfig.advogado.displayName}` },
+    ...pageHead({
+      title: `Contactos | ${advogadaEm()} — ${siteConfig.advogado.displayName}`,
+      description: `Marque uma reunião com ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: Rua Eng. Duarte Pacheco, 120, Maia. Telemóvel ${siteConfig.advogado.phoneDisplay}.`,
+      path: "/contactos",
+    }),
+    scripts: [
+      jsonLd(
+        breadcrumbLd([
+          { name: "Início", path: "/" },
+          { name: "Contactos", path: "/contactos" },
+        ]),
+      ),
     ],
-    links: [{ rel: "canonical", href: absoluteUrl("/contactos") }],
   }),
   component: Contactos,
 });
 
 function Contactos() {
   const a = siteConfig.advogado;
-  // Enquanto a morada não estiver confirmada, o mapa mostra apenas a
-  // localidade (ou o país, se também ela estiver por confirmar).
-  const mapsQuery = encodeURIComponent(
-    !isPlaceholder(a.street)
-      ? `${a.street}, ${a.postalCode} ${a.locality}`
-      : !isPlaceholder(a.locality)
-        ? `${a.locality}, Portugal`
-        : "Portugal",
-  );
+  const mapsQuery = encodeURIComponent(a.mapsQuery);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
@@ -107,7 +104,7 @@ function Contactos() {
       const result = await sendContactEmail({ data: parsed.data });
       if (result?.accepted !== true) {
         setFormError(
-          "Não foi possível enviar o pedido. Tente novamente ou contacte-nos pelo telefone.",
+          "Não foi possível enviar o pedido. Tente novamente ou contacte-me pelo telefone.",
         );
         return;
       }
@@ -116,7 +113,7 @@ function Contactos() {
       form.reset();
     } catch {
       setFormError(
-        "Não foi possível enviar o pedido. Tente novamente ou contacte-nos pelo telefone.",
+        "Não foi possível enviar o pedido. Tente novamente ou contacte-me pelo telefone.",
       );
     } finally {
       setSending(false);
@@ -129,9 +126,9 @@ function Contactos() {
 
   return (
     <SiteLayout>
-      <PageHero eyebrow="Contactos" title="Falar com a Andreia Martins">
-        Atendimento presencial no escritório. Ligue, escreva ou deixe os seus contactos — a Andreia
-        Martins entrará em contacto consigo.
+      <PageHero eyebrow="Contactos" title={`Marcar reunião ${a.localityIn}`}>
+        Atendimento presencial no escritório {a.localityIn}, {a.hours.toLowerCase()}. Ligue, escreva
+        ou deixe os seus contactos e entrarei em contacto consigo.
       </PageHero>
 
       <section className="bg-background py-20 lg:py-24">
@@ -153,7 +150,6 @@ function Contactos() {
                       {a.street}
                       <br />
                       {a.postalCode} {a.locality}
-                      {!isPlaceholder(a.district) && `, ${a.district}`}
                     </dd>
                   </div>
                 </div>
@@ -205,7 +201,7 @@ function Contactos() {
                     <dd className="mt-1">
                       <a
                         href={mailHref(a.email)}
-                        className="font-serif text-xl hover:text-[color:var(--gold-ink)]"
+                        className="font-serif text-lg [overflow-wrap:anywhere] hover:text-[color:var(--gold-ink)] sm:text-xl"
                       >
                         {a.email}
                       </a>
@@ -243,7 +239,7 @@ function Contactos() {
                 Envie os seus contactos
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                A Andreia Martins entrará em contacto consigo pelo telefone ou email indicado.
+                Entrarei em contacto consigo pelo telefone ou email indicado.
               </p>
 
               {sent ? (
@@ -253,7 +249,7 @@ function Contactos() {
                   </div>
                   <h3 className="font-serif text-xl text-[color:var(--ink)]">Pedido recebido</h3>
                   <p className="text-sm text-muted-foreground">
-                    A Andreia Martins entrará em contacto consigo.
+                    Obrigada pelo contacto. Entrarei em contacto consigo.
                   </p>
                 </div>
               ) : (
