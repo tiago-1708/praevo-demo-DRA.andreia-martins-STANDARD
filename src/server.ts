@@ -35,6 +35,8 @@ const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
   "Cross-Origin-Opener-Policy": "same-origin",
+  // Anti-clickjacking para browsers antigos (os atuais usam frame-ancestors).
+  "X-Frame-Options": "DENY",
   "Content-Security-Policy": [
     "default-src 'self'",
     // 'unsafe-inline' no script/style: TanStack Start injeta CSS crítico e o
@@ -49,6 +51,11 @@ const SECURITY_HEADERS: Record<string, string> = {
     "frame-src https://www.google.com",
     "base-uri 'self'",
     "form-action 'self'",
+    // O site não pode ser embebido noutros sites (clickjacking), não carrega
+    // plugins e força HTTPS em todos os recursos.
+    "frame-ancestors 'none'",
+    "object-src 'none'",
+    "upgrade-insecure-requests",
   ].join("; "),
 };
 
@@ -97,10 +104,47 @@ function wwwRedirect(request: Request): Response | null {
   return new Response(null, { status: 301, headers: { Location: url.toString() } });
 }
 
+const ALLOWED_METHODS = new Set(["GET", "HEAD", "POST"]);
+// O maior pedido legítimo (formulário de contactos) tem poucos KB.
+const MAX_POST_BYTES = 32 * 1024;
+
+/**
+ * Filtro de pedidos antes do SSR: só GET/HEAD/POST; nos POST (funções de
+ * servidor, i.e. o formulário) recusa pedidos vindos de outros sites (Origin
+ * diferente, proteção CSRF) e corpos anormalmente grandes.
+ */
+function rejectRequest(request: Request): Response | null {
+  if (!ALLOWED_METHODS.has(request.method)) {
+    return new Response("Method Not Allowed", {
+      status: 405,
+      headers: { Allow: "GET, HEAD, POST", "content-type": "text/plain; charset=utf-8" },
+    });
+  }
+  if (request.method === "POST") {
+    const origin = request.headers.get("origin");
+    if (origin && origin !== new URL(request.url).origin) {
+      return new Response("Forbidden", {
+        status: 403,
+        headers: { "content-type": "text/plain; charset=utf-8" },
+      });
+    }
+    const length = Number(request.headers.get("content-length") ?? "0");
+    if (length > MAX_POST_BYTES) {
+      return new Response("Payload Too Large", {
+        status: 413,
+        headers: { "content-type": "text/plain; charset=utf-8" },
+      });
+    }
+  }
+  return null;
+}
+
 export default {
   async fetch(request: Request, env: RuntimeEnv) {
     const redirect = wwwRedirect(request);
     if (redirect) return redirect;
+    const rejected = rejectRequest(request);
+    if (rejected) return hardenResponse(request, rejected);
     try {
       const response = await handler.fetch(request, { context: { env } });
       const normalized = await normalizeCatastrophicSsrResponse(response);
