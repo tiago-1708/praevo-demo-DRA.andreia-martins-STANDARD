@@ -45,7 +45,10 @@ const runtimeConfigSchema = z.object({
 function readRuntimeConfig() {
   const env = currentEnv();
   const apiKey = env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
-  const to = env.LEAD_DESTINATION_EMAIL ?? process.env.LEAD_DESTINATION_EMAIL;
+  // Secrets vazios (o workflow sincroniza "" quando não existem) caem para o
+  // email da advogada definido em site-config.ts.
+  const to =
+    env.LEAD_DESTINATION_EMAIL || process.env.LEAD_DESTINATION_EMAIL || siteConfig.advogado.email;
   const from =
     env.LEAD_FROM_ADDRESS ||
     process.env.LEAD_FROM_ADDRESS ||
