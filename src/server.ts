@@ -5,7 +5,7 @@ import handler from "@tanstack/react-start/server-entry";
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 import type { RuntimeEnv } from "./lib/server-context";
-import { isIndexable } from "./lib/site-config";
+import { isIndexable, siteConfig } from "./lib/site-config";
 
 // h3 swallows in-handler throws into a normal 500 Response with body
 // {"unhandled":true,"message":"HTTPError"} — try/catch alone never fires for those.
@@ -82,8 +82,25 @@ function hardenResponse(request: Request, response: Response): Response {
   });
 }
 
+/**
+ * Com domínio próprio, "www.<domínio>" também aponta para o Worker (ver
+ * scripts/prepare-worker.mjs); redireciona-se em 301 para o domínio sem
+ * "www", para haver um só endereço canónico (SEO).
+ */
+function wwwRedirect(request: Request): Response | null {
+  const domain = siteConfig.domain;
+  if (!domain) return null;
+  const url = new URL(request.url);
+  if (url.hostname !== `www.${domain}`) return null;
+  url.hostname = domain;
+  url.protocol = "https:";
+  return new Response(null, { status: 301, headers: { Location: url.toString() } });
+}
+
 export default {
   async fetch(request: Request, env: RuntimeEnv) {
+    const redirect = wwwRedirect(request);
+    if (redirect) return redirect;
     try {
       const response = await handler.fetch(request, { context: { env } });
       const normalized = await normalizeCatastrophicSsrResponse(response);

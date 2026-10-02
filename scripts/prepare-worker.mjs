@@ -45,9 +45,15 @@ if (!hasContactRateLimiter) {
 }
 
 if (domain) {
-  config.routes = [{ pattern: domain, custom_domain: true }];
+  // Domínio sem "www" (canónico) + "www", que o Worker redireciona em 301
+  // para o primeiro (src/server.ts). O domínio tem de estar numa Zone da
+  // conta Cloudflare; a Cloudflare cria os registos DNS e o certificado.
+  config.routes = [
+    { pattern: domain, custom_domain: true },
+    { pattern: `www.${domain}`, custom_domain: true },
+  ];
   delete config.workers_dev;
-  console.log(`✓ Worker "${slug}" preparado para ${domain}`);
+  console.log(`✓ Worker "${slug}" preparado para ${domain} (+ www)`);
 } else {
   config.workers_dev = true;
   delete config.routes;

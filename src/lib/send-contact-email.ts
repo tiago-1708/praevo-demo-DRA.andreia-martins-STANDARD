@@ -4,11 +4,13 @@ import { z } from "zod";
 import { contactSubmissionSchema } from "./contact-submission";
 import { enforceContactRateLimit } from "./contact-rate-limiter";
 import type { RuntimeEnv, ServerRequestContext } from "./server-context";
+import { siteConfig } from "./site-config";
 
 /**
- * Envio do formulário de contactos. Notifica o escritório por email
- * (Resend). Sem confirmação automática ao cliente — o escritório contacta
- * directamente pelos dados recebidos.
+ * Envio do formulário de contactos. Notifica a advogada por email
+ * (Resend), com "Responder" a ir diretamente para o email de quem escreveu.
+ * Sem confirmação automática ao cliente: a advogada contacta diretamente
+ * pelos dados recebidos.
  *
  * Secrets: lidos de `context.env` (bindings do Worker em produção — ver
  * `src/server.ts`). Em `vite dev` local esse contexto não existe (o Worker
@@ -45,7 +47,9 @@ function readRuntimeConfig() {
   const apiKey = env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
   const to = env.LEAD_DESTINATION_EMAIL ?? process.env.LEAD_DESTINATION_EMAIL;
   const from =
-    env.LEAD_FROM_ADDRESS ?? process.env.LEAD_FROM_ADDRESS ?? "Escritório <onboarding@resend.dev>";
+    env.LEAD_FROM_ADDRESS ||
+    process.env.LEAD_FROM_ADDRESS ||
+    `Site ${siteConfig.advogado.displayName} <onboarding@resend.dev>`;
 
   return runtimeConfigSchema.safeParse({ apiKey, to, from });
 }
@@ -89,28 +93,44 @@ export const sendContactEmail = createServerFn({ method: "POST" })
     }
     const { apiKey, to, from } = config.data;
 
+    const name = escapeHtml(data.name);
+    const email = escapeHtml(data.email);
+    const phone = escapeHtml(data.phone);
+    const telHref = `tel:${data.phone.replace(/[^\d+]/g, "")}`;
     const message = data.message
-      ? `<p><strong>Mensagem:</strong><br>${escapeHtml(data.message).replace(/\n/g, "<br>")}</p>`
-      : "<p><em>Sem mensagem.</em></p>";
+      ? escapeHtml(data.message).replace(/\n/g, "<br>")
+      : "<em>Sem mensagem.</em>";
+    const row = (label: string, value: string) =>
+      `<tr><td style="padding:8px 0;color:#6b5a52;font-size:13px;width:90px;vertical-align:top">${label}</td><td style="padding:8px 0;font-size:15px">${value}</td></tr>`;
 
     const html = `
-      <h2>Novo pedido de contacto</h2>
-      <p><strong>Nome:</strong> ${escapeHtml(data.name)}</p>
-      <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-      <p><strong>Telefone:</strong> ${escapeHtml(data.phone)}</p>
-      ${message}
-      <hr>
-      <p style="font-size:12px;color:#666">Recebido pelo formulário do site.</p>
+      <div style="font-family:Arial,Helvetica,sans-serif;color:#2e1c1a;max-width:560px">
+        <div style="background:#521616;color:#f4f1ea;padding:18px 24px;border-radius:10px 10px 0 0">
+          <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:.8">Site · ${escapeHtml(siteConfig.advogado.displayName)}</div>
+          <div style="font-size:20px;margin-top:4px">Novo pedido de contacto</div>
+        </div>
+        <div style="border:1px solid #ddd3c7;border-top:0;padding:20px 24px;border-radius:0 0 10px 10px;background:#fbf9f5">
+          <table style="border-collapse:collapse;width:100%">
+            ${row("Nome", name)}
+            ${row("Telefone", `<a href="${telHref}" style="color:#521616">${phone}</a>`)}
+            ${row("Email", `<a href="mailto:${email}" style="color:#521616">${email}</a>`)}
+            ${row("Mensagem", message)}
+          </table>
+          <p style="margin:18px 0 0;font-size:12px;color:#6b5a52">Enviado pelo formulário de contactos do site. Pode responder diretamente a este email para escrever a ${name}.</p>
+        </div>
+      </div>
     `.trim();
 
     const text = [
-      "Novo pedido de contacto",
+      "Novo pedido de contacto (site)",
+      "",
       `Nome: ${data.name}`,
-      `Email: ${data.email}`,
       `Telefone: ${data.phone}`,
+      `Email: ${data.email}`,
+      "",
       data.message ? `Mensagem:\n${data.message}` : "Sem mensagem.",
       "",
-      "Recebido pelo formulário do site.",
+      "Enviado pelo formulário de contactos do site. Pode responder diretamente a este email.",
     ].join("\n");
 
     const controller = new AbortController();
@@ -128,7 +148,7 @@ export const sendContactEmail = createServerFn({ method: "POST" })
           from,
           to,
           reply_to: data.email,
-          subject: `[Site] Novo contacto: ${data.name}`,
+          subject: `Novo pedido de contacto pelo site: ${data.name}`,
           html,
           text,
         }),
