@@ -118,7 +118,7 @@ export const siteConfig = {
    * é indexado. Preencher ativa a indexação, o URL canónico, o sitemap e o
    * robots.txt com esse domínio.
    */
-  domain: null as string | null,
+  domain: "andreiagmartins.com" as string | null,
   themeColor: "#F4F1EA",
 
   /** Modo demonstração (nota no rodapé + noindex). Site final: false. */
