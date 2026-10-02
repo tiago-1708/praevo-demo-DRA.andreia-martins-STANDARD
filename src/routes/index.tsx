@@ -152,7 +152,7 @@ function HomePage() {
             <div>
               <Eyebrow>Áreas de prática</Eyebrow>
               <h2 className="font-serif text-3xl leading-tight text-[color:var(--ink)] sm:text-4xl">
-                Áreas de prática {a.localityIn}
+                Áreas de prática
               </h2>
             </div>
             <Link

@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Eyebrow, NumberBadge, PageHero } from "@/components/site/Brand";
-import { siteConfig, siteName, advogadaEm, advogadaEmMinuscula } from "@/lib/site-config";
+import { siteConfig, siteName } from "@/lib/site-config";
 import { breadcrumbLd, jsonLd, pageHead } from "@/lib/seo";
 import { handleSpot } from "@/lib/spotlight";
 
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/areas-de-atuacao/")({
   head: () => ({
     ...pageHead({
       title: `Áreas de Prática | ${siteName()}`,
-      description: `Áreas de prática de ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: família e menores, heranças, imigração, insolvências, arrendamento, condomínios e contratos.`,
+      description: `Áreas de prática de ${siteConfig.advogado.displayName}, advogada: família e menores, heranças e inventários, imigração e nacionalidade, insolvências, arrendamento, condomínios, contratos e direito civil.`,
       path: "/areas-de-atuacao",
     }),
     scripts: [
@@ -29,13 +29,9 @@ export const Route = createFileRoute("/areas-de-atuacao/")({
 function AreasIndex() {
   return (
     <SiteLayout>
-      <PageHero
-        eyebrow="Áreas de prática"
-        title={`Áreas de prática ${siteConfig.advogado.localityIn}`}
-      >
-        Presto serviços a particulares, famílias, cidadãos estrangeiros, empresas e condomínios, no
-        escritório {siteConfig.advogado.localityIn}: da família às heranças, da imigração à
-        insolvência.
+      <PageHero eyebrow={siteConfig.advogado.displayName} title="Áreas de prática">
+        Presto serviços a particulares, famílias, cidadãos estrangeiros, empresas e condomínios: da
+        família às heranças, da imigração à insolvência.
       </PageHero>
 
       <section className="bg-background py-20 lg:py-24">
