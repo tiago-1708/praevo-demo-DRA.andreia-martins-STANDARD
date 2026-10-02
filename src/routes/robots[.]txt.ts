@@ -15,7 +15,7 @@ export const Route = createFileRoute("/robots.txt")({
               "\n",
             )
           : [
-              "# Site ainda sem domínio final — não indexar.",
+              "# Site ainda sem domínio final: não indexar.",
               "User-agent: *",
               "Disallow: /",
               "",

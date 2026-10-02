@@ -60,7 +60,7 @@ function Sobre() {
                   className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--gold-ink)]"
                   aria-hidden
                 />
-                Inscrita na Ordem dos Advogados — Cédula Profissional n.º {a.cedula}
+                Inscrita na Ordem dos Advogados, Cédula Profissional n.º {a.cedula}
               </li>
               <li className="flex items-start gap-3">
                 <MapPin

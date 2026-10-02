@@ -7,7 +7,7 @@ import { reopenCookieConsent } from "@/components/site/CookieConsent";
 export const Route = createFileRoute("/cookies")({
   head: () => ({
     meta: [
-      { title: `Política de Cookies — ${siteConfig.advogado.displayName}` },
+      { title: `Política de Cookies | ${siteConfig.advogado.displayName}` },
       {
         name: "description",
         content: `Política de cookies do site de ${siteConfig.advogado.displayName}, advogada.`,
@@ -40,12 +40,12 @@ function Cookies() {
           <section>
             <h2 className="text-lg text-[color:var(--ink)]">2. Cookies utilizados</h2>
             <p className="mt-3">
-              Este site utiliza apenas cookies essenciais — não recolhe dados de análise, não usa
+              Este site utiliza apenas cookies essenciais: não recolhe dados de análise, não usa
               cookies de marketing nem partilha dados com terceiros.
             </p>
             <ul className="mt-4 list-disc space-y-2 pl-6">
               <li>
-                <code>praevo_cookie_consent</code> — regista a decisão do utilizador sobre este
+                <code>praevo_cookie_consent</code>: regista a decisão do utilizador sobre este
                 banner. Duração: 12 meses. Armazenamento: <em>localStorage</em>. Não recolhe dados
                 identificáveis.
               </li>
@@ -55,7 +55,7 @@ function Cookies() {
           <section>
             <h2 className="text-lg text-[color:var(--ink)]">3. Gerir o consentimento</h2>
             <p className="mt-3">
-              Pode alterar a sua decisão em qualquer momento — clique em{" "}
+              Pode alterar a sua decisão em qualquer momento: clique em{" "}
               <button
                 type="button"
                 onClick={reopenCookieConsent}

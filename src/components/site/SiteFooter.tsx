@@ -137,7 +137,7 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {siteName()}. Todos os direitos reservados.
           </p>
           <p>
-            {a.displayName}, advogada inscrita na Ordem dos Advogados — Cédula Profissional n.º{" "}
+            {a.displayName}, advogada inscrita na Ordem dos Advogados, Cédula Profissional n.º{" "}
             {a.cedula}.
           </p>
         </div>

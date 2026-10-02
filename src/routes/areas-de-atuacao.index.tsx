@@ -10,7 +10,7 @@ import { handleSpot } from "@/lib/spotlight";
 export const Route = createFileRoute("/areas-de-atuacao/")({
   head: () => ({
     ...pageHead({
-      title: `Áreas de Prática | ${advogadaEm()} — ${siteConfig.advogado.displayName}`,
+      title: `Áreas de Prática | ${advogadaEm()} | ${siteConfig.advogado.displayName}`,
       description: `Áreas de prática de ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: família e menores, heranças, imigração, insolvências, arrendamento, condomínios e contratos.`,
       path: "/areas-de-atuacao",
     }),
@@ -34,7 +34,7 @@ function AreasIndex() {
         title={`Áreas de prática ${siteConfig.advogado.localityIn}`}
       >
         Presto serviços a particulares, famílias, cidadãos estrangeiros, empresas e condomínios, no
-        escritório {siteConfig.advogado.localityIn} — da família às heranças, da imigração à
+        escritório {siteConfig.advogado.localityIn}: da família às heranças, da imigração à
         insolvência.
       </PageHero>
 

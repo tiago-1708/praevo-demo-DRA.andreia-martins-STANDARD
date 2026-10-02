@@ -82,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "robots", content: robotsContent() },
       { name: "author", content: siteConfig.advogado.displayName },
       { name: "theme-color", content: siteConfig.themeColor },
-      { property: "og:site_name", content: `${siteName()} — Advogada` },
+      { property: "og:site_name", content: `${siteName()}, Advogada` },
       { property: "og:locale", content: "pt_PT" },
       { name: "format-detection", content: "telephone=no" },
     ],

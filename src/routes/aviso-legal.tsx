@@ -6,7 +6,7 @@ import { siteConfig, absoluteUrl, isIndexable } from "@/lib/site-config";
 export const Route = createFileRoute("/aviso-legal")({
   head: () => ({
     meta: [
-      { title: `Aviso Legal e Privacidade — ${siteConfig.advogado.displayName}` },
+      { title: `Aviso Legal e Privacidade | ${siteConfig.advogado.displayName}` },
       {
         name: "description",
         content: `Aviso legal e política de privacidade do site de ${siteConfig.advogado.displayName}, advogada.`,
@@ -81,7 +81,7 @@ function AvisoLegal() {
               Responsável pelo tratamento: {a.legalName}, com os contactos indicados no ponto 1.
               Direitos do titular: acesso, retificação, apagamento, limitação, oposição e
               portabilidade dos dados, exercidos por email para {a.email}. Reclamação sempre
-              disponível junto da Comissão Nacional de Proteção de Dados (CNPD — cnpd.pt).
+              disponível junto da Comissão Nacional de Proteção de Dados (CNPD, cnpd.pt).
             </p>
           </section>
 

@@ -128,7 +128,7 @@ export const sendContactEmail = createServerFn({ method: "POST" })
           from,
           to,
           reply_to: data.email,
-          subject: `[Site] Novo contacto — ${data.name}`,
+          subject: `[Site] Novo contacto: ${data.name}`,
           html,
           text,
         }),

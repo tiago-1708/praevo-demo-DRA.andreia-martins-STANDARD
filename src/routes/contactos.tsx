@@ -28,7 +28,7 @@ import { breadcrumbLd, jsonLd, pageHead } from "@/lib/seo";
 export const Route = createFileRoute("/contactos")({
   head: () => ({
     ...pageHead({
-      title: `Contactos | ${advogadaEm()} — ${siteConfig.advogado.displayName}`,
+      title: `Contactos | ${advogadaEm()} | ${siteConfig.advogado.displayName}`,
       description: `Marque uma reunião com ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: Rua Eng. Duarte Pacheco, 120, Maia. Telemóvel ${siteConfig.advogado.phoneDisplay}.`,
       path: "/contactos",
     }),

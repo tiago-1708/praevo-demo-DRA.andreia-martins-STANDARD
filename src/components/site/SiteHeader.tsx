@@ -47,7 +47,7 @@ export function SiteHeader() {
           to="/"
           onClick={onLogoClick}
           className="flex min-w-0 items-center text-[color:var(--ink)]"
-          aria-label={`${a.displayName}, Advogada — início`}
+          aria-label={`${a.displayName}, Advogada: início`}
         >
           <Logo variant="lockup" size="sm" accentClassName="text-[color:var(--gold-ink)]" />
         </Link>

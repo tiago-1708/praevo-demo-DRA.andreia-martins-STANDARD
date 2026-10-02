@@ -86,10 +86,10 @@ export type Brand = {
    * mudar a identidade visual, editar apenas este bloco.
    */
   colors: {
-    dark: string; // Cor mais escura — blocos de cor, rodapé, botões primários
-    darkAlt: string; // Variação — hover, bloco de contacto
+    dark: string; // Cor mais escura: blocos de cor, rodapé, botões primários
+    darkAlt: string; // Variação: hover, bloco de contacto
     accent: string; // Cor de destaque sobre `dark`
-    accentSoft: string; // Versão clara — hovers subtis
+    accentSoft: string; // Versão clara: hovers subtis
     accentInk: string; // Accent para texto/ícones em fundo claro (AA)
     background: string; // Fundo do body
     ink: string; // Cor do texto corrido e dos títulos em fundo claro
@@ -162,7 +162,7 @@ export const siteConfig = {
     phoneAltE164: null,
     phoneAltDisplay: null,
     email: "andreiagmartins-68433P@adv.oa.pt",
-    hours: "Segunda a sexta, 9h30 – 18h30",
+    hours: "Segunda a sexta, das 9h30 às 18h30",
     openingHours: {
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       opens: "09:30",
@@ -174,7 +174,7 @@ export const siteConfig = {
       "condomínios em Direito da Família e Menores, Inventário e Sucessões, Imigração e " +
       "Nacionalidade, Insolvências, Arrendamento, Condomínios, Contratos e Direito Civil.",
     bioLong: [
-      "Nem sempre sonhei em ser advogada. Na verdade, foi o Direito que, aos poucos, me foi conquistando — e hoje já não me imagino a fazer outra coisa.",
+      "Nem sempre sonhei em ser advogada. Na verdade, foi o Direito que, aos poucos, me foi conquistando, e hoje já não me imagino a fazer outra coisa.",
       "Apaixonei-me por esta profissão e pela possibilidade de, através dela, fazer a diferença na vida de alguém. Gosto de ouvir, de perceber os problemas para lá daquilo que está escrito nos documentos e, sobretudo, de encontrar soluções.",
       "Sou exigente com o meu trabalho, mas acredito que ser advogada não tem de significar ser distante. Gosto de uma relação próxima, transparente e humana com quem me procura, e acredito que explicar o Direito de forma simples é também uma forma de melhor o defender.",
       "É assim que exerço a advocacia: com rigor, mas sem perder a leveza; com profissionalismo, mas sem deixar de ser eu.",
@@ -266,7 +266,7 @@ export const siteConfig = {
           "Na insolvência de uma pessoa singular, a lei permite que, verificados certos requisitos, as dívidas que não forem pagas no processo venham a ser perdoadas. Em termos gerais:",
         steps: [
           "O pedido de exoneração do passivo restante é feito pelo devedor no próprio processo de insolvência.",
-          "Se for admitido, segue-se um período de cessão — em regra, de três anos — durante o qual o rendimento disponível, acima do necessário a um sustento digno, é entregue a um fiduciário para pagamento aos credores.",
+          "Se for admitido, segue-se um período de cessão (em regra, de três anos), durante o qual o rendimento disponível, acima do necessário a um sustento digno, é entregue a um fiduciário para pagamento aos credores.",
           "Durante esse período, o devedor tem deveres a cumprir, como informar alterações de rendimentos e de morada e procurar exercer uma atividade remunerada.",
           "Terminado o período de cessão e cumpridos os deveres, o tribunal decide sobre a exoneração das dívidas que restem.",
           "Algumas dívidas não são abrangidas, como os créditos por alimentos, as multas e coimas e as dívidas fiscais e à Segurança Social.",
@@ -282,7 +282,7 @@ export const siteConfig = {
           "A identificação das partes e do imóvel, com a referência à licença de utilização (ou ao documento que a dispense) e ao certificado energético.",
           "A finalidade do arrendamento (habitacional ou não habitacional), o prazo e o regime de renovação.",
           "O valor da renda, a forma e o local de pagamento e, se existir, a caução ou as rendas pagas antecipadamente.",
-          "A repartição das despesas — condomínio, obras, água, luz e gás — e o estado do imóvel na entrega, de preferência com registo fotográfico anexo.",
+          "A repartição das despesas (condomínio, obras, água, luz e gás) e o estado do imóvel na entrega, de preferência com registo fotográfico anexo.",
           "A comunicação do contrato às Finanças e o pagamento do Imposto do Selo, obrigações que cabem ao senhorio.",
         ],
         note: "As regras aplicáveis dependem do tipo de arrendamento e da data em que o contrato é celebrado.",
@@ -311,7 +311,7 @@ export const siteConfig = {
       short:
         "Divórcio, regulação das responsabilidades parentais, pensão de alimentos e partilha de bens.",
       long: [
-        "As questões de família tocam no que cada pessoa tem de mais importante. Acompanho divórcios, separações e a regulação das responsabilidades parentais com proximidade e discrição, privilegiando a via do acordo sempre que ela protege os interesses de todos — em especial, os das crianças.",
+        "As questões de família tocam no que cada pessoa tem de mais importante. Acompanho divórcios, separações e a regulação das responsabilidades parentais com proximidade e discrição, privilegiando a via do acordo sempre que ela protege os interesses de todos, em especial os das crianças.",
         "Quando o acordo não é possível, acompanho o processo em tribunal e explico cada passo de forma simples: o que vai acontecer, quanto tempo pode demorar e que decisões há a tomar.",
       ],
       topics: [
@@ -334,7 +334,7 @@ export const siteConfig = {
       title: "Inventário e Sucessões",
       short: "Habilitação de herdeiros, partilhas, processos de inventário e testamentos.",
       long: [
-        "Depois do falecimento de um familiar, há passos e prazos que não podem ficar esquecidos — e decisões que convém tomar com informação. Acompanho herdeiros e cabeças-de-casal desde a habilitação de herdeiros até à partilha, por acordo ou através de processo de inventário, no cartório notarial ou no tribunal.",
+        "Depois do falecimento de um familiar, há passos e prazos que não podem ficar esquecidos, e decisões que convém tomar com informação. Acompanho herdeiros e cabeças-de-casal desde a habilitação de herdeiros até à partilha, por acordo ou através de processo de inventário, no cartório notarial ou no tribunal.",
         "Acompanho também quem quer planear a sua sucessão com antecedência, através de testamento ou de outros instrumentos previstos na lei, para evitar dúvidas e conflitos no futuro.",
       ],
       topics: [
@@ -358,7 +358,7 @@ export const siteConfig = {
       short:
         "Vistos, autorizações de residência, reagrupamento familiar e nacionalidade portuguesa.",
       long: [
-        "Mudar de país traz consigo um conjunto de procedimentos que nem sempre são simples. Acompanho cidadãos estrangeiros e as suas famílias nos pedidos de vistos e de autorização de residência junto da AIMA — Agência para a Integração, Migrações e Asilo —, nas renovações e no reagrupamento familiar.",
+        "Mudar de país traz consigo um conjunto de procedimentos que nem sempre são simples. Acompanho cidadãos estrangeiros e as suas famílias nos pedidos de vistos e de autorização de residência junto da AIMA (Agência para a Integração, Migrações e Asilo), nas renovações e no reagrupamento familiar.",
         "Acompanho também pedidos de nacionalidade portuguesa junto do Instituto dos Registos e do Notariado, por atribuição ou por aquisição, e reviso a documentação antes de cada submissão. Como a legislação nesta área tem sido alterada com frequência, cada caso é analisado à luz das regras em vigor à data do pedido.",
       ],
       topics: [
@@ -404,7 +404,7 @@ export const siteConfig = {
       short: "Contratos de arrendamento, rendas em atraso, cessação do contrato e despejo.",
       long: [
         "O arrendamento é uma relação que se prolonga no tempo e que convém começar bem. Acompanho senhorios e inquilinos na preparação e na revisão do contrato, na atualização de rendas e na resolução de diferendos durante a sua execução.",
-        "Quando há rendas em atraso ou o contrato chega ao fim, acompanho a cessação — por acordo, denúncia, oposição à renovação ou resolução — e, se necessário, o procedimento especial de despejo.",
+        "Quando há rendas em atraso ou o contrato chega ao fim, acompanho a cessação (por acordo, denúncia, oposição à renovação ou resolução) e, se necessário, o procedimento especial de despejo.",
       ],
       topics: [
         "Contratos de arrendamento habitacional e não habitacional",
@@ -450,7 +450,7 @@ export const siteConfig = {
       title: "Contratos",
       short: "Redação, revisão e negociação de contratos para particulares e empresas.",
       long: [
-        "Um contrato bem redigido é a primeira forma de prevenir um litígio. Redijo e reviso contratos do dia a dia — compra e venda, contratos-promessa, prestação de serviços, empreitada, mútuo — e explico, antes da assinatura, o que cada cláusula significa.",
+        "Um contrato bem redigido é a primeira forma de prevenir um litígio. Redijo e reviso contratos do dia a dia, como compra e venda, contratos-promessa, prestação de serviços, empreitada ou mútuo, e explico, antes da assinatura, o que cada cláusula significa.",
         "Quando surge um incumprimento, acompanho a negociação com a outra parte e, se necessário, os meios judiciais adequados.",
       ],
       topics: [
@@ -474,7 +474,7 @@ export const siteConfig = {
         "Responsabilidade civil, cobrança de dívidas, relações de vizinhança e direitos do consumidor.",
       long: [
         "O Direito Civil regula grande parte das relações do quotidiano: entre vizinhos, entre credores e devedores, entre consumidores e empresas. Acompanho estas questões desde a primeira análise da documentação até à via judicial, quando é necessária.",
-        "Na cobrança de dívidas, começo pela via extrajudicial e, sem pagamento, recorro aos meios adequados ao valor e à prova disponível — como o procedimento de injunção ou a ação judicial.",
+        "Na cobrança de dívidas, começo pela via extrajudicial e, sem pagamento, recorro aos meios adequados ao valor e à prova disponível, como o procedimento de injunção ou a ação judicial.",
       ],
       topics: [
         "Responsabilidade civil e indemnizações",

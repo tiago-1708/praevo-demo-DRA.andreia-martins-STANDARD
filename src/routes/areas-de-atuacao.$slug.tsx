@@ -131,7 +131,7 @@ function AreaPage() {
                 </ul>
                 <div className="mt-8 border-t border-[color:var(--gold)]/25 pt-8">
                   <p className="text-sm leading-relaxed text-[color:var(--ivory)]/80">
-                    Uma conversa a tempo ajuda a perceber as opções. Fale comigo antes de decidir —
+                    Uma conversa a tempo ajuda a perceber as opções. Fale comigo antes de decidir:
                     atendimento presencial no escritório {a.localityIn}.
                   </p>
                   <Link to="/contactos" className="btn-primary mt-6 w-full">

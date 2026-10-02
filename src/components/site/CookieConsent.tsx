@@ -64,7 +64,7 @@ export function CookieConsent() {
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm leading-relaxed text-[color:var(--ivory)]/85">
             Este site utiliza cookies de análise para melhorar a experiência de navegação. Pode
-            aceitar ou recusar — consulte a{" "}
+            aceitar ou recusar. Consulte a{" "}
             <Link to="/cookies" className="underline hover:text-[color:var(--gold)]">
               Política de Cookies
             </Link>{" "}

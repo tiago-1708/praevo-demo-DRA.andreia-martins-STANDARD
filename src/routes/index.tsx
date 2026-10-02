@@ -18,7 +18,7 @@ import { handleSpot } from "@/lib/spotlight";
 export const Route = createFileRoute("/")({
   head: () => ({
     ...pageHead({
-      title: `${advogadaEm()} | ${siteConfig.advogado.displayName} — Família, Heranças e Imigração`,
+      title: `${advogadaEm()} | ${siteConfig.advogado.displayName} | Família, Heranças e Imigração`,
       description: `${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: família e menores, heranças e inventários, imigração e nacionalidade, insolvências, arrendamento, condomínios e contratos.`,
       path: "/",
     }),
@@ -46,14 +46,14 @@ function HomePage() {
               </Eyebrow>
             </div>
             <h1 className="animate-fade-rise delay-1 max-w-3xl font-serif text-[2.6rem] leading-[1.02] font-medium sm:text-6xl lg:text-7xl">
-              {advogadaEm()}.{" "}
-              <em className="text-[color:var(--gold-ink)]">Com rigor, sem perder a leveza.</em>
+              Com rigor, <em className="text-[color:var(--gold-ink)]">sem perder a leveza.</em>
             </h1>
             <p className="animate-fade-rise delay-2 mt-7 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Sou a {a.displayName} e presto serviços jurídicos a particulares, famílias, cidadãos
-              estrangeiros, empresas e condomínios — em família e menores, heranças, imigração e
-              nacionalidade, insolvências, arrendamento, condomínios e contratos. Explico o Direito
-              de forma simples, para que cada decisão seja tomada com informação.
+              Sou a {a.displayName}, {advogadaEmMinuscula()}, e presto serviços jurídicos a
+              particulares, famílias, cidadãos estrangeiros, empresas e condomínios, em família e
+              menores, heranças, imigração e nacionalidade, insolvências, arrendamento, condomínios
+              e contratos. Explico o Direito de forma simples, para que cada decisão seja tomada com
+              informação.
             </p>
 
             <div className="animate-fade-rise delay-3 mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">

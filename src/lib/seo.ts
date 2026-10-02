@@ -73,7 +73,7 @@ export function siteGraph() {
       {
         "@type": ["LegalService", "Attorney"],
         "@id": ids.business(),
-        name: `${siteName()} — Advogada`,
+        name: `${siteName()}, Advogada`,
         url: baseUrl(),
         image: absoluteUrl(OG_IMAGE),
         logo: absoluteUrl(OG_IMAGE),
@@ -149,7 +149,7 @@ export function siteGraph() {
         "@type": "WebSite",
         "@id": ids.website(),
         url: baseUrl(),
-        name: `${siteName()} — Advogada`,
+        name: `${siteName()}, Advogada`,
         inLanguage: "pt-PT",
         publisher: { "@id": ids.business() },
       },
