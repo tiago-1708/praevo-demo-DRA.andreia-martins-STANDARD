@@ -17,6 +17,7 @@ import { contactSubmissionSchema } from "@/lib/contact-submission";
 import { trackEvent } from "@/lib/analytics";
 import {
   siteConfig,
+  siteName,
   advogadaEm,
   advogadaEmMinuscula,
   fullAddress,
@@ -28,7 +29,7 @@ import { breadcrumbLd, jsonLd, pageHead } from "@/lib/seo";
 export const Route = createFileRoute("/contactos")({
   head: () => ({
     ...pageHead({
-      title: `Contactos | ${advogadaEm()} | ${siteConfig.advogado.displayName}`,
+      title: `Contactos | ${siteName()} | ${advogadaEm()}`,
       description: `Marque uma reunião com ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: Rua Eng. Duarte Pacheco, 120, Maia. Telemóvel ${siteConfig.advogado.phoneDisplay}.`,
       path: "/contactos",
     }),

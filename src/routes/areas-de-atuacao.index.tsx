@@ -3,14 +3,14 @@ import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Eyebrow, NumberBadge, PageHero } from "@/components/site/Brand";
-import { siteConfig, advogadaEm, advogadaEmMinuscula } from "@/lib/site-config";
+import { siteConfig, siteName, advogadaEm, advogadaEmMinuscula } from "@/lib/site-config";
 import { breadcrumbLd, jsonLd, pageHead } from "@/lib/seo";
 import { handleSpot } from "@/lib/spotlight";
 
 export const Route = createFileRoute("/areas-de-atuacao/")({
   head: () => ({
     ...pageHead({
-      title: `Áreas de Prática | ${advogadaEm()} | ${siteConfig.advogado.displayName}`,
+      title: `Áreas de Prática | ${siteName()}`,
       description: `Áreas de prática de ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: família e menores, heranças, imigração, insolvências, arrendamento, condomínios e contratos.`,
       path: "/areas-de-atuacao",
     }),

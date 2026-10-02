@@ -76,13 +76,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       // Valores por omissão; cada rota define os seus via pageHead() (seo.ts).
-      { title: `${advogadaEm()} | ${siteConfig.advogado.displayName}` },
+      { title: `${siteName()} | ${advogadaEm()}` },
       { name: "description", content: siteConfig.advogado.bio },
       // Só indexável com domínio final (ver isIndexable em site-config.ts).
       { name: "robots", content: robotsContent() },
       { name: "author", content: siteConfig.advogado.displayName },
       { name: "theme-color", content: siteConfig.themeColor },
-      { property: "og:site_name", content: `${siteName()}, Advogada` },
+      { property: "og:site_name", content: siteName() },
       { property: "og:locale", content: "pt_PT" },
       { name: "format-detection", content: "telephone=no" },
     ],

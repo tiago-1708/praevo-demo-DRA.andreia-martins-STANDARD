@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/Brand";
-import { siteConfig, absoluteUrl, isIndexable } from "@/lib/site-config";
+import { siteConfig, siteName, absoluteUrl, isIndexable } from "@/lib/site-config";
 
 export const Route = createFileRoute("/aviso-legal")({
   head: () => ({
     meta: [
-      { title: `Aviso Legal e Privacidade | ${siteConfig.advogado.displayName}` },
+      { title: `Aviso Legal e Privacidade | ${siteName()}` },
       {
         name: "description",
         content: `Aviso legal e política de privacidade do site de ${siteConfig.advogado.displayName}, advogada.`,
@@ -33,10 +33,11 @@ function AvisoLegal() {
           <section>
             <h2 className="text-lg text-[color:var(--ink)]">1. Identificação</h2>
             <p className="mt-3">
-              O presente sítio é da responsabilidade de <strong>{a.legalName}</strong>, advogada
-              inscrita na Ordem dos Advogados portuguesa com a cédula profissional n.º {a.cedula},
-              com domicílio profissional em {a.street}, {a.postalCode} {a.locality}, NIF {a.nif}.
-              Contactos: {a.email} · {a.phoneDisplay}.
+              O presente sítio é da responsabilidade de <strong>{siteName()}</strong>, NIF {a.nif},
+              com domicílio profissional em {a.street}, {a.postalCode} {a.locality}. A advocacia é
+              exercida por {a.legalName}, advogada inscrita na Ordem dos Advogados portuguesa com a
+              cédula profissional n.º {a.cedula}, em regime de responsabilidade limitada. Contactos:{" "}
+              {a.email} · {a.phoneDisplay}.
             </p>
           </section>
 
@@ -78,7 +79,7 @@ function AvisoLegal() {
               tempo estritamente necessário.
             </p>
             <p className="mt-3">
-              Responsável pelo tratamento: {a.legalName}, com os contactos indicados no ponto 1.
+              Responsável pelo tratamento: {siteName()}, com os contactos indicados no ponto 1.
               Direitos do titular: acesso, retificação, apagamento, limitação, oposição e
               portabilidade dos dados, exercidos por email para {a.email}. Reclamação sempre
               disponível junto da Comissão Nacional de Proteção de Dados (CNPD, cnpd.pt).

@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/Brand";
-import { siteConfig, absoluteUrl, isIndexable } from "@/lib/site-config";
+import { siteConfig, siteName, absoluteUrl, isIndexable } from "@/lib/site-config";
 import { reopenCookieConsent } from "@/components/site/CookieConsent";
 
 export const Route = createFileRoute("/cookies")({
   head: () => ({
     meta: [
-      { title: `Política de Cookies | ${siteConfig.advogado.displayName}` },
+      { title: `Política de Cookies | ${siteName()}` },
       {
         name: "description",
         content: `Política de cookies do site de ${siteConfig.advogado.displayName}, advogada.`,

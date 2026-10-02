@@ -6,6 +6,7 @@ import { ArchLogo, Eyebrow, NumberBadge } from "@/components/site/Brand";
 import { FaqItem } from "@/components/site/FaqItem";
 import {
   siteConfig,
+  siteName,
   advogadaEm,
   advogadaEmMinuscula,
   telHref,
@@ -18,7 +19,7 @@ import { handleSpot } from "@/lib/spotlight";
 export const Route = createFileRoute("/")({
   head: () => ({
     ...pageHead({
-      title: `${advogadaEm()} | ${siteConfig.advogado.displayName} | Família, Heranças e Imigração`,
+      title: `${siteName()} | ${advogadaEm()}`,
       description: `${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}: família e menores, heranças e inventários, imigração e nacionalidade, insolvências, arrendamento, condomínios e contratos.`,
       path: "/",
     }),

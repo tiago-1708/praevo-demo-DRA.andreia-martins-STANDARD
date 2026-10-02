@@ -4,7 +4,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { Eyebrow, PageHero } from "@/components/site/Brand";
 import { FaqBody } from "@/components/site/FaqItem";
-import { getArea, getFaq, siteConfig, telHref } from "@/lib/site-config";
+import { getArea, getFaq, siteConfig, siteName, telHref } from "@/lib/site-config";
 import { breadcrumbLd, faqPageLd, jsonLd, pageHead, serviceLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/areas-de-atuacao/$slug")({
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/areas-de-atuacao/$slug")({
     const faq = area.faq ? getFaq(area.faq) : undefined;
     return {
       ...pageHead({
-        title: `${area.seoTitle} | ${siteConfig.advogado.displayName}`,
+        title: `${area.seoTitle} | ${siteName()}`,
         description: area.seoDescription,
         path,
       }),

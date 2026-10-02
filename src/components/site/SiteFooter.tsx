@@ -134,7 +134,7 @@ export function SiteFooter() {
       <div className="relative border-t border-[color:var(--gold)]/15">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-xs text-[color:var(--ivory)]/80 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {siteName()}. Todos os direitos reservados.
+            © {new Date().getFullYear()} {siteName()} · Todos os direitos reservados.
           </p>
           <p>
             {a.displayName}, advogada inscrita na Ordem dos Advogados, Cédula Profissional n.º{" "}

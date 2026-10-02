@@ -3,13 +3,19 @@ import { ArrowRight, BadgeCheck, Check, Clock, MapPin } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { ArchLogo, Eyebrow, PageHero } from "@/components/site/Brand";
-import { siteConfig, advogadaEm, advogadaEmMinuscula, fullAddress } from "@/lib/site-config";
+import {
+  siteConfig,
+  siteName,
+  advogadaEm,
+  advogadaEmMinuscula,
+  fullAddress,
+} from "@/lib/site-config";
 import { breadcrumbLd, jsonLd, pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/sobre")({
   head: () => ({
     ...pageHead({
-      title: `Sobre ${siteConfig.advogado.displayName} | ${advogadaEm()}`,
+      title: `Sobre ${siteConfig.advogado.displayName} | ${siteName()}`,
       description: `Conheça ${siteConfig.advogado.displayName}, ${advogadaEmMinuscula()}, inscrita na Ordem dos Advogados (cédula ${siteConfig.advogado.cedula}). ${siteConfig.perfil.tagline}.`,
       path: "/sobre",
       type: "profile",

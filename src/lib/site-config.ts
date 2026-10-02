@@ -148,7 +148,9 @@ export const siteConfig = {
     name: "Andreia Martins",
     legalName: "Andreia G. Martins",
     displayName: "Andreia Martins",
-    firm: null,
+    // Exerce em regime de responsabilidade limitada (R.L.): denominação
+    // usada no título das páginas, no rodapé e no Aviso Legal.
+    firm: "Andreia G. Martins Advogada R.L.",
     cedula: "68433P",
     nif: "251231909",
     street: "Rua Eng. Duarte Pacheco, n.º 120, 2.º andar, sala 11",
